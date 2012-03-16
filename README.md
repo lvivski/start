@@ -2,6 +2,21 @@
 
 Small server-side Dart web development framework.
 
+``` js
+#library('app');
+#import('lib/start.dart');
+
+void main() {
+    var app = Start.createServer();
+
+    app.get('/', (req, res) {
+        res.send('Hello World');
+    });
+
+    app.listen(3000);
+}
+```
+
 ## License
 
 (The MIT License)
