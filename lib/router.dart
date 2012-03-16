@@ -8,17 +8,19 @@ class Router {
     List<Map> routes;
 
     parse (req, res) {
+        var route = match(req);
+        var action = route['action'];
+        action(new Request(req), new Response(res));
+    }
+
+    match(req) {
         var method = req.method;
         var path = req.path;
-        var params = req.queryParameters;
-        var headers = req.headers;
         var route = routes.filter((route) {
             return route['method'] == method.toUpperCase()
                 && route['path'] == path;
         })[0];
-        var action = route['action'];
-
-        action(new Request(req), new Response(res));
+        return route;
     }
 
     add(String method, String path, Closure action) {
