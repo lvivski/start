@@ -2,7 +2,7 @@
 
 Small server-side Dart web development framework.
 
-``` js
+``` dart
 #library('app');
 #import('lib/start.dart');
 
