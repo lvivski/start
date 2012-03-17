@@ -22,17 +22,20 @@ class Response {
 
     Response type (contentType) => set('Content-Type', value);
 
-    Response cache (String type, [int maxAge]) {
-        String value = type;
-        if(maxAge !== null) {
-            value += ', max-age=${maxAge}';
+    Response cache (String type, [Map options]) {
+        if(options == null) {
+            options = {};
         }
+        String value = type;
+        options.forEach((key, value) {
+            value += ', ${key}=${value}';
+        });
         return set('Cache-Control', value);
     }
 
     Response status (code) {
         response.statusCode = code;
-        return thisl
+        return this;
     }
 
     Response cookie (name, val, [Map options]) {

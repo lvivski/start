@@ -13,8 +13,26 @@ main() {
         });
 
         test('path', () {
-            Expect.equals('/', route['path']);
+            Expect.equals('^/?\$', route['path']['regexp']);
         });
+
+    });
+
+    group('Route normalizer', () {
+        var router = new Router();
+        var route = router.normalize('/dfgdfg/:user/:name');
+        test('placeholder (:)', () {
+            Expect.equals('^/dfgdfg/(\\w+)/(\\w+)/?\$', route['regexp']);
+            Expect.equals('user', route['keys'][0]);
+            Expect.equals('name', route['keys'][1]);
+        });
+
+        test('params', () {
+            var params = router.parseParams('/dfgdfg/candy/man/', route);
+            Expect.equals('candy', params['user']);
+            Expect.equals('man', params['name']);
+        });
+
 
     });
     new DARTest().run();
