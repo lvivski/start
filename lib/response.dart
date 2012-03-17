@@ -1,30 +1,58 @@
 #library('response');
 
-#import('dart:json');
 #import('dart:io');
+#import('cookie.dart');
 
 class Response {
     HttpResponse response;
 
     Response (this.response);
 
-    send (String string) {
-        response.outputStream.write(string.charCodes());
-        response.outputStream.close();
-    }
-
-    header (String name, [value]) {
+    Response header (String name, [value]) {
         if (value == null) {
             return response.header[name];
         }
         response.setHeader(name, value);
+        return this;
     }
 
-    status ([int code]) {
-        if (code == null) {
-            return response.statusCode;
+    Response get (String hame) => header(name);
+
+    Response set (name, value) => header(name, value);
+
+    Response type (contentType) => set('Content-Type', value);
+
+    Response cache (String type, [int maxAge]) {
+        String value = type;
+        if(maxAge !== null) {
+            value += ', max-age=${maxAge}';
         }
+        return set('Cache-Control', value);
+    }
+
+    Response status (code) {
         response.statusCode = code;
+        return thisl
+    }
+
+    Response cookie (name, val, [Map options]) {
+        if(options == null) {
+            options = {};
+        }
+        options['name'] = name;
+        options['value'] = val;
+        var cookie = Cookie.stringify(options);
+        return header('Set-Cookie', cookie);
+    }
+
+    deleteCookie (name) {
+        Map options = { expires: new Date(1), path: '/' };
+        return cookie(name, '', options);
+    }
+
+    send (String string) {
+        response.outputStream.write(string.charCodes());
+        response.outputStream.close();
     }
 
     sendfile (path) {
