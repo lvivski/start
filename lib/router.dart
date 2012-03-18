@@ -22,14 +22,13 @@ class Router {
         String method = req.method;
         var path = req.path;
         var route = routes.filter((route) {
-            var re = new RegExp(route['path']['regexp']);
             return route['method'] == method.toUpperCase()
-                && re.hasMatch(path);
+                && route['path']['regexp'].hasMatch(path);
         });
         return route.length > 0 ? route[0] : null;
     }
 
-    add (String method, String path, Closure action) {
+    void add (String method, String path, Closure action) {
         if (['get','post','put','delete'].indexOf(method) < 0) {
             throw new Exception('no such method');
         }
@@ -43,33 +42,42 @@ class Router {
         });
     }
 
-    normalize (path, [bool strict = false]) {
+    Map normalize (path, [bool strict = false]) {
         if (path is RegExp) {
             return path;
         }
         if (path is List) {
             path = '(' + Strings.join(path, '|') + ')';
         }
-        path = path.concat(strict ? '' : '/?').replaceAll('//', '/');
+        path = path.concat(strict ? '' : '/?');
 
         var keys = [];
 
-        RegExp placeholderRE = const RegExp(@':(\w+)');
+        RegExp placeholderRE = const RegExp(@'(\.)?:(\w+)(\?)?');
         placeholderRE.allMatches(path).forEach((placeholder) {
-            keys.add(placeholder[1]);
+            String replace = '(?:';
+            if (placeholder[1].length > 0) {
+                replace += '\.';
+            }
+            replace += '(\\w+))';
+            if (placeholder[3].length > 0) {
+                replace += '?';
+            }
+            path = path.replaceFirst(placeholder[0], replace);
+            keys.add(placeholder[2]);
         });
 
-        path = '^' + path.replaceAll(placeholderRE, '(\\w+)') + '\$';
+        path = path.replaceAll('//', '/');
 
         return {
-            'regexp':path,
+            'regexp': new RegExp('^' + path + '\$'),
             'keys':keys
         };
     }
 
-    parseParams(String path, Map routePath) {
+    Map parseParams(String path, Map routePath) {
         Map params = {};
-        Match match = new RegExp(routePath['regexp']).firstMatch(path);
+        Match match = routePath['regexp'].firstMatch(path);
         for (var i = 0; i < routePath['keys'].length; i++) {
             params[routePath['keys'][i]] = match[i+1];
         }

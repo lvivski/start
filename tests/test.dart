@@ -13,16 +13,16 @@ main() {
         });
 
         test('path', () {
-            Expect.equals('^/?\$', route['path']['regexp']);
+            Expect.equals('^/?\$', route['path']['regexp'].pattern);
         });
 
     });
 
     group('Route normalizer', () {
         var router = new Router();
-        var route = router.normalize('/dfgdfg/:user/:name');
+        var route = router.normalize('/dfgdfg/:user/:name.:type?');
         test('placeholder (:)', () {
-            Expect.equals('^/dfgdfg/(\\w+)/(\\w+)/?\$', route['regexp']);
+            Expect.equals('^/dfgdfg/(?:(\\w+))/(?:(\\w+))(?:.(\\w+))?/?\$', route['regexp'].pattern);
             Expect.equals('user', route['keys'][0]);
             Expect.equals('name', route['keys'][1]);
         });

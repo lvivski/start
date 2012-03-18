@@ -11,10 +11,10 @@ void main() {
     });
 
 
-    app.get('/hello/:name', (req, res) {
+    app.get('/hello/:name.:lastname?', (req, res) {
         res
             .header('Content-Type', 'text/html; charset=UTF-8')
-            .send('Hello, ' + req.param('name'));
+            .send('Hello, ' + req.param('name') + req.param('lastname'));
     });
 
 

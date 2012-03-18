@@ -48,7 +48,7 @@ class Response {
         return header('Set-Cookie', cookie);
     }
 
-    deleteCookie (name) {
+    Response deleteCookie (name) {
         Map options = { expires: new Date(1), path: '/' };
         return cookie(name, '', options);
     }
