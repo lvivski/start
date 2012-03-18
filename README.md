@@ -19,8 +19,9 @@ void main() {
 
 ## Instructions
 - Download latest Dart SDK from http://www.dartlang.org/docs/getting-started/sdk/
-- Checkout this repository and <cd> to its folder
-- run <$PATH_TO_DART_SDK/bin/dart app.js>
+- Checkout this repository
+- run
+    $PATH_TO_DART_SDK/bin/dart app.js
 - open http://127.0.0.1:3000/
 
 
