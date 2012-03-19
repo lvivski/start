@@ -10,17 +10,11 @@ class Request {
 
   String header (String name) => request.headers[name.toLowerCase()];
 
-  bool accepts (String type) {
-    return request.headers['accept'].split(',').indexOf(type) >= 0;
-  }
+  bool accepts (String type) => request.headers['accept'].split(',').indexOf(type) >= 0;
 
-  bool isMime (String type) {
-    return request.headers['content-type'].contains(type);
-  }
+  bool isMime (String type) => request.headers['content-type'].contains(type);
 
-  bool isForwarded () {
-    return request.headers.containsKey('x-forwarded-host');
-  }
+  bool get isForwarded() => request.headers.containsKey('x-forwarded-host');
 
   get uri() => request.uri;
 

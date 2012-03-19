@@ -15,9 +15,7 @@ class Start {
     };
   }
 
-  static createServer() {
-    return new Start();
-  }
+  static createServer() => new Start();
 
   listen (int portNumber) {
     server.listen('127.0.0.1', portNumber);
