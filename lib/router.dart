@@ -28,7 +28,7 @@ class Router {
         return route.length > 0 ? route[0] : null;
     }
 
-    void add (String method, String path, Closure action) {
+    void add (String method, String path, Function action) {
         if (['get','post','put','delete'].indexOf(method) < 0) {
             throw new Exception('no such method');
         }
@@ -77,9 +77,9 @@ class Router {
 
     Map parseParams(String path, Map routePath) {
         Map params = {};
-        Match match = routePath['regexp'].firstMatch(path);
+        Match paramsMatch = routePath['regexp'].firstMatch(path);
         for (var i = 0; i < routePath['keys'].length; i++) {
-            params[routePath['keys'][i]] = match[i+1];
+            params[routePath['keys'][i]] = paramsMatch[i+1];
         }
         return params;
     }

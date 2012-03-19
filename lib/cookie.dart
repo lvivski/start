@@ -17,8 +17,11 @@ class Cookie {
             options['path'] = '/';
         }
         pairs.add("path=${options['path']}");
+        if (options.containsKey('expires')) {
+            pairs.add("expires=${options['expires']}");
+        }
         if (options.containsKey('max-age')) {
-            Date expires = stringifyDate(new Date.now().add(new Duration(seconds:options['max-age'])));
+            String expires = stringifyDate(new Date.now().add(new Duration(seconds:options['max-age'])));
             pairs.add("expires=${expires}");
         }
         if (options.containsKey('httpOnly')) {

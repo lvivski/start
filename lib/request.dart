@@ -1,5 +1,7 @@
 #library('request');
 
+#import('dart:io');
+
 class Request {
     HttpRequest request;
     Map params;
@@ -8,7 +10,7 @@ class Request {
 
     String header (String name) => request.headers[name.toLowerCase()];
 
-    bool accepts (Sring type) {
+    bool accepts (String type) {
         return request.headers['accept'].split(',').indexOf(type) >= 0;
     }
 
@@ -17,7 +19,7 @@ class Request {
     }
 
     bool isForwarded () {
-        return request.header.containsKey('x-forwarded-host');
+        return request.headers.containsKey('x-forwarded-host');
     }
 
     get uri() => request.uri;

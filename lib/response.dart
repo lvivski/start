@@ -1,6 +1,8 @@
 #library('response');
 
 #import('dart:io');
+#import('dart:json');
+
 #import('cookie.dart');
 
 class Response {
@@ -8,27 +10,27 @@ class Response {
 
     Response (this.response);
 
-    Response header (String name, [value]) {
+    header (String name, [value]) {
         if (value == null) {
-            return response.header[name];
+            return response.headers[name];
         }
         response.setHeader(name, value);
         return this;
     }
 
-    Response get (String hame) => header(name);
+    Response get (String name) => header(name);
 
     Response set (name, value) => header(name, value);
 
-    Response type (contentType) => set('Content-Type', value);
+    Response type (contentType) => set('Content-Type', contentType);
 
-    Response cache (String type, [Map options]) {
+    Response cache (String cacheType, [Map options]) {
         if(options == null) {
             options = {};
         }
-        String value = type;
-        options.forEach((key, value) {
-            value += ', ${key}=${value}';
+        String value = cacheType;
+        options.forEach((key, val) {
+            value += ', ${key}=${val}';
         });
         return set('Cache-Control', value);
     }
@@ -44,12 +46,12 @@ class Response {
         }
         options['name'] = name;
         options['value'] = val;
-        var cookie = Cookie.stringify(options);
-        return header('Set-Cookie', cookie);
+        var cookieHeader = Cookie.stringify(options);
+        return header('Set-Cookie', cookieHeader);
     }
 
     Response deleteCookie (name) {
-        Map options = { expires: new Date(1), path: '/' };
+        Map options = { 'expires': 'Thu, 01-Jan-70 00:00:01 GMT', 'path': '/' };
         return cookie(name, '', options);
     }
 
