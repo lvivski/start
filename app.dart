@@ -2,7 +2,7 @@
 #import('lib/start.dart');
 
 void main() {
-  var app = Start.createServer();
+  var app = new Start.createServer('127.0.0.1', 3000);
 
   app.get('/', (req, res) {
     res
@@ -16,6 +16,4 @@ void main() {
       .header('Content-Type', 'text/html; charset=UTF-8')
       .send('Hello, ' + req.param('name') + req.param('lastname'));
   });
-
-  app.listen(3000);
 }
