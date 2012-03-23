@@ -4,16 +4,28 @@ Small server-side Dart web development framework.
 
 ``` dart
 #library('app');
+
 #import('lib/start.dart');
+#import('lib/server.dart');
+
+class App extends Server {
+  App(): super() {
+    get('/', (req, res) {
+      res
+        .header('Content-Type', 'text/html; charset=UTF-8')
+        .send('Hello World');
+    });
+
+    get('/hello/:name.:lastname?', (req, res) {
+      res
+        .header('Content-Type', 'text/html; charset=UTF-8')
+        .send('Hello, ' + req.param('name') + req.param('lastname'));
+    });
+  }
+}
 
 void main() {
-  var app = Start.createServer();
-
-  app.get('/', (req, res) {
-    res.send('Hello World');
-  });
-
-  app.listen(3000);
+  new Start.createServer(new App(), '127.0.0.1', 3000);
 }
 ```
 
