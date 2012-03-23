@@ -23,4 +23,9 @@ class Start {
       _serverPort.send(message, _statusPort.toSendPort());
     });
   }
+  
+  void shutdown() {
+    _serverPort.send(new Message.stop(), _statusPort.toSendPort());
+    _statusPort.close();
+  }
 }
