@@ -19,5 +19,4 @@ class Message {
 
   bool get isStart() => _command == 'start';
   bool get isStop() => _command == 'stop';
-  bool get isAdd() => _command == 'add';
 }

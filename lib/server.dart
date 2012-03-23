@@ -38,13 +38,11 @@ class Server extends Isolate {
         replyTo.send('Server stopping', null);
         stop();
         replyTo.send('Server stopped', null);
-      } else if (message.isAdd) {
-        replyTo.send('Adding route', null);
-        _router.add(message.params['method'],
-                    message.params['route'],
-                    message.params['handler']);
-        replyTo.send('Route added "${message.params['method']}:${message.params['route']}"', null);
       }
     });
+  }
+
+  noSuchMethod (String name, List args) {
+    _router.add(name, args[0], args[1]);
   }
 }
