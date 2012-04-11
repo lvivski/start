@@ -9,7 +9,7 @@ class Start {
   SendPort _serverPort;
   Server _server;
   
-  Start.createServer(Server server, String hostAddress, int tcpPort)
+  Start.runServer(Server server, String hostAddress, int tcpPort)
     : _statusPort = new ReceivePort(),
       _serverPort = null,
       _server = server {

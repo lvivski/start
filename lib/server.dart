@@ -14,7 +14,7 @@ class Server extends Isolate {
     _router = new Router();
   }
   
-  stop() {
+  void stop() {
     _server.close();
     this.port.close();
   }
@@ -42,7 +42,7 @@ class Server extends Isolate {
     });
   }
 
-  noSuchMethod (String name, List args) {
+  void noSuchMethod (String name, List args) {
     _router.add(name, args[0], args[1]);
   }
 }

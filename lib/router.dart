@@ -51,16 +51,16 @@ class Router {
     }
     path = path.concat(strict ? '' : '/?');
 
-    var keys = [];
+    List keys = [];
 
     RegExp placeholderRE = const RegExp(@'(\.)?:(\w+)(\?)?');
     placeholderRE.allMatches(path).forEach((placeholder) {
       String replace = '(?:';
-      if (placeholder[1].length > 0) {
+      if (placeholder[1] !== null) {
         replace += '\.';
       }
       replace += '(\\w+))';
-      if (placeholder[3].length > 0) {
+      if (placeholder[3] !== null) {
         replace += '?';
       }
       path = path.replaceFirst(placeholder[0], replace);
