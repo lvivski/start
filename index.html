@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Start by lvivski</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Start</h1>
+        <p>Sinatra inspired web development framework for Dart</p>
+        <p class="view"><a href="https://github.com/lvivski/start">View the Project on GitHub <small>lvivski/start</small></a></p>
+        <ul>
+          <li><a href="https://github.com/lvivski/start/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/lvivski/start/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/lvivski/start">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Small server-side Dart web development framework.</p>
+
+<div class="highlight">
+<pre>#<span class="k">library</span><span class="p">(</span><span class="s1">'app'</span><span class="p">);</span>
+
+#<span class="k">import</span><span class="p">(</span><span class="s1">'lib/start.dart'</span><span class="p">);</span>
+#<span class="k">import</span><span class="p">(</span><span class="s1">'lib/server.dart'</span><span class="p">);</span>
+
+<span class="kd">class</span> <span class="nc">App</span> <span class="kd">extends</span> <span class="n">Server</span> <span class="p">{</span>
+  <span class="n">App</span><span class="p">()</span><span class="o">:</span> <span class="k">super</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">res</span>
+        <span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">,</span> <span class="s1">'text/html; charset=UTF-8'</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="kd">get</span><span class="p">(</span><span class="s1">'/hello/:name.:lastname?'</span><span class="p">,</span> <span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">res</span>
+        <span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">,</span> <span class="s1">'text/html; charset=UTF-8'</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s1">'Hello, '</span> <span class="o">+</span> <span class="n">req</span><span class="p">.</span><span class="n">param</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span> <span class="o">+</span> <span class="n">req</span><span class="p">.</span><span class="n">param</span><span class="p">(</span><span class="s1">'lastname'</span><span class="p">));</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">new</span> <span class="n">Start</span><span class="p">.</span><span class="n">createServer</span><span class="p">(</span><span class="k">new</span> <span class="n">App</span><span class="p">(),</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span> <span class="m">3000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+</div>
+
+
+<h2>Instructions</h2>
+
+<ul>
+<li>Download latest Dart SDK from <a href="http://www.dartlang.org/docs/getting-started/sdk/">http://www.dartlang.org/docs/getting-started/sdk/</a></li>
+<li>Checkout this repository and
+<code>
+cd
+</code>
+to its folder</li>
+<li>run
+<code>
+$PATH_TO_DART_SDK/bin/dart app.dart
+</code>
+</li>
+<li>open <a href="http://127.0.0.1:3000/">http://127.0.0.1:3000/</a></li>
+</ul><h2>License</h2>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2012 Yehor Lvivski <a href="mailto:lvivski@gmail.com">lvivski@gmail.com</a></p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/lvivski">lvivski</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
