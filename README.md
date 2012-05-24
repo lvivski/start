@@ -38,7 +38,7 @@ void main() {
     to its folder
 - run
     ```
-    $PATH_TO_DART_SDK/bin/dart app.js
+    $PATH_TO_DART_SDK/bin/dart app.dart
     ```
 - open http://127.0.0.1:3000/
 
