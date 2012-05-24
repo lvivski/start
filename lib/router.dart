@@ -6,7 +6,7 @@
 class Router {
   List<Map> routes;
 
-  parse (req, res) {
+  parse(req, res) {
     var route = match(req);
     if (route == null) {
       new Response(res).status(404).send('Not found!');
@@ -18,7 +18,7 @@ class Router {
     action(request, new Response(res));
   }
 
-  match (req) {
+  match(req) {
     String method = req.method;
     var path = req.path;
     var route = routes.filter((route) {
@@ -28,7 +28,7 @@ class Router {
     return route.length > 0 ? route[0] : null;
   }
 
-  void add (String method, String path, Function action) {
+  void add(String method, String path, Function action) {
     if (['get','post','put','delete'].indexOf(method) < 0) {
       throw new Exception('no such method');
     }
@@ -42,7 +42,7 @@ class Router {
     });
   }
 
-  Map normalize (path, [bool strict = false]) {
+  Map normalize(path, [bool strict = false]) {
     if (path is RegExp) {
       return path;
     }
@@ -54,7 +54,9 @@ class Router {
     List keys = [];
 
     RegExp placeholderRE = const RegExp(@'(\.)?:(\w+)(\?)?');
-    placeholderRE.allMatches(path).forEach((placeholder) {
+    Iterable<Match> matches = placeholderRE.allMatches(path);
+
+    for (Match placeholder in matches) {
       String replace = '(?:';
       if (placeholder[1] !== null) {
         replace += '\.';
@@ -65,7 +67,7 @@ class Router {
       }
       path = path.replaceFirst(placeholder[0], replace);
       keys.add(placeholder[2]);
-    });
+    }
 
     path = path.replaceAll('//', '/');
 

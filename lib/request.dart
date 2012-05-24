@@ -6,19 +6,21 @@ class Request {
   HttpRequest request;
   Map params;
 
-  Request (this.request);
+  Request(this.request);
 
-  String header (String name) => request.headers[name.toLowerCase()];
+  List header(String name) => request.headers[name.toLowerCase()];
 
-  bool accepts (String type) => request.headers['accept'].split(',').indexOf(type) >= 0;
+  bool accepts(String type) =>
+      request.headers['accept'].filter((name) => name.split(',').indexOf(type) ).length > 0;
 
-  bool isMime (String type) => request.headers['content-type'].contains(type);
+  bool isMime(String type) =>
+      request.headers['content-type'].map((value) => value == type).length > 0;
 
-  bool get isForwarded() => request.headers.containsKey('x-forwarded-host');
+  bool get isForwarded() => request.headers['x-forwarded-host'] !== null;
 
   get uri() => request.uri;
 
-  param (String name) {
+  param(String name) {
     if (params.containsKey(name)) {
       return params[name];
     }

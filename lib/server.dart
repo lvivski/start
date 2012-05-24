@@ -24,11 +24,11 @@ class Server extends Isolate {
       if (message.isStart) {
         _host = message.params['host'];
         _port = message.params['port'];
-        replyTo.send('Server starting', null);
         _server = new HttpServer();
+        replyTo.send('Server starting', null);
         try {
           _server.listen(_host, _port);
-          _server.onRequest = (HttpRequest req, HttpResponse rsp) =>
+          _server.defaultRequestHandler = (HttpRequest req, HttpResponse rsp) =>
             _router.parse(req, rsp);
           replyTo.send('Server started', null);
         } catch (var e) {
@@ -42,7 +42,7 @@ class Server extends Isolate {
     });
   }
 
-  void noSuchMethod (String name, List args) {
+  void noSuchMethod(String name, List args) {
     _router.add(name, args[0], args[1]);
   }
 }

@@ -3,7 +3,7 @@
 #import('dart:json');
 
 class Cookie {
-  static String stringify (Map options) {
+  static String stringify(Map options) {
     if (options['value'] is Map) {
       options['value'] = 'j:' + JSON.stringify(options['value']);
     }
@@ -32,7 +32,7 @@ class Cookie {
     return Strings.join(pairs, '; ');
   }
 
-  static Map parse (String cookie) {
+  static Map parse(String cookie) {
     Map cookies = {};
     List pairs = cookie.split(';');
     pairs.forEach((pair) {

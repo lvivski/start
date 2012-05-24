@@ -1,5 +1,4 @@
-#import('unittest/unittest_dartest.dart');
-#import('dartest/dartest.dart');
+#import('/Applications/Dart/dart-sdk/lib/unittest/unittest.dart');
 #import('../lib/router.dart');
 
 main() {
@@ -9,11 +8,11 @@ main() {
     var route = router.routes[0];
 
     test('method', () {
-      Expect.equals('GET', route['method']);
+      expect(route['method']).equals('GET');
     });
 
     test('path', () {
-      Expect.equals('^/?\$', route['path']['regexp'].pattern);
+      expect(route['path']['regexp'].pattern).equals('^/?\$');
     });
 
   });
@@ -22,18 +21,17 @@ main() {
     var router = new Router();
     var route = router.normalize('/dfgdfg/:user/:name.:type?');
     test('placeholder (:)', () {
-      Expect.equals('^/dfgdfg/(?:(\\w+))/(?:(\\w+))(?:.(\\w+))?/?\$', route['regexp'].pattern);
-      Expect.equals('user', route['keys'][0]);
-      Expect.equals('name', route['keys'][1]);
+      expect(route['regexp'].pattern).equals('^/dfgdfg/(?:(\\w+))/(?:(\\w+))(?:.(\\w+))?/?\$');
+      expect(route['keys'][0]).equals('user');
+      expect(route['keys'][1]).equals('name');
     });
 
     test('params', () {
       var params = router.parseParams('/dfgdfg/candy/man/', route);
-      Expect.equals('candy', params['user']);
-      Expect.equals('man', params['name']);
+      expect(params['user']).equals('candy');
+      expect(params['name']).equals('man');
     });
   });
-  new DARTest().run();
 }
 
 

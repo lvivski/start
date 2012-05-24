@@ -8,23 +8,23 @@
 class Response {
   HttpResponse response;
 
-  Response (this.response);
+  Response(this.response);
 
-  header (String name, [value]) {
+  header(String name, [value]) {
     if (value == null) {
       return response.headers[name];
     }
-    response.setHeader(name, value);
+    response.headers.set(name, value);
     return this;
   }
 
-  Response get (String name) => header(name);
+  Response get(String name) => header(name);
 
-  Response set (name, value) => header(name, value);
+  Response set(name, value) => header(name, value);
 
-  Response type (contentType) => set('Content-Type', contentType);
+  Response type(contentType) => set('Content-Type', contentType);
 
-  Response cache (String cacheType, [Map options]) {
+  Response cache(String cacheType, [Map options]) {
     if(options == null) {
       options = {};
     }
@@ -35,13 +35,13 @@ class Response {
     return set('Cache-Control', value);
   }
 
-  Response status (code) {
+  Response status(code) {
     response.statusCode = code;
     return this;
   }
 
-  Response cookie (name, val, [Map options]) {
-    if(options == null) {
+  Response cookie(name, val, [Map options]) {
+    if (options == null) {
       options = {};
     }
     options['name'] = name;
@@ -50,19 +50,19 @@ class Response {
     return header('Set-Cookie', cookieHeader);
   }
 
-  Response deleteCookie (name) {
+  Response deleteCookie(name) {
     Map options = { 'expires': 'Thu, 01-Jan-70 00:00:01 GMT', 'path': '/' };
     return cookie(name, '', options);
   }
 
-  send (String string) {
+  send(String string) {
     response.outputStream.write(string.charCodes());
     response.outputStream.close();
   }
 
-  sendfile (path) {
+  sendFile(path) {
     var file = new File(path);
-    file.exists((found) {
+    file.exists().then((found) {
       if (found) {
         file.openInputStream().pipe(response.outputStream);
       } else {
@@ -72,14 +72,14 @@ class Response {
     });
   }
 
-  json (data) {
+  json(data) {
     if(data is Map) {
       data = JSON.stringify(data);
     }
     send(data);
   }
 
-  redirect (url, [int code = 302]) {
+  redirect(url, [int code = 302]) {
     response.statusCode = code;
     header('Location', url);
     response.outputStream.close();
