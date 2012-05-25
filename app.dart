@@ -20,5 +20,5 @@ class App extends Server {
 }
 
 void main() {
-  new Start.runServer(new App(), '127.0.0.1', 3000);
+  start(new App(), '127.0.0.1', 3000);
 }

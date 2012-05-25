@@ -6,15 +6,15 @@
 #import('cookie.dart');
 
 class Response {
-  HttpResponse response;
+  HttpResponse _response;
 
-  Response(this.response);
+  Response(this._response);
 
   header(String name, [value]) {
     if (value == null) {
-      return response.headers[name];
+      return _response.headers[name];
     }
-    response.headers.set(name, value);
+    _response.headers.set(name, value);
     return this;
   }
 
@@ -36,7 +36,7 @@ class Response {
   }
 
   Response status(code) {
-    response.statusCode = code;
+    _response.statusCode = code;
     return this;
   }
 
@@ -56,18 +56,18 @@ class Response {
   }
 
   send(String string) {
-    response.outputStream.write(string.charCodes());
-    response.outputStream.close();
+    _response.outputStream.write(string.charCodes());
+    _response.outputStream.close();
   }
 
   sendFile(path) {
     var file = new File(path);
     file.exists().then((found) {
       if (found) {
-        file.openInputStream().pipe(response.outputStream);
+        file.openInputStream().pipe(_response.outputStream);
       } else {
-        response.statusCode = HttpStatus.NOT_FOUND;
-        response.outputStream.close();
+        _response.statusCode = HttpStatus.NOT_FOUND;
+        _response.outputStream.close();
       }
     });
   }
@@ -80,8 +80,8 @@ class Response {
   }
 
   redirect(url, [int code = 302]) {
-    response.statusCode = code;
+    _response.statusCode = code;
     header('Location', url);
-    response.outputStream.close();
+    _response.outputStream.close();
   }
 }

@@ -3,27 +3,27 @@
 #import('dart:io');
 
 class Request {
-  HttpRequest request;
+  HttpRequest _request;
   Map params;
 
-  Request(this.request);
+  Request(this._request);
 
-  List header(String name) => request.headers[name.toLowerCase()];
+  List header(String name) => _request.headers[name.toLowerCase()];
 
   bool accepts(String type) =>
-      request.headers['accept'].filter((name) => name.split(',').indexOf(type) ).length > 0;
+      _request.headers['accept'].filter((name) => name.split(',').indexOf(type) ).length > 0;
 
   bool isMime(String type) =>
-      request.headers['content-type'].map((value) => value == type).length > 0;
+      _request.headers['content-type'].map((value) => value == type).length > 0;
 
-  bool get isForwarded() => request.headers['x-forwarded-host'] !== null;
+  bool get isForwarded() => _request.headers['x-forwarded-host'] !== null;
 
-  get uri() => request.uri;
+  get uri() => _request.uri;
 
   param(String name) {
     if (params.containsKey(name)) {
       return params[name];
     }
-    return request.queryParameters[name];
+    return _request.queryParameters[name];
   }
 }
