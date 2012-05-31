@@ -48,7 +48,7 @@ class Response {
     }
     options['name'] = name;
     options['value'] = val;
-    var cookieHeader = Cookie.stringify(options);
+    var cookieHeader = CookieIml.stringify(options);
     return header('Set-Cookie', cookieHeader);
   }
 

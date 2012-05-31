@@ -2,7 +2,7 @@
 
 #import('dart:json');
 
-class Cookie {
+class CookieIml {
   static String stringify(Map options) {
     if (options['value'] is Map) {
       options['value'] = 'j:' + JSON.stringify(options['value']);
