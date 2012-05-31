@@ -7,8 +7,7 @@ class App extends Server {
   App(): super() {
     get('/', (req, res) {
       res
-        .header('Content-Type', 'text/html; charset=UTF-8')
-        .send('Hello World');
+        .render('index', {'title': 'Start'});
     });
 
     get('/hello/:name.:lastname?', (req, res) {

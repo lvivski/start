@@ -1,0 +1,3 @@
+dependencies: 
+  hart: 
+    git: git://github.com/lvivski/hart.git

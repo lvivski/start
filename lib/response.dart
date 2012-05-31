@@ -4,11 +4,13 @@
 #import('dart:json');
 
 #import('cookie.dart');
+#import('../views/views.dart');
 
 class Response {
   HttpResponse _response;
+  View _view;
 
-  Response(this._response);
+  Response(this._response): _view = new View();
 
   header(String name, [value]) {
     if (value == null) {
@@ -83,5 +85,10 @@ class Response {
     _response.statusCode = code;
     header('Location', url);
     _response.outputStream.close();
+  }
+
+  render(String viewName, [Map params]) {
+    header('Content-Type', 'text/html; charset=UTF-8')
+    .send(_view.render(viewName, params));
   }
 }
