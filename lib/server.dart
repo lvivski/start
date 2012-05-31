@@ -6,6 +6,7 @@
 
 class Server {
   HttpServer _server;
+  String publicDir = 'public';
   
   Server() : _server = new HttpServer();
   
@@ -15,8 +16,7 @@ class Server {
   
   void listen(host, port) {
     _server.defaultRequestHandler = (HttpRequest req, HttpResponse res) {
-      new Response(res).status(404).send('Not found!');
-      return;
+      new Response(res).sendFile(publicDir + req.path);
     };
     _server.listen(host, port);
   }
