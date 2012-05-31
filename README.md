@@ -2,6 +2,8 @@
 
 Small server-side Dart web development framework.
 
+It uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine and can serve static files from `public` folder (by default).
+
 ``` dart
 #library('app');
 
@@ -30,11 +32,7 @@ void main() {
 
 ## Instructions
 - Download latest Dart SDK from http://www.dartlang.org/docs/getting-started/sdk/
-- Checkout this repository and
-    ```
-    cd
-    ```
-    to its folder
+- Checkout this repository and `cd` to its folder
 - run
     ```
     $PATH_TO_DART_SDK/bin/dart /bin/run.dart
