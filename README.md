@@ -12,8 +12,7 @@ class App extends Server {
   App(): super() {
     get('/', (req, res) {
       res
-        .header('Content-Type', 'text/html; charset=UTF-8')
-        .send('Hello World');
+        .render('index', {'title': 'Start'});
     });
 
     get('/hello/:name.:lastname?', (req, res) {
@@ -38,8 +37,10 @@ void main() {
     to its folder
 - run
     ```
-    $PATH_TO_DART_SDK/bin/dart app.dart
+    $PATH_TO_DART_SDK/bin/dart /bin/run.dart
     ```
+    This bin will install dependecies (hart), compile templates and start your application
+
 - open http://127.0.0.1:3000/
 
 
