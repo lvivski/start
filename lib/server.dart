@@ -16,7 +16,7 @@ class Server {
   
   void listen(host, port) {
     _server.defaultRequestHandler = (HttpRequest req, HttpResponse res) {
-      new Response(res).sendFile(publicDir + req.path);
+      new Response(res).sendFile(publicDir.concat(req.path));
     };
     _server.listen(host, port);
   }
@@ -60,7 +60,7 @@ class Server {
       return path;
     }
     if (path is List) {
-      path = '(' + Strings.join(path, '|') + ')';
+      path = '(${Strings.join(path, '|')})';
     }
     path = path.concat(strict ? '' : '/?');
 
@@ -70,22 +70,22 @@ class Server {
     Iterable<Match> matches = placeholderRE.allMatches(path);
 
     for (Match placeholder in matches) {
-      String replace = '(?:';
+      StringBuffer replace = new StringBuffer('(?:');
       if (placeholder[1] !== null) {
-        replace += '\.';
+        replace.add('\.');
       }
-      replace += '(\\w+))';
+      replace.add('(\\w+))');
       if (placeholder[3] !== null) {
-        replace += '?';
+        replace.add('?');
       }
-      path = path.replaceFirst(placeholder[0], replace);
+      path = path.replaceFirst(placeholder[0], replace.toString());
       keys.add(placeholder[2]);
     }
 
     path = path.replaceAll('//', '/');
 
     return {
-      'regexp': new RegExp('^' + path + '\$'),
+      'regexp': new RegExp('^$path\$'),
       'keys': keys
     };
   }

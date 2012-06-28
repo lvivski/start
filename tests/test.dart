@@ -1,6 +1,7 @@
-#import('/Applications/Dart/dart-sdk/lib/unittest/unittest.dart');
+#import('dart:unittest');
 
 main() {
+
 }
 
 

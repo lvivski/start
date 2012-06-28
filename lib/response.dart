@@ -30,11 +30,11 @@ class Response {
     if(options == null) {
       options = {};
     }
-    String value = cacheType;
+    StringBuffer value = new StringBuffer(cacheType);
     options.forEach((key, val) {
-      value += ', ${key}=${val}';
+      value.add(', ${key}=${val}');
     });
-    return set('Cache-Control', value);
+    return set('Cache-Control', value.toString());
   }
 
   Response status(code) {

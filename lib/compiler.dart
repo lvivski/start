@@ -84,7 +84,7 @@ class View {
     lister.onDone = (bool done) {
       if (done) {
         buff.add(_getMain(templates));
-        new File(inputDir + '/views.dart').open(FileMode.WRITE).then((file) {
+        new File('$inputDir/views.dart').open(FileMode.WRITE).then((file) {
           file.writeString(buff.toString());
         });  
       }
@@ -92,6 +92,6 @@ class View {
   }
   
   static String camelize(String name) {
-    return Strings.join(name.split(const RegExp(@'-|_')).map((part) => part[0].toUpperCase() + part.substring(1)), '');
+    return Strings.join(name.split(const RegExp(@'-|_')).map((part) => part[0].toUpperCase().concat(part.substring(1))), '');
   }
 }
