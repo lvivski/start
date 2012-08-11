@@ -20,7 +20,7 @@ class App extends Server {
     get('/hello/:name.:lastname?', (req, res) {
       res
         .header('Content-Type', 'text/html; charset=UTF-8')
-        .send('Hello, ' + req.param('name') + req.param('lastname'));
+        .send('Hello, $req.param('name') $req.param('lastname')');
     });
   }
 }
