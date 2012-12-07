@@ -1,11 +1,13 @@
-#import('dart:io');
+import 'dart:io';
 
-final DART_PATH = '/Applications/Dart/dart-sdk/';
+final DART_PATH = '/Applications/Dart IDE/dart-sdk/';
 
 startServerProcess() {
-  var serverProcess = Process.start("$DART_PATH/bin/dart", ["app.dart"]);
-  var stdoutStream = new StringInputStream(serverProcess.stdout);
-  stdoutStream.onLine = () => print(stdoutStream.readLine());
+  Future<Process> serverProcessFuture = Process.start("$DART_PATH/bin/dart", ["app.dart"]);
+  serverProcessFuture.then((process) {
+    var stdoutStream = new StringInputStream(process.stdout);
+    stdoutStream.onLine = () => print(stdoutStream.readLine());  
+  });
 }
 
 void main() {

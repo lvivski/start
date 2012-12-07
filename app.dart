@@ -1,7 +1,7 @@
-#library('app');
+library app;
 
-#import('lib/start.dart');
-#import('lib/server.dart');
+import 'lib/start.dart';
+import 'lib/server.dart';
 
 class App extends Server {
   App(): super() {

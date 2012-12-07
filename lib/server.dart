@@ -1,8 +1,8 @@
-#library('server');
+library server;
 
-#import('dart:io');
-#import('response.dart');
-#import('request.dart');
+import 'dart:io';
+import 'response.dart';
+import 'request.dart';
 
 class Server {
   HttpServer _server;
@@ -21,7 +21,10 @@ class Server {
     _server.listen(host, port);
   }
 
-  void noSuchMethod(String name, List args) {
+  void noSuchMethod(mirror) {
+    var name = mirror.memberName;
+    var args = mirror.positionalArguments;
+    
     if (['get','post','put','delete'].indexOf(name) < 0) {
       throw new Exception('No such HTTP method');
     }
@@ -66,7 +69,7 @@ class Server {
 
     List keys = [];
 
-    RegExp placeholderRE = const RegExp(@'(\.)?:(\w+)(\?)?');
+    RegExp placeholderRE = new RegExp(r'(\.)?:(\w+)(\?)?');
     Iterable<Match> matches = placeholderRE.allMatches(path);
 
     for (Match placeholder in matches) {

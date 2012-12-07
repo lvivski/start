@@ -1,6 +1,6 @@
-#library('request');
+library request;
 
-#import('dart:io');
+import 'dart:io';
 
 class Request {
   HttpRequest _request;
@@ -16,14 +16,16 @@ class Request {
   bool isMime(String type) =>
       _request.headers['content-type'].map((value) => value == type).length > 0;
 
-  bool get isForwarded() => _request.headers['x-forwarded-host'] !== null;
+  bool get isForwarded => _request.headers['x-forwarded-host'] !== null;
 
-  get uri() => _request.uri;
+  get uri => _request.uri;
 
   param(String name) {
-    if (params.containsKey(name)) {
+    if (params.containsKey(name) && params[name] !== null) {
       return params[name];
     }
-    return _request.queryParameters[name];
+    return _request.queryParameters[name] !== null
+         ? _request.queryParameters[name]
+         : '';
   }
 }

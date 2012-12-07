@@ -1,3 +1,6 @@
 .svn
 /packages
+/bin/packages
 /.children
+/pubspec.lock
+

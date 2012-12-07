@@ -1,5 +1,5 @@
-#import("dart:io");
-#import("lib/compiler.dart");
+import 'dart:io';
+import 'lib/compiler.dart';
 
 void main() {
   var compiledViews = new File('views/views.dart');

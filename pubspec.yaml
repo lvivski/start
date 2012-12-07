@@ -1,3 +1,7 @@
-dependencies: 
+name: start
+version: 0.0.1
+dependencies:
   hart: 
     git: git://github.com/lvivski/hart.git
+  unittest:
+    sdk: unittest

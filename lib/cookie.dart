@@ -1,6 +1,6 @@
-#library('cookie');
+library cookie;
 
-#import('dart:json');
+import 'dart:json';
 
 class CookieIml {
   static String stringify(Map options) {

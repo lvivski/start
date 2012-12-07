@@ -1,10 +1,10 @@
-#library('response');
+library response;
 
-#import('dart:io');
-#import('dart:json');
+import 'dart:io';
+import 'dart:json';
 
-#import('cookie.dart');
-#import('../views/views.dart');
+import 'cookie.dart';
+import '../views/views.dart';
 
 class Response {
   HttpResponse _response;
@@ -58,7 +58,7 @@ class Response {
   }
 
   send(String string) {
-    _response.outputStream.write(string.charCodes());
+    _response.outputStream.write(string.charCodes);
     _response.outputStream.close();
   }
 
