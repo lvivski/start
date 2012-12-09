@@ -1,8 +1,8 @@
 library server;
 
 import 'dart:io';
-import 'response.dart';
-import 'request.dart';
+import 'src/response.dart';
+import 'src/request.dart';
 
 class Server {
   HttpServer _server;

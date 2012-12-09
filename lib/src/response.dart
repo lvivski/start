@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:json';
 
 import 'cookie.dart';
-import '../views/views.dart';
+import '../../views/views.dart';
 
 class Response {
   HttpResponse _response;
