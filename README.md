@@ -1,26 +1,40 @@
 # Start
 
-Small server-side Dart web development framework.
+Sinatra inspired web framework.
 
-It uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine and can serve static files from `public` folder (by default).
+It has simple API to serve static files from `public` folder (by default), rendered templates and websockets.
 
-``` dart
-#library('app');
+Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
 
-#import('lib/start.dart');
-#import('lib/server.dart');
+## Usase
+
+Don't forget to compiles views with `bin/compiler.dart` (views are precompiled in `example`).
+
+```dart
+library app;
+
+import 'package:start/start.dart';
+import 'package:start/server.dart';
+
+import 'views/views.dart';
 
 class App extends Server {
   App(): super() {
+    view = new View();
+    publicDir = 'example/public';
+
     get('/', (req, res) {
-      res
-        .render('index', {'title': 'Start'});
+      res.render('index', {'title': 'Start'});
     });
 
     get('/hello/:name.:lastname?', (req, res) {
-      res
-        .header('Content-Type', 'text/html; charset=UTF-8')
-        .send('Hello, ${req.param('name')} ${req.param('lastname')}');
+      res.header('Content-Type', 'text/html; charset=UTF-8')
+         .send('Hello, ${req.param('name')} ${req.param('lastname')}');
+    });
+
+    ws('/socket', (socket) {
+      socket.on('ping', () { socket.send('pong'); })
+            .on('terminate', () { socket.close(1, 'requested'); });
     });
   }
 }
@@ -29,18 +43,6 @@ void main() {
   start(new App(), '127.0.0.1', 3000);
 }
 ```
-
-## Instructions
-- Download latest Dart SDK from http://www.dartlang.org/docs/getting-started/sdk/
-- Checkout this repository and `cd` to its folder
-- run
-    ```
-    $PATH_TO_DART_SDK/bin/dart /bin/run.dart
-    ```
-    This bin will install dependecies (hart), compile templates and start your application
-
-- open http://127.0.0.1:3000/
-
 
 ## License
 

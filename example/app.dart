@@ -11,14 +11,12 @@ class App extends Server {
     publicDir = 'example/public';
 
     get('/', (req, res) {
-      res
-        .render('index', {'title': 'Start'});
+      res.render('index', {'title': 'Start'});
     });
 
     get('/hello/:name.:lastname?', (req, res) {
-      res
-        .header('Content-Type', 'text/html; charset=UTF-8')
-        .send('Hello, ${req.param('name')} ${req.param('lastname')}');
+      res.header('Content-Type', 'text/html; charset=UTF-8')
+         .send('Hello, ${req.param('name')} ${req.param('lastname')}');
     });
 
     ws('/socket', (socket) {
