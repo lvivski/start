@@ -1,7 +1,7 @@
 library compiler;
 
 import 'dart:io';
-import '../../packages/hart/hart.dart';
+import 'package:hart/hart.dart';
 
 class Compiler {
   static compile(String inputDir) {

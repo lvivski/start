@@ -1,12 +1,14 @@
 library server;
 
-import 'dart:io';
+import 'dart:io' hide Socket;
 import 'src/response.dart';
 import 'src/request.dart';
+import 'src/socket.dart';
 
 class Server {
   HttpServer _server;
   String publicDir = 'public';
+  var view;
 
   Server() : _server = new HttpServer();
 
@@ -21,44 +23,53 @@ class Server {
     _server.listen(host, port);
   }
 
-  void noSuchMethod(mirror) {
-    var name = mirror.memberName;
-    var args = mirror.positionalArguments;
+  void noSuchMethod(InvocationMirror mirror) {
+    var name = mirror.memberName,
+        args = mirror.positionalArguments;
 
-    if (['get','post','put','delete'].indexOf(name) < 0) {
+    if (['get','post','put','delete','ws'].indexOf(name) == -1) {
       throw new Exception('No such HTTP method');
     }
 
     Map route = {
       'method': name.toUpperCase(),
-      'path': normalize(args[0]),
+      'path': _normalize(args[0]),
       'action': args[1]
     };
 
     _server.addRequestHandler(
-      getMatcher(route),
-      getHandler(route)
+      _getMatcher(route),
+      _getHandler(route)
     );
   }
 
-  getMatcher(Map route) {
+  _getMatcher(Map route) {
     return (HttpRequest req) {
       String method = req.method;
       String path = req.path;
-      return route['method'] == method.toUpperCase()
+      return (route['method'] == method.toUpperCase() || route['method'] == 'WS')
           && route['path']['regexp'].hasMatch(path);
     };
   }
 
-  getHandler(Map route) {
-    return (HttpRequest req, HttpResponse res) {
-      Request request = new Request(req);
-      request.params = parseParams(req.path, route['path']);
-      route['action'](request, new Response(res));
-    };
+  _getHandler(Map route) {
+    if (route['method'] == 'WS') {
+      var ws = new WebSocketHandler();
+      ws.onOpen = (WebSocketConnection conn) {
+        var socket = new Socket(conn);
+        route['action'](socket);
+      };
+      return ws.onRequest;
+    } else {
+      return (HttpRequest req, HttpResponse res) {
+        var request = new Request(req);
+        request.params = _parseParams(req.path, route['path']);
+        route['action'](request, new Response(res, view));
+      };
+    }
   }
 
-  Map normalize(path, [bool strict = false]) {
+  Map _normalize(path, [bool strict = false]) {
     if (path is RegExp) {
       return path;
     }
@@ -93,7 +104,7 @@ class Server {
     };
   }
 
-  Map parseParams(String path, Map routePath) {
+  Map _parseParams(String path, Map routePath) {
     Map params = {};
     Match paramsMatch = routePath['regexp'].firstMatch(path);
     for (var i = 0; i < routePath['keys'].length; i++) {

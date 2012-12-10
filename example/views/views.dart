@@ -6,15 +6,15 @@ class IndexView extends View {
 
   IndexView(this.locals);
 
-  noSuchMethod(mirror) {
+  noSuchMethod(InvocationMirror mirror) {
     if (locals == null) {
       locals = {};
     }
     if (mirror.memberName.length > 4) {
-      String name = mirror.memberName;
-      List args = mirror.positionalArguments;
-      String prefix = name.substring(0, 4);
-      String key = name.substring(4);
+      var name = mirror.memberName,
+          args = mirror.positionalArguments,
+          prefix = name.substring(0, 4),
+          key = name.substring(4);
       if (prefix == "get:") {
         return locals[key];
       } else if (prefix == "set:") {
@@ -25,7 +25,7 @@ class IndexView extends View {
 
   get() {
     return '''
-<!DOCTYPE html>\n<html>\n<head>\n<title>${escape(title)}</title>\n<link${attrs({ 'rel': "stylesheet", 'href': "/stylesheets/main.css", 'type': "text/css"})}/></head>\n<body>\n<h1>${escape(title)}</h1>\n<p>is awesome</p></body></html>
+<!DOCTYPE html>\n<html>\n<head>\n<title>${escape(title)}</title>\n<link${attrs({ 'rel': "stylesheet", 'href': "/stylesheets/main.css", 'type': "text/css"})}/>\n<script${attrs({ 'type': "application/dart", 'src': "/scripts/script.dart" })}></script>\n<script${attrs({ 'type': "text/javascript", 'src': "//dart.googlecode.com/svn/trunk/dart/client/dart.js" })}></script></head>\n<body>\n<h1>${escape(title)}</h1>\n<p>is awesome</p></body></html>
     ''';
   }
 }

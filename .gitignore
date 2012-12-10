@@ -1,5 +1,5 @@
 .svn
-/packages
-/bin/packages
-/.children
+packages
+.children
+.project
 

@@ -4,13 +4,12 @@ import 'dart:io';
 import 'dart:json';
 
 import 'cookie.dart';
-import '../../views/views.dart';
 
 class Response {
   HttpResponse _response;
-  View _view;
+  var _view;
 
-  Response(this._response): _view = new View();
+  Response(this._response, [this._view]);
 
   header(String name, [value]) {
     if (value == null) {

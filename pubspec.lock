@@ -1,1 +1,1 @@
-{"packages":{"hart":{"version":"0.0.1-1","source":"git","description":{"url":"git://github.com/lvivski/hart.git","ref":null,"resolved-ref":"edf2556396f560a9c4104bfddfec26c58ba33b62"}},"unittest":{"version":"0.0.0-r.15714","source":"sdk","description":"unittest"}}}
+{"packages":{"hart":{"version":"0.0.1","source":"git","description":{"url":"git://github.com/lvivski/hart.git","ref":"678c9015781b707047e87865f455023af49a6418","resolved-ref":"678c9015781b707047e87865f455023af49a6418"}},"unittest":{"version":"0.0.0-r.15714","source":"sdk","description":"unittest"}}}

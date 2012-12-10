@@ -2,7 +2,9 @@ name: start
 version: 0.0.1
 dependencies:
   hart: 
-    version: '>=0.0.1'
-    git: git://github.com/lvivski/hart.git
+    version: any
+    git: 
+      url: git://github.com/lvivski/hart.git
+      ref: 678c9015781b707047e87865f455023af49a6418
   unittest:
     sdk: unittest

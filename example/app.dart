@@ -1,10 +1,15 @@
 library app;
 
-import 'lib/start.dart';
-import 'lib/server.dart';
+import 'package:start/start.dart';
+import 'package:start/server.dart';
+
+import 'views/views.dart';
 
 class App extends Server {
   App(): super() {
+    view = new View();
+    publicDir = 'example/public';
+
     get('/', (req, res) {
       res
         .render('index', {'title': 'Start'});
@@ -14,6 +19,11 @@ class App extends Server {
       res
         .header('Content-Type', 'text/html; charset=UTF-8')
         .send('Hello, ${req.param('name')} ${req.param('lastname')}');
+    });
+
+    ws('/socket', (socket) {
+      socket.on('ping', () { socket.send('pong'); })
+            .on('terminate', () { socket.close(1, 'requested'); });
     });
   }
 }
