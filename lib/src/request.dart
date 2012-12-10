@@ -16,15 +16,15 @@ class Request {
   bool isMime(String type) =>
       _request.headers['content-type'].map((value) => value == type).length > 0;
 
-  bool get isForwarded => _request.headers['x-forwarded-host'] !== null;
+  bool get isForwarded => _request.headers['x-forwarded-host'] != null;
 
   get uri => _request.uri;
 
   param(String name) {
-    if (params.containsKey(name) && params[name] !== null) {
+    if (params.containsKey(name) && params[name] != null) {
       return params[name];
     }
-    return _request.queryParameters[name] !== null
+    return _request.queryParameters[name] != null
          ? _request.queryParameters[name]
          : '';
   }

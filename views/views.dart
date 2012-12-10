@@ -7,7 +7,7 @@ class IndexView extends View {
   IndexView(this.locals);
 
   noSuchMethod(mirror) {
-    if (locals === null) {
+    if (locals == null) {
       locals = {};
     }
     if (mirror.memberName.length > 4) {

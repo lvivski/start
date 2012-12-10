@@ -14,12 +14,12 @@ class Compiler {
       String name = file.name.split('/').last.split('.')[0];
       templates[name] = template;
     };
-    
+
     lister.onDone = (bool done) {
       if (done) {
         new File('$inputDir/views.dart').open(FileMode.WRITE).then((file) {
           file.writeString(Hart.compile(templates));
-        });  
+        });
       }
     };
   }

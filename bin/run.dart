@@ -6,7 +6,7 @@ startServerProcess() {
   Future<Process> serverProcessFuture = Process.start("$DART_PATH/bin/dart", ["app.dart"]);
   serverProcessFuture.then((process) {
     var stdoutStream = new StringInputStream(process.stdout);
-    stdoutStream.onLine = () => print(stdoutStream.readLine());  
+    stdoutStream.onLine = () => print(stdoutStream.readLine());
   });
 }
 
