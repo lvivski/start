@@ -21,7 +21,7 @@ class App extends Server {
 
     ws('/socket', (socket) {
       socket.on('ping', () { socket.send('pong'); })
-            .on('terminate', () { socket.close(1, 'requested'); });
+            .on('ping', () { socket.close(1, 'requested'); });
     });
   }
 }

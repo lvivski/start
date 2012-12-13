@@ -14,7 +14,7 @@ main() {
 
   ws.on.message.add((m) {
     if (m.data == "pong") {
-      ws.send("terminate");
+      print('got pong');
     }
   });
 }
