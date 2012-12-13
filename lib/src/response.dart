@@ -1,6 +1,6 @@
 library response;
 
-import 'dart:io';
+import 'dart:io' hide Cookie;
 import 'dart:json';
 
 import 'cookie.dart';
@@ -47,7 +47,7 @@ class Response {
     }
     options['name'] = name;
     options['value'] = val;
-    var cookieHeader = CookieIml.stringify(options);
+    var cookieHeader = Cookie.stringify(options);
     return header('Set-Cookie', cookieHeader);
   }
 
