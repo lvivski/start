@@ -1,10 +1,9 @@
 name: start
 version: 0.0.1
+description: Sinatra inspired Web framework
+author: Yehor Lvivksi <lvivski@gmail.com>
+homepage: http://github.com/lvivski/start
 dependencies:
-  hart: 
-    version: any
-    git: 
-      url: git://github.com/lvivski/hart.git
-      ref: 678c9015781b707047e87865f455023af49a6418
+  hart: ">=0.0.2"
   unittest:
     sdk: unittest
