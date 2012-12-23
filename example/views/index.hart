@@ -2,9 +2,9 @@ doctype 5
 html
   head
     title= title
-    link{ rel: "stylesheet", href: "/stylesheets/main.css", type: "text/css"}
-    script{ type: "application/dart", src: "/scripts/script.dart" }
-    script{ type: "text/javascript", src: "//dart.googlecode.com/svn/trunk/dart/client/dart.js" }
+    link[rel="stylesheet", href="/stylesheets/main.css", type="text/css"]
+    script[type="application/dart", src="/scripts/script.dart"]
+    script[type="text/javascript", src="//dart.googlecode.com/svn/trunk/dart/client/dart.js"]
   body
     h1= title
     p is awesome

@@ -1,9 +1,8 @@
 name: start
-version: 0.0.1
+version: 0.0.1+hotfix.deps
 description: Sinatra inspired Web framework
 author: Yehor Lvivksi <lvivski@gmail.com>
 homepage: http://github.com/lvivski/start
 dependencies:
-  hart: ">=0.0.2"
-  unittest:
-    sdk: unittest
+  hart: ">0.0.3"
+  unittest: ">=0.2.7"
