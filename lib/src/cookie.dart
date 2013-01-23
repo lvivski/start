@@ -29,7 +29,7 @@ class Cookie {
     if (options.containsKey('secure')) {
       pairs.add('secure');
     }
-    return Strings.join(pairs, '; ');
+    return pairs.join('; ');
   }
 
   static Map parse(String cookie) {

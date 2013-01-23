@@ -77,7 +77,7 @@ class Server {
       };
     }
     if (path is List) {
-      path = '(${Strings.join(path, '|')})';
+      path = '(${path.join('|')})';
     }
     path = path.concat(strict ? '' : '/?');
 
