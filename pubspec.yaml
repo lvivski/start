@@ -1,5 +1,5 @@
 name: start
-version: 0.0.1+hotfix.deps
+version: 0.0.1+hotfix.m3
 description: Sinatra inspired Web framework
 author: Yehor Lvivksi <lvivski@gmail.com>
 homepage: http://github.com/lvivski/start

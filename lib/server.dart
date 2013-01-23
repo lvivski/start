@@ -28,7 +28,7 @@ class Server {
         args = mirror.positionalArguments;
 
     if (['get','post','put','delete','ws'].indexOf(name) == -1) {
-      throw new Exception('No such HTTP method');
+      throw new NoSuchMethodError(this, name, args, mirror.namedArguments);
     }
 
     Map route = {
