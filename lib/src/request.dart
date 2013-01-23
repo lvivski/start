@@ -18,6 +18,10 @@ class Request {
 
   bool get isForwarded => _request.headers['x-forwarded-host'] != null;
 
+  InputStream get input => _request.inputStream;
+
+  String get path => _request.path;
+
   get uri => _request.uri;
 
   param(String name) {
