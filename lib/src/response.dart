@@ -75,7 +75,7 @@ class Response {
 
   json(data) {
     if(data is Map) {
-      data = JSON.stringify(data);
+      data = stringify(data);
     }
     send(data);
   }

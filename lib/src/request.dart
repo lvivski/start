@@ -11,10 +11,10 @@ class Request {
   List header(String name) => _request.headers[name.toLowerCase()];
 
   bool accepts(String type) =>
-      _request.headers['accept'].filter((name) => name.split(',').indexOf(type) ).length > 0;
+      _request.headers['accept'].where((name) => name.split(',').indexOf(type) ).length > 0;
 
   bool isMime(String type) =>
-      _request.headers['content-type'].map((value) => value == type).length > 0;
+      _request.headers['content-type'].where((value) => value == type).length > 0;
 
   bool get isForwarded => _request.headers['x-forwarded-host'] != null;
 

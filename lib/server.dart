@@ -71,7 +71,10 @@ class Server {
 
   Map _normalize(path, [bool strict = false]) {
     if (path is RegExp) {
-      return path;
+      return {
+        'regexp': path,
+        'keys': []
+      };
     }
     if (path is List) {
       path = '(${Strings.join(path, '|')})';

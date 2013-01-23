@@ -42,5 +42,5 @@ class Socket {
     _conn.close(status, reason);
   }
 
-  List<Map> _lookup(Object message) => _handlers.filter((action) => action['message'] == message);
+  List<Map> _lookup(Object message) => _handlers.where((action) => action['message'] == message);
 }

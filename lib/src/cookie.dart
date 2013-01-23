@@ -5,7 +5,7 @@ import 'dart:json';
 class Cookie {
   static String stringify(Map options) {
     if (options['value'] is Map) {
-      options['value'] = 'j:${JSON.stringify(options['value'])}';
+      options['value'] = 'j:${stringify(options['value'])}';
     }
     var pairs = ["${options['name']}=${options['value']}"];
 
