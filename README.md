@@ -2,6 +2,8 @@
 
 Sinatra inspired web framework.
 
+[![](https://drone.io/lvivski/start/status.png)](https://drone.io/lvivski/start/latest)
+
 It has simple API to serve static files from `public` folder (by default), rendered templates and websockets.
 
 Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
