@@ -20,7 +20,7 @@ class Cookie {
       pairs.add("expires=${options['expires']}");
     }
     if (options.containsKey('max-age')) {
-      String expires = stringifyDate(new Date.now().add(new Duration(seconds:options['max-age'])));
+      String expires = stringifyDate(new DateTime.now().add(new Duration(seconds:options['max-age'])));
       pairs.add("expires=${expires}");
     }
     if (options.containsKey('httpOnly')) {
@@ -44,7 +44,7 @@ class Cookie {
     return cookies;
   }
 
-  static String stringifyDate(Date date) {
+  static String stringifyDate(DateTime date) {
     String weekday = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][date.weekday];
     String month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Now','Dec'][date.month-1];
     String hour = ('00${date.hour}');
