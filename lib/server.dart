@@ -89,11 +89,11 @@ class Server {
     for (Match placeholder in matches) {
       StringBuffer replace = new StringBuffer('(?:');
       if (placeholder[1] != null) {
-        replace.add('\.');
+        replace.write('\.');
       }
-      replace.add('(\\w+))');
+      replace.write('(\\w+))');
       if (placeholder[3] != null) {
-        replace.add('?');
+        replace.write('?');
       }
       path = path.replaceFirst(placeholder[0], replace.toString());
       keys.add(placeholder[2]);

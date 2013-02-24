@@ -31,7 +31,7 @@ class Response {
     }
     StringBuffer value = new StringBuffer(cacheType);
     options.forEach((key, val) {
-      value.add(', ${key}=${val}');
+      value.write(', ${key}=${val}');
     });
     return set('Cache-Control', value.toString());
   }
