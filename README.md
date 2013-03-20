@@ -10,7 +10,7 @@ Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default tem
 
 ## Usase
 
-Don't forget to compiles views with `bin/compiler.dart` (views are precompiled in `example`).
+Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
 
 ```dart
 import 'package:start/start.dart';
