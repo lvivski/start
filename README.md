@@ -13,36 +13,25 @@ Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default tem
 Don't forget to compiles views with `bin/compiler.dart` (views are precompiled in `example`).
 
 ```dart
-library app;
-
 import 'package:start/start.dart';
-import 'package:start/server.dart';
-
 import 'views/views.dart';
 
-class App extends Server {
-  App(): super() {
-    view = new View();
-    publicDir = 'example/public';
-
-    get('/', (req, res) {
+void main() {
+  start(view: new View(), public: 'example/public', port: 3000).then((app) {
+    app.get('/', (req, res) {
       res.render('index', {'title': 'Start'});
     });
 
-    get('/hello/:name.:lastname?', (req, res) {
+    app.get('/hello/:name.:lastname?', (req, res) {
       res.header('Content-Type', 'text/html; charset=UTF-8')
-         .send('Hello, ${req.param('name')} ${req.param('lastname')}');
+      .send('Hello, ${req.param('name')} ${req.param('lastname')}');
     });
 
-    ws('/socket', (socket) {
+    app.ws('/socket', (socket) {
       socket.on('ping', () { socket.send('pong'); })
-            .on('terminate', () { socket.close(1, 'requested'); });
+      .on('ping', () { socket.close(1, 'requested'); });
     });
-  }
-}
-
-void main() {
-  start(new App(), '127.0.0.1', 3000);
+  });
 }
 ```
 

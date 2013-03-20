@@ -1,6 +1,7 @@
 library request;
 
 import 'dart:io';
+import 'dart:async';
 
 class Request {
   HttpRequest _request;
@@ -18,9 +19,9 @@ class Request {
 
   bool get isForwarded => _request.headers['x-forwarded-host'] != null;
 
-  InputStream get input => _request.inputStream;
+  Stream get input => _request;
 
-  String get path => _request.path;
+  String get path => _request.uri.path;
 
   get uri => _request.uri;
 

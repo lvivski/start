@@ -1,8 +1,9 @@
 name: start
-version: 0.0.2
+version: 0.0.3
 author: Yehor Lvivksi <lvivski@gmail.com>
 description: Sinatra inspired Web framework
 homepage: http://github.com/lvivski/start
 dependencies:
   unittest: '>=0.2.7'
-  hart: '>0.0.3'
+  browser: any
+  hart: '>=0.0.4'

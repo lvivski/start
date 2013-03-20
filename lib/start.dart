@@ -2,6 +2,6 @@ library start;
 
 import 'server.dart';
 
-start(Server server, String hostAddress, int tcpPort) {
-  server.listen(hostAddress, tcpPort);
+start({view, String public: 'public', String host: '127.0.0.1', int port: 80}) {
+  return new Server(view, public).listen(host, port);
 }

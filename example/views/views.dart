@@ -17,7 +17,7 @@ class IndexView extends View {
 
   get() {
     return '''
-<!DOCTYPE html>\n<html>\n<head>\n<title>${escape(title)}</title>\n<link${attrs({'rel':"stylesheet", 'href':"/stylesheets/main.css", 'type':"text/css"})}/>\n<script${attrs({'type':"application/dart", 'src':"/scripts/script.dart"})}></script>\n<script${attrs({'type':"text/javascript", 'src':"//dart.googlecode.com/svn/trunk/dart/client/dart.js"})}></script></head>\n<body>\n<h1>${escape(title)}</h1>\n<p>is awesome</p></body></html>
+<!DOCTYPE html>\n<html>\n<head>\n<title>${escape(title)}</title>\n<link${attrs({'rel':"stylesheet", 'href':"/stylesheets/main.css", 'type':"text/css"})}/>\n<script${attrs({'type':"application/dart", 'src':"/scripts/script.dart"})}></script>\n<script${attrs({'type':"text/javascript", 'src':"packages/browser/dart.js"})}></script></head>\n<body>\n<h1>${escape(title)}</h1>\n<p>is awesome</p></body></html>
     ''';
   }
 }

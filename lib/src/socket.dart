@@ -1,30 +1,30 @@
 library socket;
 
 import 'dart:io' hide Socket;
+import 'dart:async';
 
 class Socket {
-  WebSocketConnection _conn;
+  WebSocket _ws;
 
   List<Map> _handlers;
 
-  Socket(WebSocketConnection conn) {
-    this._conn = conn;
-
-    _conn.onMessage = (Object message) {
+  Socket(WebSocket ws) {
+    this._ws = ws;
+    _ws.listen((message) {
       var handlers = _lookup(message);
       if (handlers.length > 0) {
         handlers.forEach((handler) => handler['action']());
       } else {
         // some err stuff
       }
-    };
-    _conn.onClosed = (int status, String reason) {
-      print('[$status] $reason');
-    };
+    },
+    onDone: () {
+      print('[${_ws.closeCode}] ${_ws.closeReason}');
+    });
   }
 
   void send(Object message) {
-    _conn.send(message);
+    _ws.send(message);
   }
 
   Socket on(Object message, Function action) {
@@ -39,8 +39,8 @@ class Socket {
   }
 
   void close([int status, String reason]) {
-    _conn.close(status, reason);
+    _ws.close(status, reason);
   }
 
-  List<Map> _lookup(Object message) => _handlers.where((action) => action['message'] == message);
+  List<Map> _lookup(Object message) => _handlers.where((action) => action['message'] == message).toList();
 }

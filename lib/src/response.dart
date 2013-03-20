@@ -57,18 +57,18 @@ class Response {
   }
 
   send(String string) {
-    _response.outputStream.write(string.charCodes);
-    _response.outputStream.close();
+    _response.write(string);
+    _response.close();
   }
 
   sendFile(path) {
     var file = new File(path);
     file.exists().then((found) {
       if (found) {
-        file.openInputStream().pipe(_response.outputStream);
+        file.openRead().pipe(_response);
       } else {
         _response.statusCode = HttpStatus.NOT_FOUND;
-        _response.outputStream.close();
+        _response.close();
       }
     });
   }
@@ -83,7 +83,7 @@ class Response {
   redirect(url, [int code = 302]) {
     _response.statusCode = code;
     header('Location', url);
-    _response.outputStream.close();
+    _response.close();
   }
 
   render(String viewName, [Map params]) {

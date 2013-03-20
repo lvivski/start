@@ -1,33 +1,55 @@
 library server;
 
 import 'dart:io' hide Socket;
+import 'dart:async';
 import 'src/response.dart';
 import 'src/request.dart';
 import 'src/socket.dart';
 
 class Server {
   HttpServer _server;
-  String publicDir = 'public';
-  var view;
+  Stream _stream;
+  String _public;
+  var _view;
 
-  Server() : _server = new HttpServer();
+  Server(this._view, this._public);
 
   void stop() {
     _server.close();
   }
 
-  void listen(host, port) {
-    _server.defaultRequestHandler = (HttpRequest req, HttpResponse res) {
-      new Response(res).sendFile(publicDir.concat(req.path));
+  Future listen(host, port) {
+    return HttpServer.bind(host, port).then((HttpServer server){
+      _server = server;
+      _stream = _server.asBroadcastStream();
+      _stream.listen((HttpRequest req) {
+        new Response(req.response).sendFile(_public + req.uri.path);
+      });
+      
+      return this;
+    });
+  }
+  
+  void ws(path, handler) {
+    Map route = {
+     'method': 'WS',
+     'path': _normalize(path),
+     'action': handler
     };
-    _server.listen(host, port);
+    
+    _stream.where(_getMatcher(route))
+        .transform(new WebSocketTransformer())
+        .listen((WebSocket ws){
+          var socket = new Socket(ws);
+          handler(socket);
+        });
   }
 
   void noSuchMethod(InvocationMirror mirror) {
     var name = mirror.memberName,
         args = mirror.positionalArguments;
-
-    if (['get','post','put','delete','ws'].indexOf(name) == -1) {
+    
+    if (['get','post','put','delete'].indexOf(name) == -1) {
       throw new NoSuchMethodError(this, name, args, mirror.namedArguments);
     }
 
@@ -37,36 +59,24 @@ class Server {
       'action': args[1]
     };
 
-    _server.addRequestHandler(
-      _getMatcher(route),
-      _getHandler(route)
-    );
+    _stream.where(_getMatcher(route)).listen(_getHandler(route));
   }
 
   _getMatcher(Map route) {
     return (HttpRequest req) {
       String method = req.method;
-      String path = req.path;
+      String path = req.uri.path;
       return (route['method'] == method.toUpperCase() || route['method'] == 'WS')
           && route['path']['regexp'].hasMatch(path);
     };
   }
 
   _getHandler(Map route) {
-    if (route['method'] == 'WS') {
-      var ws = new WebSocketHandler();
-      ws.onOpen = (WebSocketConnection conn) {
-        var socket = new Socket(conn);
-        route['action'](socket);
-      };
-      return ws.onRequest;
-    } else {
-      return (HttpRequest req, HttpResponse res) {
-        var request = new Request(req);
-        request.params = _parseParams(req.path, route['path']);
-        route['action'](request, new Response(res, view));
-      };
-    }
+    return (HttpRequest req) {
+      var request = new Request(req);
+      request.params = _parseParams(req.uri.path, route['path']);
+      route['action'](request, new Response(req.response, _view));
+    };
   }
 
   Map _normalize(path, [bool strict = false]) {
