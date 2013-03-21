@@ -9,7 +9,7 @@ Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default tem
 
 You can install it with `pub install start`
 
-## Usase
+## Usage
 Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
 
 ```dart
