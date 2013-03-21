@@ -1,5 +1,4 @@
 # Start
-
 Sinatra inspired web framework.
 
 [![](https://drone.io/lvivski/start/status.png)](https://drone.io/lvivski/start/latest)
@@ -8,8 +7,9 @@ It has simple API to serve static files from `public` folder (by default), rende
 
 Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
 
-## Usase
+You can install it with `pub install start`
 
+## Usase
 Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
 
 ```dart
@@ -35,8 +35,62 @@ void main() {
 }
 ```
 
-## License
+## API
 
+### start()
+You start the server with `start()` function. It has 4 named arguments and returns `Server` future
+```dart
+start({view, String public: 'public', String host: '127.0.0.1', int port: 80})
+```
+
+The only required argument is `view`.
+
+### Server
+```dart
+listen(host, port) // start the server (it's performed by the start function)
+stop() // stops the server
+get|post|put|delete(String route, handler(Request req, Response res))
+// adds a handler
+ws(String route, handler(Socket s)) // adds WebSocket handler
+```
+
+#### Routes
+Route is a string with placeholders like `:name` its value is available through the Request `param()` method. Placeholders should start with colon `:`, if placeholder ends with a question mark `?` it's optional.
+`"/hello/:name.:lastname?"` will match `"/hello/john"` and `"/hello/john.joe"`
+
+### Request
+```dart
+header(String name) // get header
+accepts(String type) // check accept header
+input // raw HttpRequest stream
+path // requested URI path
+uri // requested URI
+param(String name) // get query param by name
+```
+
+### Response
+```dart
+header(String name, [value]) // get or set header
+get(String name) // get header
+set(String name) // set header
+type(contentType) // set Content-Type
+cache(String cacheType) // set Cache-Control
+status(code) // sets response status code
+cookie(name, val) // sets cookie
+send(string) // sends string and closes response
+sendFile(path) // sends file content or 404 if not exists
+json(Map data) // stringifies map and sends it
+render(viewName, [Map params]) // renders server view
+```
+
+### Socket
+```dart
+send(message) // sends message
+on(message, action) // adds handler to message
+close(status, reason) // closes socket
+```
+
+## License
 (The MIT License)
 
 Copyright (c) 2012 Yehor Lvivski <lvivski@gmail.com>
