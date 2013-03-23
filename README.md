@@ -7,7 +7,7 @@ It has simple API to serve static files from `public` folder (by default), rende
 
 Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
 
-You can install it with `pub install start`
+_**Note**: Current `dart` version doesn't support exporting of packages `bin` folder. So for now to use `start` you have to download the repository content and run your app from `example`. This behavior will be changed in future._
 
 ## Usage
 Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
