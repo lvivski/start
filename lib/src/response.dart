@@ -36,12 +36,12 @@ class Response {
     return set('Cache-Control', value.toString());
   }
 
-  Response status(code) {
+  Response status(int code) {
     _response.statusCode = code;
     return this;
   }
 
-  Response cookie(name, val, [Map options]) {
+  Response cookie(String name, String val, [Map options]) {
     if (options == null) {
       options = {};
     }
@@ -51,9 +51,13 @@ class Response {
     return header('Set-Cookie', cookieHeader);
   }
 
-  Response deleteCookie(name) {
+  Response deleteCookie(String name) {
     Map options = { 'expires': 'Thu, 01-Jan-70 00:00:01 GMT', 'path': '/' };
     return cookie(name, '', options);
+  }
+
+  add(String string) {
+    _response.write(string);
   }
 
   send(String string) {
@@ -61,7 +65,11 @@ class Response {
     _response.close();
   }
 
-  sendFile(path) {
+  close() {
+    _response.close();
+  }
+
+  sendFile(String path) {
     var file = new File(path);
     file.exists().then((found) {
       if (found) {
@@ -74,13 +82,20 @@ class Response {
   }
 
   json(data) {
-    if(data is Map) {
+    if (data is Map) {
       data = stringify(data);
     }
     send(data);
   }
+  
+  jsonp(String name, data) {
+    if (data is Map) {
+      data = stringify(data);
+    }
+    send("$name('$data');");
+  }
 
-  redirect(url, [int code = 302]) {
+  redirect(String url, [int code = 302]) {
     _response.statusCode = code;
     header('Location', url);
     _response.close();

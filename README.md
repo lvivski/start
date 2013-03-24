@@ -77,9 +77,12 @@ type(contentType) // set Content-Type
 cache(String cacheType) // set Cache-Control
 status(code) // sets response status code
 cookie(name, val) // sets cookie
+add(string) // add a string to response
+close() // closes response
 send(string) // sends string and closes response
 sendFile(path) // sends file content or 404 if not exists
 json(Map data) // stringifies map and sends it
+jsonp(String name, Map data) // stringifies map and sends it in callback as `name(data)`
 render(viewName, [Map params]) // renders server view
 ```
 
