@@ -17,7 +17,7 @@ class IndexView extends View {
 
   get() {
     return '''
-<!DOCTYPE html>\n<html>\n<head>\n<title>${escape(title)}</title>\n<link${attrs({'rel':"stylesheet", 'href':"/stylesheets/main.css", 'type':"text/css"})}/>\n<script${attrs({'type':"application/dart", 'src':"/scripts/script.dart"})}></script>\n<script${attrs({'type':"text/javascript", 'src':"packages/browser/dart.js"})}></script></head>\n<body>\n<h1>${escape(title)}</h1>\n<p>is awesome</p></body></html>
+<!DOCTYPE html>\n<html>\n<head>\n<title>${escape("Start with Twitter Bootstrap")}</title>\n<link${attrs({'rel':"stylesheet", 'href':"/stylesheets/bootstrap.css", 'type':"text/css"})}/>\n<link${attrs({'rel':"stylesheet", 'href':"/stylesheets/bootstrap-responsive.css", 'type':"text/css"})}/>\n<script${attrs({'type':"application/dart", 'src':"/scripts/script.dart"})}></script>\n<script${attrs({'type':"text/javascript", 'src':"packages/browser/dart.js"})}></script></head>\n<body>\n<h2>${escape(title)}</h2>\n<p>is awesome</p>\n<input${attrs({'type':"text", 'placeholder':"Type something..."})}/>\n<input${attrs({'type':"button", 'class':"btn btn-primary", 'value':"Click here"})}/></body></html>
     ''';
   }
 }

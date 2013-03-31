@@ -1,10 +1,15 @@
 doctype 5
 html
   head
-    title= title
-    link[rel="stylesheet", href="/stylesheets/main.css", type="text/css"]
+    title= "Start with Twitter Bootstrap"    
+    link[rel="stylesheet", href="/stylesheets/bootstrap.css", type="text/css"]
+    link[rel="stylesheet", href="/stylesheets/bootstrap-responsive.css", type="text/css"]
     script[type="application/dart", src="/scripts/script.dart"]
     script[type="text/javascript", src="packages/browser/dart.js"]
   body
-    h1= title
+    h2= title
     p is awesome
+    input[type="text", placeholder="Type something..."]
+    input[type="button", class="btn btn-primary", value="Click here"]
+    
+    
