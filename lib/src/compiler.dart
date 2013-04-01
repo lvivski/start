@@ -15,7 +15,7 @@ class Compiler {
         templates[name] = template; 
       }
     }, onDone: () {
-      new File('$inputDir/views.dart').open(FileMode.WRITE).then((file) {
+      new File('$inputDir/views.dart').open(mode: FileMode.WRITE).then((file) {
         file.writeString(Hart.compile(templates));
       });
     });
