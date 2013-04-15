@@ -7,52 +7,44 @@ import 'request.dart';
 import 'response.dart';
 import 'socket.dart';
 
-typedef bool Matcher(HttpRequest req);
-typedef void Handler(HttpRequest req, [view]);
-
 class Route {
-  Matcher matcher;
-  Handler handler;
+  String _method;
+  Map _path;
+  Function _action;
+  String _dir;
+  StreamController _controller;
   
-  Route(String method, path, action) {
-    path = _normalize(path);
-    this.matcher = _getMatcher(method, path);
-    this.handler = _getHandler(path, action);
+  Route(this._method, path, this._action) {
+    this._path = _normalize(path);
   }
   
-  Route.file(String dir) {
-    this.handler = (HttpRequest req, [view]) {
-      new Response(req.response).sendFile(dir + req.uri.path);
-    }; 
-  }
+  Route.file(this._dir); 
   
   Route.ws(path, action) {
-    var controller = new StreamController();
-    controller.stream.transform(new WebSocketTransformer()).listen((WebSocket ws){
+    this._method = 'ws';
+    this._path = _normalize(path);
+    _controller = new StreamController();
+    _controller.stream.transform(new WebSocketTransformer()).listen((WebSocket ws){
       var socket = new Socket(ws);
       action(socket);
     });
-    
-    this.matcher = _getMatcher('ws', _normalize(path));
-    
-    this.handler = (HttpRequest req, [view]) {
-      controller.add(req);
-    };
-  }
-    
-  _getMatcher(String method, Map path) {
-    return (HttpRequest req) {
-      return (method.toLowerCase() == req.method.toLowerCase())
-          && path['regexp'].hasMatch(req.uri.path);
-    };
   }
   
-  _getHandler(path, action) {
-    return (HttpRequest req, [view]) {
+  match(HttpRequest req) {
+    return ((_method.toLowerCase() == req.method.toLowerCase())
+        && _path['regexp'].hasMatch(req.uri.path));
+  }
+  
+  handle(HttpRequest req, [view]) {
+    if (_dir != null) {
+      new Response(req.response).sendFile(_dir + req.uri.path);
+    } else if (_controller != null) {
+      _controller.add(req);
+    } else {
       var request = new Request(req);
-      request.params = _parseParams(req.uri.path, path);
-      action(request, new Response(req.response, view));
-    };
+      request.params = _parseParams(req.uri.path, _path);
+      _action(request, new Response(req.response, view));
+    }
   }
   
   Map _normalize(path, [bool strict = false]) {

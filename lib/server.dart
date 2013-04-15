@@ -20,9 +20,9 @@ class Server {
     return HttpServer.bind(host, port).then((HttpServer server){
       _server = server;
       _server.listen((HttpRequest req) {
-        _routes.firstWhere((Route route) => route.matcher(req),
+        _routes.firstWhere((Route route) => route.match(req),
             orElse: () => new Route.file(_public))
-            .handler(req, _view);
+            .handle(req, _view);
       });
       
       return this;
