@@ -8,8 +8,8 @@ import 'src/socket.dart';
 
 class Server {
   HttpServer _server;
-  Stream _stream;
   String _public;
+  List<Map> _routes = [];
   var _view;
 
   Server(this._view, this._public);
@@ -18,12 +18,18 @@ class Server {
     _server.close();
   }
 
-  Future listen(host, port) {
+  Future listen(String host, num port) {
+    defaultHandler(HttpRequest req) {
+      new Response(req.response).sendFile(_public + req.uri.path);
+    }
+    
     return HttpServer.bind(host, port).then((HttpServer server){
       _server = server;
-      _stream = _server.asBroadcastStream();
-      _stream.listen((HttpRequest req) {
-        new Response(req.response).sendFile(_public + req.uri.path);
+      _server.listen((HttpRequest req) {
+        _routes.firstWhere(
+            (route) => route['matcher'](req),
+            orElse: () => { 'handler': defaultHandler })
+            ['handler'](req);
       });
       
       return this;
@@ -33,16 +39,22 @@ class Server {
   void ws(path, handler) {
     Map route = {
      'method': 'WS',
-     'path': _normalize(path),
-     'action': handler
+     'path': _normalize(path)
     };
     
-    _stream.where(_getMatcher(route))
-        .transform(new WebSocketTransformer())
-        .listen((WebSocket ws){
-          var socket = new Socket(ws);
-          handler(socket);
-        });
+    var controller = new StreamController();
+    controller.stream.transform(new WebSocketTransformer()).listen((WebSocket ws){
+      var socket = new Socket(ws);
+      handler(socket);
+    });
+    
+    _routes.add({
+      'matcher': _getMatcher(route),
+      'handler': (HttpRequest req) {
+        controller.add(req);
+      }
+    });
+    
   }
 
   void noSuchMethod(InvocationMirror mirror) {
@@ -58,8 +70,11 @@ class Server {
       'path': _normalize(args[0]),
       'action': args[1]
     };
-
-    _stream.where(_getMatcher(route)).listen(_getHandler(route));
+    
+    _routes.add({
+      'matcher': _getMatcher(route),
+      'handler': _getHandler(route)
+    });
   }
 
   _getMatcher(Map route) {
