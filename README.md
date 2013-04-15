@@ -55,8 +55,8 @@ ws(String route, handler(Socket s)) // adds WebSocket handler
 ```
 
 #### Routes
-Route is a string with placeholders like `:name` its value is available through the Request `param()` method. Placeholders should start with colon `:`, if placeholder ends with a question mark `?` it's optional.
-`"/hello/:name.:lastname?"` will match `"/hello/john"` and `"/hello/john.joe"`
+Route is a string with placeholders like `:firstname` its value is available through the Request `param()` method. Placeholders should start with colon `:`, if placeholder ends with a question mark `?` it's optional.
+`"/hello/:firstname.:lastname?"` will match `"/hello/john"` and `"/hello/john.doe"`
 
 ### Request
 ```dart
