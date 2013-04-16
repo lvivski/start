@@ -7,8 +7,8 @@ import 'src/route.dart';
 class Server {
   HttpServer _server;
   String _public;
-  var _routes = new List<Route>();
-  var _view;
+  var _routes = new List<Route>(),
+      _view;
 
   Server(this._view, this._public);
 
