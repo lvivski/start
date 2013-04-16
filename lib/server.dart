@@ -24,23 +24,23 @@ class Server {
             orElse: () => new Route.file(_public))
             .handle(req, _view);
       });
-      
+
       return this;
     });
   }
-  
+
   void ws(path, action) {
     _routes.add(new Route.ws(path, action));
   }
 
-  void noSuchMethod(InvocationMirror mirror) {
+  void noSuchMethod(Invocation mirror) {
     var method = mirror.memberName,
         args = mirror.positionalArguments;
-    
+
     if (['get','post','put','delete'].indexOf(method) == -1) {
       throw new NoSuchMethodError(this, method, args, mirror.namedArguments);
     }
-    
+
     _routes.add(new Route(method, args[0], args[1]));
   }
 }

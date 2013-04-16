@@ -6,7 +6,7 @@ class IndexView extends View {
 
   IndexView(this.locals);
 
-  noSuchMethod(InvocationMirror mirror) {
+  noSuchMethod(Invocation mirror) {
     if (locals == null) {
       locals = {};
     }
