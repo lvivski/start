@@ -24,7 +24,7 @@ class Socket {
   }
 
   void send(Object message) {
-    _ws.send(message);
+    _ws.add(message);
   }
 
   Socket on(Object message, Function action) {
