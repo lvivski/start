@@ -1,7 +1,4 @@
-library request;
-
-import 'dart:io';
-import 'dart:async';
+part of start;
 
 class Request {
   HttpRequest _request;

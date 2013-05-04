@@ -1,7 +1,4 @@
-library socket;
-
-import 'dart:io' hide Socket;
-import 'dart:async';
+part of start;
 
 class Socket {
   WebSocket _ws;
