@@ -16,7 +16,7 @@ class Server {
     _server.close();
   }
 
-  Future listen(String host, num port) {
+  Future<Server> listen(String host, num port) {
     return HttpServer.bind(host, port).then((HttpServer server){
       _server = server;
       _server.listen((HttpRequest req) {
@@ -33,14 +33,20 @@ class Server {
     _routes.add(new Route.ws(path, action));
   }
 
-  void noSuchMethod(Invocation mirror) {
-    var method = mirror.memberName,
-        args = mirror.positionalArguments;
-
-    if (['get','post','put','delete'].indexOf(method) == -1) {
-      throw new NoSuchMethodError(this, method, args, mirror.namedArguments);
-    }
-
-    _routes.add(new Route(method, args[0], args[1]));
+  void get(dynamic path, Function action) {
+    _routes.add(new Route('get', path, action));
   }
+
+  void post(dynamic path, Function action) {
+    _routes.add(new Route('post', path, action));
+  }
+
+  void put(dynamic path, Function action) {
+    _routes.add(new Route('put', path, action));
+  }
+
+  void delete(dynamic path, Function action) {
+    _routes.add(new Route('delete', path, action));
+  }
+
 }
