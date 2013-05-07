@@ -1,6 +1,5 @@
 part of start;
 
-
 class Route {
   String _method, _dir;
   Map _path;

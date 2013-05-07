@@ -44,5 +44,4 @@ class Server {
   void delete(dynamic path, Function action) {
     _routes.add(new Route('delete', path, action));
   }
-
 }

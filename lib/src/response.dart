@@ -78,14 +78,14 @@ class Response {
 
   json(data) {
     if (data is Map) {
-      data = Cookie.stringify(data);
+      data = Json.stringify(data);
     }
     send(data);
   }
 
   jsonp(String name, data) {
     if (data is Map) {
-      data = Cookie.stringify(data);
+      data = Json.stringify(data);
     }
     send("$name('$data');");
   }
