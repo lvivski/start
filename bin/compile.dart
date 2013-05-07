@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:start/src/compiler.dart';
+import 'package:start/compiler.dart';
 
 void main() {
   var args = new Options().arguments,

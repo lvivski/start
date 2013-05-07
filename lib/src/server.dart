@@ -1,8 +1,4 @@
-library server;
-
-import 'dart:io';
-import 'dart:async';
-import 'src/route.dart';
+part of start;
 
 class Server {
   HttpServer _server;

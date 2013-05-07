@@ -1,9 +1,4 @@
-library response;
-
-import 'dart:io' hide Cookie;
-import 'dart:json';
-
-import 'cookie.dart';
+part of start;
 
 class Response {
   HttpResponse _response;
@@ -83,14 +78,14 @@ class Response {
 
   json(data) {
     if (data is Map) {
-      data = stringify(data);
+      data = Cookie.stringify(data);
     }
     send(data);
   }
-  
+
   jsonp(String name, data) {
     if (data is Map) {
-      data = stringify(data);
+      data = Cookie.stringify(data);
     }
     send("$name('$data');");
   }
