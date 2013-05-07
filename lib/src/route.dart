@@ -1,11 +1,5 @@
-library route;
+part of start;
 
-import 'dart:io' hide Socket;
-import 'dart:async';
-
-import 'request.dart';
-import 'response.dart';
-import 'socket.dart';
 
 class Route {
   String _method, _dir;
