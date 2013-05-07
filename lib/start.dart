@@ -1,7 +1,7 @@
 library start;
 
 import 'dart:io' hide Socket, Cookie;
-import 'dart:async' show Future;
+import 'dart:async';
 import 'dart:json' as Json;
 import 'src/cookie.dart';
 
