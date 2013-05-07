@@ -1,4 +1,5 @@
 library view;
+import 'dart:mirrors';
 import 'package:hart/utils.dart';
 
 class IndexView extends View {
@@ -11,7 +12,7 @@ class IndexView extends View {
       locals = {};
     }
     if (mirror.isGetter) {
-      return locals[mirror.memberName];
+      return locals[MirrorSystem.getName(mirror.memberName)];
     }
   }
 
@@ -25,11 +26,11 @@ class IndexView extends View {
 class View {
   Map _views;
 
-  render(name, params) {
+  render(String name, Map params) {
     return _views[name](params).get();
   }
 
-  register(name, handler) {
+  register(String name, handler(Map params)) {
     if (_views == null) {
       _views = {};
     }
