@@ -16,11 +16,11 @@ class Response {
 
   Response get(String name) => header(name);
 
-  Response set(name, value) => header(name, value);
+  Response set(String name, String value) => header(name, value);
 
-  Response type(contentType) => set('Content-Type', contentType);
+  Response type(String contentType) => set('Content-Type', contentType);
 
-  Response cache(String cacheType, [Map options]) {
+  Response cache(String cacheType, [Map<String,String> options]) {
     if(options == null) {
       options = {};
     }

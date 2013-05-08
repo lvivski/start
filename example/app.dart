@@ -4,7 +4,7 @@ import 'views/views.dart';
 import 'dart:io';
 
 void main() {
-  start(view: new View(), public: 'example/public', port: 3000).then((app) {
+  start(view: new View(), public: 'example/public', port: 3000).then((Server app) {
     app.get('/', (req, res) {
       res.render('index', {'title': 'Start'});
     });

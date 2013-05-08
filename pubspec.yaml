@@ -1,5 +1,5 @@
 name: start
-version: 0.0.4
+version: 0.0.4+1
 author: Yehor Lvivksi <lvivski@gmail.com>
 description: Sinatra inspired Web framework
 homepage: http://github.com/lvivski/start

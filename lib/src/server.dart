@@ -1,5 +1,8 @@
 part of start;
 
+typedef void HttpHandler(Request req, Response r);
+typedef void WsHandler(Socket s);
+
 class Server {
   HttpServer _server;
   String _public;
@@ -25,23 +28,23 @@ class Server {
     });
   }
 
-  void ws(path, action) {
-    _routes.add(new Route.ws(path, action));
+  void ws(path, WsHandler handler) {
+    _routes.add(new Route.ws(path, handler));
+  } 
+
+  void get(path, HttpHandler handler) {
+    _routes.add(new Route('get', path, handler));
   }
 
-  void get(dynamic path, Function action) {
-    _routes.add(new Route('get', path, action));
+  void post(path, HttpHandler handler) {
+    _routes.add(new Route('post', path, handler));
   }
 
-  void post(dynamic path, Function action) {
-    _routes.add(new Route('post', path, action));
+  void put(path, HttpHandler handler) {
+    _routes.add(new Route('put', path, handler));
   }
 
-  void put(dynamic path, Function action) {
-    _routes.add(new Route('put', path, action));
-  }
-
-  void delete(dynamic path, Function action) {
-    _routes.add(new Route('delete', path, action));
+  void delete(path, HttpHandler handler) {
+    _routes.add(new Route('delete', path, handler));
   }
 }
