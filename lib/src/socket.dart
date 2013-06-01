@@ -1,5 +1,7 @@
 part of start;
 
+typedef void MsgHandler(data);
+
 class Socket {
   WebSocket _ws;
 
@@ -25,7 +27,7 @@ class Socket {
     _ws.add(message);
   }
 
-  Socket on(Object message_name, Function action) {
+  Socket on(Object message_name, MsgHandler action) {
     if (_handlers == null) {
       _handlers = [];
     }
