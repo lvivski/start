@@ -1,5 +1,7 @@
 part of start;
 
+typedef void MsgHandler(data);
+
 class Socket {
   WebSocket _ws;
 
@@ -7,10 +9,11 @@ class Socket {
 
   Socket(WebSocket ws) {
     this._ws = ws;
-    _ws.listen((message) {
-      var handlers = _lookup(message);
+    _ws.listen((data) {
+      Message msg = new Message(data);
+      var handlers = _lookup(msg.name);
       if (handlers.length > 0) {
-        handlers.forEach((handler) => handler['action']());
+        handlers.forEach((handler) => handler['action'](msg.data));
       } else {
         // some err stuff
       }
@@ -24,12 +27,12 @@ class Socket {
     _ws.add(message);
   }
 
-  Socket on(Object message, Function action) {
+  Socket on(Object message_name, MsgHandler action) {
     if (_handlers == null) {
       _handlers = [];
     }
     _handlers.add({
-      'message': message,
+      'message_name': message_name,
       'action': action
     });
     return this;
@@ -39,5 +42,5 @@ class Socket {
     _ws.close(status, reason);
   }
 
-  List<Map> _lookup(Object message) => _handlers.where((action) => action['message'] == message).toList();
+  List<Map> _lookup(String message_name) => _handlers.where((action) => action['message_name'] == message_name).toList();
 }
