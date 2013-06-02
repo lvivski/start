@@ -8,6 +8,7 @@ import 'src/cookie.dart';
 part 'src/route.dart';
 part 'src/request.dart';
 part 'src/response.dart';
+part 'src/message.dart';
 part 'src/socket.dart';
 part 'src/server.dart';
 
