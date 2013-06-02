@@ -45,7 +45,7 @@ class Cookie {
   }
 
   static String stringifyDate(DateTime date) {
-    String weekday = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][date.weekday];
+    String weekday = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][date.weekday - 1];
     String month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Now','Dec'][date.month-1];
     String hour = ('00${date.hour}');
     hour = hour.substring(hour.length-2);
