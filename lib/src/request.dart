@@ -2,6 +2,7 @@ part of start;
 
 class Request {
   HttpRequest _request;
+  Response response;
   Map params;
 
   Request(this._request);

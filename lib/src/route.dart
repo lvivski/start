@@ -3,24 +3,23 @@ part of start;
 class Route {
   String _method, _dir;
   Map _path;
-  Function _action;
-  StreamController _controller;
+  StreamController _controller = new StreamController();
+  Stream stream;
 
-  Route(String method, path, this._action) {
+  Route(String method, path) {
     _method = method.toUpperCase();
     _path = _normalize(path);
+    stream = _controller.stream;
   }
 
-  Route.file(this._dir);
+  Route.file(this._dir) {
+    stream = _controller.stream;
+  }
 
-  Route.ws(dynamic path, Function action) {
+  Route.ws(dynamic path) {
     _method = 'WS';
     _path = _normalize(path);
-    _controller = new StreamController();
-    _controller.stream.transform(new WebSocketTransformer()).listen((WebSocket ws){
-      var socket = new Socket(ws);
-      action(socket);
-    });
+    stream = _controller.stream.transform(new WebSocketTransformer()).map((WebSocket ws) => new Socket(ws));
   }
 
   match(HttpRequest req) {
@@ -36,7 +35,8 @@ class Route {
     } else {
       var request = new Request(req);
       request.params = _parseParams(req.uri.path, _path);
-      _action(request, new Response(req.response, view));
+      request.response = new Response(req.response, view);
+      _controller.add(request);
     }
   }
 
