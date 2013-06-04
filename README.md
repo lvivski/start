@@ -7,8 +7,6 @@ It has simple API to serve static files from `public` folder (by default), rende
 
 Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
 
-_**Note**: Current `dart` version doesn't support exporting of packages `bin` folder. So for now to use `start` you have to download the repository content and run your app from `example`. This behavior will be changed in future._
-
 ## Usage
 Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
 
@@ -42,8 +40,6 @@ You start the server with `start()` function. It has 4 named arguments and retur
 ```dart
 start({view, String public: 'public', String host: '127.0.0.1', int port: 80})
 ```
-
-The only required argument is `view`.
 
 ### Server
 ```dart
