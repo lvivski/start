@@ -28,23 +28,38 @@ class Server {
     });
   }
 
-  void ws(path, WsHandler handler) {
-    _routes.add(new Route.ws(path, handler));
-  } 
+  Stream<Request> ws(path) {
+    var route = new Route.ws(path);
+    _routes.add(route);
 
-  void get(path, HttpHandler handler) {
-    _routes.add(new Route('get', path, handler));
+    return route.stream;
   }
 
-  void post(path, HttpHandler handler) {
-    _routes.add(new Route('post', path, handler));
+  Stream<Request> get(path) {
+    var route = new Route('get', path);
+    _routes.add(route);
+
+    return route.stream;
   }
 
-  void put(path, HttpHandler handler) {
-    _routes.add(new Route('put', path, handler));
+  Stream<Request> post(path) {
+    var route = new Route('post', path);
+    _routes.add(route);
+
+    return route.stream;
   }
 
-  void delete(path, HttpHandler handler) {
-    _routes.add(new Route('delete', path, handler));
+  Stream<Request> put(path) {
+    var route = new Route('put', path);
+    _routes.add(route);
+
+    return route.stream;
+  }
+
+  Stream delete(path) {
+    var route = new Route('delete', path);
+    _routes.add(route);
+
+    return route.stream;
   }
 }

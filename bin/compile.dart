@@ -3,7 +3,7 @@ import 'package:start/compiler.dart';
 
 void main() {
   var args = new Options().arguments,
-      path = args.length > 0 ? args[0] : 'example/views',
+      path = args.length > 0 ? args[0] : '../example/views',
       compiledViews = new File('$path/views.dart'),
       callback = (_) => Compiler.compile(path);
 
