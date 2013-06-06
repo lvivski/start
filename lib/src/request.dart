@@ -22,7 +22,7 @@ class Request {
 
   get uri => _request.uri;
 
-  param(String name) {
+  String param(String name) {
     if (params.containsKey(name) && params[name] != null) {
       return params[name];
     }
