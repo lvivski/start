@@ -27,8 +27,8 @@ class Request {
     if (params.containsKey(name) && params[name] != null) {
       return params[name];
     }
-    return _request.queryParameters[name] != null
-         ? _request.queryParameters[name]
+    return _request.uri.queryParameters[name] != null
+         ? _request.uri.queryParameters[name]
          : '';
   }
 }
