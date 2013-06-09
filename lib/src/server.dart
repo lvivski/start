@@ -28,7 +28,7 @@ class Server {
     });
   }
 
-  Stream<Request> ws(path) {
+  Stream<Socket> ws(path) {
     var route = new Route.ws(path);
     _routes.add(route);
 
