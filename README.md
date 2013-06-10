@@ -16,20 +16,23 @@ import 'package:start/start.dart';
 import 'views/views.dart';
 
 void main() {
-  start(view: new View(), public: 'example/public', port: 3000).then((app) {
-    app.get('/', (req, res) {
-      res.render('index', {'title': 'Start'});
+  start(view: new View(), public: 'web', port: 3000).then((Server app) {
+
+    app.get('/').listen((request) {
+      request.response.render('index', {'title': 'Start'});
     });
 
-    app.get('/hello/:name.:lastname?', (req, res) {
-      res.header('Content-Type', 'text/html; charset=UTF-8')
-      .send('Hello, ${req.param('name')} ${req.param('lastname')}');
+    app.get('/hello/:name.:lastname?').listen((request) {
+      request.response
+        .header('Content-Type', 'text/html; charset=UTF-8')
+        .send('Hello, ${request.param('name')} ${request.param('lastname')}');
     });
 
-    app.ws('/socket', (socket) {
+    app.ws('/socket').listen((socket) {
       socket.on('ping', () { socket.send('pong'); })
-      .on('ping', () { socket.close(1, 'requested'); });
+        .on('ping', () { socket.close(1, 'requested'); });
     });
+
   });
 }
 ```
