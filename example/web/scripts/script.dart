@@ -5,7 +5,7 @@ main() {
   var ws = new WebSocket("ws://127.0.0.1:3000/socket");
 
   ws.onOpen.listen((a) {
-    ws.send("ping");
+    ws.send('ping');
   });
 
   ws.onClose.listen((c) {
@@ -14,7 +14,7 @@ main() {
 
   ws.onMessage.listen((m) {
     if (m.data == "pong") {
-      print('got pong');
+      ws.send('pong');
     }
   });
 }

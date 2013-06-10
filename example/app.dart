@@ -17,8 +17,8 @@ void main() {
     });
 
     app.ws('/socket').listen((socket) {
-      socket.on('ping', () { socket.send('pong'); })
-        .on('ping', () { socket.close(1, 'requested'); });
+      socket.on('ping', (data) { socket.send('pong'); })
+        .on('pong', (data) { socket.close(1000, 'requested'); });
     });
 
     app.get('/file').listen((request) { // http://localhost:3000/file?name=web/stylesheets/main.css
