@@ -6,6 +6,7 @@ Sinatra inspired web framework.
 It has simple API to serve static files from `public` folder (by default), rendered templates and websockets.
 
 Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
+The template engine is optional, you can use Start without Hart.
 
 ## Usage
 Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
@@ -48,9 +49,8 @@ start({view, String public: 'public', String host: '127.0.0.1', int port: 80})
 ```dart
 listen(host, port) // start the server (it's performed by the start function)
 stop() // stops the server
-get|post|put|delete(String route, handler(Request req, Response res))
-// adds a handler
-ws(String route, handler(Socket s)) // adds WebSocket handler
+get|post|put|delete(String route) // adds a handler, returns a Stream<Request>
+ws(String route) // adds WebSocket handler, returns a Stream
 ```
 
 #### Routes
