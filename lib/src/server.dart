@@ -41,6 +41,13 @@ class Server {
 
     return route.stream;
   }
+  
+  Stream<Request> options(path) {
+    var route = new Route('options', path);
+    _routes.add(route);
+
+    return route.stream;
+  }
 
   Stream<Request> post(path) {
     var route = new Route('post', path);
