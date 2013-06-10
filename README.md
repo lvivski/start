@@ -6,6 +6,7 @@ Sinatra inspired web framework.
 It has simple API to serve static files from `public` folder (by default), rendered templates and websockets.
 
 Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
+The template engine is optional, you can use Start without Hart.
 
 ## Usage
 Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
