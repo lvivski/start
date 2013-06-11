@@ -11,6 +11,8 @@ class Socket {
   WebSocket _ws;
 
   List<Map> _handlers;
+  
+  WebSocket get ws => _ws;
 
   Socket(WebSocket ws) {
     this._ws = ws;
