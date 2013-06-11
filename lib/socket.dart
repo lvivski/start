@@ -1,4 +1,9 @@
-part of start;
+library start_socket;
+
+import 'dart:io' hide Socket;
+import "dart:json" as Json;
+
+part 'src/message.dart';
 
 typedef void MsgHandler(data);
 
