@@ -8,7 +8,9 @@ class Message {
   var _data;
   get data => _data;
   
-  factory Message(String message) {
+  Message(this._name, [this._data]);
+  
+  factory Message.fromPacket(String message) {
     if (message.isEmpty) {
       return new Message.empty();
     }
@@ -21,10 +23,8 @@ class Message {
         data = Json.parse(parts.sublist(1).join(":"));
       }
     }
-    return new Message._internal(parts.first, data);
+    return new Message(parts.first, data);
   }
-  
-  Message._internal(this._name, this._data);
   
   Message.empty() {
     this._name = "";
