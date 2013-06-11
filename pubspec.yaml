@@ -6,4 +6,5 @@ homepage: http://github.com/lvivski/start
 dependencies:
   browser: any
   hart: '>=0.0.5'
+dev_dependencies:
   unittest: '>=0.2.7'
