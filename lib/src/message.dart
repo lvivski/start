@@ -30,4 +30,8 @@ class Message {
     this._name = "";
     this._data = null;
   }
+  
+  String toPacket() {
+    return "$_name:${Json.stringify(_data)}";
+  }
 }

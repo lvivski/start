@@ -106,5 +106,14 @@ message_tests() {
       expect(msg.name, equals("test"));
       expect(msg.data, equals(123));
     });
+    
+    test("a message can be serialized to a packet and back", () {
+      Message original_msg = new Message("serial_test", {"bob":123});
+      
+      Message decoded_msg = new Message.fromPacket(original_msg.toPacket());
+      
+      expect(decoded_msg.name, equals(original_msg.name));
+      expect(decoded_msg.data, equals(original_msg.data));
+    });
   });
 }
