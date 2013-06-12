@@ -1,3 +1,5 @@
+library start_message;
+
 import 'dart:json' as Json;
 
 class Message {

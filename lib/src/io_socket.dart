@@ -1,8 +1,6 @@
 part of start;
 
-typedef void MsgHandler(data);
-
-class IoSocket {
+class IoSocket implements Socket {
   WebSocket _ws;
 
   List<Map> _handlers;

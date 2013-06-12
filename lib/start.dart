@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:json' as Json;
 import 'src/cookie.dart';
 import 'src/message.dart';
+import 'src/socket.dart';
 
 part 'src/route.dart';
 part 'src/request.dart';
