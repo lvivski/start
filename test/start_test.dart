@@ -10,9 +10,9 @@ import '../lib/start.dart';
 import '../lib/src/message.dart';
 
 part 'message_test.dart';
-part 'socket_test.dart';
+part 'io_socket_test.dart';
 
 main() {
   message_tests();
-  socket_tests();
+  io_socket_tests();
 }

@@ -2,14 +2,14 @@ part of start;
 
 typedef void MsgHandler(data);
 
-class Socket {
+class IoSocket {
   WebSocket _ws;
 
   List<Map> _handlers;
   
   WebSocket get ws => _ws;
 
-  Socket(WebSocket ws) {
+  IoSocket(WebSocket ws) {
     this._ws = ws;
     _ws.listen((data) {
       Message msg = new Message(data);
@@ -30,7 +30,7 @@ class Socket {
     _ws.add(msg.toPacket());
   }
 
-  Socket on(Object message_name, MsgHandler action) {
+  IoSocket on(Object message_name, MsgHandler action) {
     if (_handlers == null) {
       _handlers = [];
     }

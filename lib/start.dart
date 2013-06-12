@@ -11,7 +11,7 @@ part 'src/request.dart';
 part 'src/response.dart';
 part 'src/server.dart';
 part 'src/mime_types.dart';
-part 'src/socket.dart';
+part 'src/io_socket.dart';
 
 Future<Server> start({ view, String public: 'web', String host: '127.0.0.1', int port: 80 }) {
   return new Server(view, public).listen(host, port);
