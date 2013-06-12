@@ -1,4 +1,4 @@
-part of start_socket;
+import 'dart:json' as Json;
 
 class Message {
   
@@ -32,6 +32,9 @@ class Message {
   }
   
   String toPacket() {
+    if (_data == null) {
+      return _name;
+    }
     return "$_name:${Json.stringify(_data)}";
   }
 }

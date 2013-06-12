@@ -1,9 +1,4 @@
-library start_socket;
-
-import 'dart:io' hide Socket;
-import "dart:json" as Json;
-
-part 'src/message.dart';
+part of start;
 
 typedef void MsgHandler(data);
 
@@ -30,8 +25,9 @@ class Socket {
     });
   }
 
-  void send(Object message) {
-    _ws.add(message);
+  void send(String msg_name, { data }) {
+    Message msg = new Message(msg_name, data);
+    _ws.add(msg.toPacket());
   }
 
   Socket on(Object message_name, MsgHandler action) {

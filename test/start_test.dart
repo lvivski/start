@@ -7,7 +7,7 @@ import 'package:unittest/unittest.dart';
 import 'package:unittest/mock.dart';
 
 import '../lib/start.dart';
-import '../lib/socket.dart';
+import '../lib/src/message.dart';
 
 part 'message_test.dart';
 part 'socket_test.dart';

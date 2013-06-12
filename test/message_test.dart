@@ -115,5 +115,20 @@ message_tests() {
       expect(decoded_msg.name, equals(original_msg.name));
       expect(decoded_msg.data, equals(original_msg.data));
     });
+
+    test("a message without data can be serialized to a packet and back", () {
+      Message original_msg = new Message("serial_test");
+
+      Message decoded_msg = new Message.fromPacket(original_msg.toPacket());
+
+      expect(decoded_msg.name, equals(original_msg.name));
+      expect(decoded_msg.data, equals(original_msg.data));
+    });
+
+    test("a message without data does not include the ':' in the packer", () {
+      Message msg = new Message("test123");
+
+      expect(msg.toPacket(), equals("test123"));
+    });
   });
 }
