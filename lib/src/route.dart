@@ -29,7 +29,18 @@ class Route {
 
   handle(HttpRequest req, [view]) {
     if (_dir != null) {
-      new Response(req.response).sendFile(_dir + req.uri.path);
+      var path = _dir + req.uri.path,
+          directory = new Directory(path),
+          response = new Response(req.response);
+
+      directory.exists().then((found) {
+        if (found) {
+          response.sendFile(directory.path + '/index.html');
+        } else {
+          response.sendFile(path);
+        }
+      },
+      onError: (e) => print(e));
     } else if (_method == 'WS') {
       _controller.add(req);
     } else {
