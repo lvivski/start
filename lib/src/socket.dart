@@ -1,11 +1,11 @@
 part of start;
 
-typedef void MsgHandler(data);
-
-class Socket {
+class Socket implements SocketBase {
   WebSocket _ws;
 
   List<Map> _handlers;
+  
+  WebSocket get ws => _ws;
 
   Socket(WebSocket ws) {
     this._ws = ws;
@@ -23,8 +23,9 @@ class Socket {
     });
   }
 
-  void send(Object message) {
-    _ws.add(message);
+  void send(String msg_name, { data }) {
+    Message msg = new Message(msg_name, data);
+    _ws.add(msg.toPacket());
   }
 
   Socket on(Object message_name, MsgHandler action) {
