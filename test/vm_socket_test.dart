@@ -5,11 +5,11 @@ class MockWebSocket extends Mock implements WebSocket {}
 io_socket_tests() {
   group("Socket", () {
     MockWebSocket ws;
-    IoSocket socket;
+    Socket socket;
     
     setUp(() {
       ws = new MockWebSocket();
-      socket = new IoSocket(ws);
+      socket = new Socket(ws);
     });
     
     test("can be constructed from a WebSocket", () {
