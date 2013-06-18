@@ -5,7 +5,7 @@ set -e
 DIR=$( cd $( dirname "${BASH_SOURCE[0]}" )/.. && pwd )
 
 echo "Analyzing library for warnings or type errors"
-dart_analyzer --fatal-warnings --fatal-type-errors lib/start.dart lib/compiler.dart
+dartanalyzer --show-package-warnings --package-root lib
 rm -r out
 
 for test in $DIR/test/*_test.dart
