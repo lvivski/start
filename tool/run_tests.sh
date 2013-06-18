@@ -6,11 +6,6 @@ DIR=$( cd $( dirname "${BASH_SOURCE[0]}" )/.. && pwd )
 
 echo "Analyzing library for warnings or type errors"
 dartanalyzer --show-package-warnings $DIR/lib/start.dart
-
-for test in $DIR/test/*_test.dart
-do
-	echo -e "\nRunning test suite: $(basename $test)"
-	dart --checked $test
-done
+dart --checked $DIR/test/start_test.dart
 
 echo -e "\n[32m✓ OK[0m"
