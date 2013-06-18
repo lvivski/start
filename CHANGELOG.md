@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.8
+
+Breaking changes. Removed `hart` dependency, `start` now uses proper `Cookie` library,
+serves `index.html` by default
+
 ## 0.0.7
 
 This update is dependent on a breaking change in the latest version of the Dart

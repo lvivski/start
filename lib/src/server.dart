@@ -6,10 +6,9 @@ typedef void WsHandler(Socket s);
 class Server {
   HttpServer _server;
   String _public;
-  var _routes = new List<Route>(),
-      _view;
+  var _routes = new List<Route>();
 
-  Server(this._view, this._public);
+  Server(this._public);
 
   void stop() {
     _server.close();
@@ -21,7 +20,7 @@ class Server {
       _server.listen((HttpRequest req) {
         _routes.firstWhere((Route route) => route.match(req),
             orElse: () => new Route.file(_public))
-            .handle(req, _view);
+            .handle(req);
       });
 
       return this;
@@ -41,7 +40,7 @@ class Server {
 
     return route.stream;
   }
-  
+
   Stream<Request> options(path) {
     var route = new Route('options', path);
     _routes.add(route);

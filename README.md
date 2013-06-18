@@ -3,24 +3,13 @@ Sinatra inspired web framework.
 
 [![](https://drone.io/lvivski/start/status.png)](https://drone.io/lvivski/start/latest)
 
-It has simple API to serve static files from `public` folder (by default), rendered templates and websockets.
-
-Start uses [Hart](https://github.com/lvivski/hart "lvivski/hart") as default template engine.
-The template engine is optional, you can use Start without Hart.
-
-## Usage
-Don't forget to compile views with `bin/compiler.dart` (views are precompiled in `example`).
+It has simple API to serve static files from `web` folder (by default), websockets and for JSON responses.
 
 ```dart
 import 'package:start/start.dart';
-import 'views/views.dart';
 
 void main() {
-  start(view: new View(), public: 'web', port: 3000).then((Server app) {
-
-    app.get('/').listen((request) {
-      request.response.render('index', {'title': 'Start'});
-    });
+  start(public: 'web', port: 3000).then((Server app) {
 
     app.get('/hello/:name.:lastname?').listen((request) {
       request.response
@@ -29,10 +18,9 @@ void main() {
     });
 
     app.ws('/socket').listen((socket) {
-      socket.on('ping', () { socket.send('pong'); })
-        .on('ping', () { socket.close(1, 'requested'); });
+      socket.on('ping', (data) { socket.send('pong'); })
+        .on('pong', (data) { socket.close(1000, 'requested'); });
     });
-
   });
 }
 ```
@@ -42,7 +30,7 @@ void main() {
 ### start()
 You start the server with `start()` function. It has 4 named arguments and returns `Server` future
 ```dart
-start({view, String public: 'public', String host: '127.0.0.1', int port: 80})
+start({String public: 'web', String host: '127.0.0.1', int port: 80})
 ```
 
 ### Server

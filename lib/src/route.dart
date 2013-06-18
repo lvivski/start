@@ -27,7 +27,7 @@ class Route {
         && _path['regexp'].hasMatch(req.uri.path));
   }
 
-  handle(HttpRequest req, [view]) {
+  handle(HttpRequest req) {
     if (_dir != null) {
       var path = _dir + req.uri.path,
           directory = new Directory(path),
@@ -46,7 +46,7 @@ class Route {
     } else {
       var request = new Request(req);
       request.params = _parseParams(req.uri.path, _path);
-      request.response = new Response(req.response, view);
+      request.response = new Response(req.response);
       _controller.add(request);
     }
   }

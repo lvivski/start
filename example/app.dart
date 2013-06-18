@@ -1,14 +1,9 @@
 import 'package:start/start.dart';
-import 'views/views.dart';
 
 import 'dart:io';
 
 void main() {
-  start(view: new View(), public: 'web', port: 3000).then((Server app) {
-
-    app.get('/').listen((request) {
-      request.response.render('index', {'title': 'Start'});
-    });
+  start(public: 'web', port: 3000).then((Server app) {
 
     app.get('/hello/:name.:lastname?').listen((request) {
       request.response

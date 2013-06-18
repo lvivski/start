@@ -2,9 +2,8 @@ part of start;
 
 class Response {
   HttpResponse _response;
-  var _view;
 
-  Response(this._response, [this._view]);
+  Response(this._response);
 
   header(String name, [value]) {
     if (value == null) {
@@ -37,13 +36,34 @@ class Response {
   }
 
   Response cookie(String name, String val, [Map options]) {
-    if (options == null) {
-      options = {};
-    }
-    options['name'] = name;
-    options['value'] = val;
-    var cookieHeader = Cookie.stringify(options);
-    return header('Set-Cookie', cookieHeader);
+    var cookie = new Cookie(name, val);
+
+    options.forEach((option, value) {
+      switch (option) {
+        case 'domain':
+          cookie.domain = value;
+          break;
+        case 'expires':
+          cookie.expires = value;
+          break;
+        case 'httpOnly':
+          cookie.httpOnly = value;
+          break;
+        case 'maxAge':
+          cookie.maxAge = value;
+          break;
+        case 'path':
+          cookie.path = value;
+          break;
+        case 'secure':
+          cookie.secure = value;
+          break;
+        default:
+          break;
+      }
+    });
+
+    return header('Set-Cookie', cookie.toString());
   }
 
   Response deleteCookie(String name) {
@@ -78,7 +98,7 @@ class Response {
           _response.close();
         }, test: (e) => e == 404);
   }
-  
+
   mime_type(File file) {
     for (final ext in EXT_TO_CONTENT_TYPE.keys) {
       if (file.path.endsWith(ext)) {
@@ -105,10 +125,5 @@ class Response {
     _response.statusCode = code;
     header('Location', url);
     _response.close();
-  }
-
-  render(String viewName, [Map params]) {
-    header('Content-Type', 'text/html; charset=UTF-8')
-    .send(_view.render(viewName, params));
   }
 }
