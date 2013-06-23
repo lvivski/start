@@ -3,40 +3,33 @@ library start_message;
 import 'dart:json' as Json;
 
 class Message {
+  String name;
+  var data;
 
-  String _name;
-  String get name => _name;
-
-  var _data;
-  get data => _data;
-
-  Message(this._name, [this._data]);
+  Message(this.name, [this.data]);
 
   factory Message.fromPacket(String message) {
     if (message.isEmpty) {
       return new Message.empty();
     }
 
-    List<String> parts = message.split(":");
+    List<String> parts = message.split(':');
     String name = parts.first;
     var data = null;
-    if (parts.length > 1) {
-      if (!parts[1].isEmpty) {
-        data = Json.parse(parts.sublist(1).join(":"));
-      }
+
+    if (parts.length > 1 && !parts[1].isEmpty) {
+      data = Json.parse(parts.sublist(1).join(':'));
     }
-    return new Message(parts.first, data);
+
+    return new Message(name, data);
   }
 
-  Message.empty() {
-    this._name = "";
-    this._data = null;
-  }
+  Message.empty(): this('');
 
   String toPacket() {
-    if (_data == null) {
-      return _name;
+    if (data == null) {
+      return name;
     }
-    return "$_name:${Json.stringify(_data)}";
+    return '$name:${Json.stringify(data)}';
   }
 }

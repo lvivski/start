@@ -12,5 +12,4 @@ abstract class SocketBase {
   Stream on(String message_name);
 
   void close([int status, String reason]);
-
 }
