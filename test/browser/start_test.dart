@@ -7,9 +7,10 @@ import 'package:unittest/unittest.dart';
 import 'package:unittest/mock.dart';
 import 'package:unittest/html_config.dart';
 import 'package:start/socket.dart';
+import 'package:start/src/message.dart';
 
-part "message_test.dart";
-part "browser_socket_test.dart";
+part '../message_test.dart';
+part 'socket_test.dart';
 
 main() {
   useHtmlConfiguration();

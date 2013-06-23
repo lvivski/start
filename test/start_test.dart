@@ -7,9 +7,10 @@ import 'package:unittest/unittest.dart';
 import 'package:unittest/mock.dart';
 
 import 'package:start/start.dart';
+import 'package:start/src/message.dart';
 
 part 'message_test.dart';
-part 'vm_socket_test.dart';
+part 'socket_test.dart';
 
 main() {
   message_tests();
