@@ -1,20 +1,20 @@
 import 'dart:html';
 import 'dart:json';
 
-main() {
-  var ws = new WebSocket("ws://127.0.0.1:3000/socket");
+import 'package:start/socket.dart';
 
-  ws.onOpen.listen((a) {
-    ws.send('ping');
+main() {
+  var socket = new Socket('ws://127.0.0.1:3000/socket');
+
+  socket.onOpen.listen((a) {
+    socket.send('connected');
   });
 
-  ws.onClose.listen((c) {
+  socket.onClose.listen((c) {
     print('[${c.code}] ${c.reason}');
   });
 
-  ws.onMessage.listen((m) {
-    if (m.data == "pong") {
-      ws.send('pong');
-    }
+  socket.on('ping').listen((data) {
+    socket.send('pong');
   });
 }

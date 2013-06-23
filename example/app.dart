@@ -10,8 +10,8 @@ void main() {
     });
 
     app.ws('/socket').listen((socket) {
-      socket.on('ping').listen((data) {
-        socket.send('pong');
+      socket.on('connected').listen((data) {
+        socket.send('ping');
       });
 
       socket.on('pong').listen((data) {
