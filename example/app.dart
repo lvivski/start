@@ -1,7 +1,5 @@
 import 'package:start/start.dart';
 
-import 'dart:io';
-
 void main() {
   start(public: 'web', port: 3000).then((Server app) {
 
@@ -12,21 +10,12 @@ void main() {
     });
 
     app.ws('/socket').listen((socket) {
-      socket.on('ping', (data) { socket.send('pong'); })
-        .on('pong', (data) { socket.close(1000, 'requested'); });
-    });
+      socket.on('ping').listen((data) {
+        socket.send('pong');
+      });
 
-    app.get('/file').listen((request) { // http://localhost:3000/file?name=web/stylesheets/main.css
-      var file = new File(request.param('name'));
-      file.exists().then((found) {
-        if (found) {
-          file.readAsString().then((content) {
-            request.response.send(content);
-          });
-        } else {
-          request.response.status(404);
-          request.response.close();
-        }
+      socket.on('pong').listen((data) {
+        socket.close(1000, 'requested');
       });
     });
   });
