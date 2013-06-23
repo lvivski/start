@@ -36,31 +36,11 @@ class Response {
   }
 
   Response cookie(String name, String val, [Map options]) {
-    var cookie = new Cookie(name, val);
+    var cookie = new Cookie(name, val),
+        cookieMirror = reflect(cookie);
 
     options.forEach((option, value) {
-      switch (option) {
-        case 'domain':
-          cookie.domain = value;
-          break;
-        case 'expires':
-          cookie.expires = value;
-          break;
-        case 'httpOnly':
-          cookie.httpOnly = value;
-          break;
-        case 'maxAge':
-          cookie.maxAge = value;
-          break;
-        case 'path':
-          cookie.path = value;
-          break;
-        case 'secure':
-          cookie.secure = value;
-          break;
-        default:
-          break;
-      }
+      cookieMirror.setField(new Symbol(option), value);
     });
 
     return header('Set-Cookie', cookie.toString());
