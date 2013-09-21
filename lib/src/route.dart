@@ -63,9 +63,12 @@ class Route {
     }
 
     var keys = [];
+    
+    if (!strict) {
+      path += '/?';
+    }
 
-    path = path.concat(strict ? '' : '/?')
-        .replaceAllMapped(new RegExp(r'(\.)?:(\w+)(\?)?'), (Match placeholder) {
+    path = path.replaceAllMapped(new RegExp(r'(\.)?:(\w+)(\?)?'), (Match placeholder) {
           var replace = new StringBuffer('(?:');
 
           if (placeholder[1] != null) {
