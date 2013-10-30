@@ -2,7 +2,7 @@ library start;
 
 import 'dart:io' hide Socket;
 import 'dart:async';
-import 'dart:json' as Json;
+import 'dart:convert';
 import 'dart:mirrors';
 
 import 'src/socket_base.dart';
