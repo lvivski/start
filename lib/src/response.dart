@@ -89,14 +89,14 @@ class Response {
 
   json(data) {
     if (data is Map || data is List) {
-      data = Json.stringify(data);
+      data = JSON.encode(data);
     }
     send(data);
   }
 
   jsonp(String name, data) {
     if (data is Map) {
-      data = Json.stringify(data);
+      data = JSON.encode(data);
     }
     send("$name('$data');");
   }

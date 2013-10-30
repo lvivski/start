@@ -1,6 +1,6 @@
 library start_message;
 
-import 'dart:json' as Json;
+import 'dart:convert';
 
 class Message {
   String name;
@@ -18,7 +18,7 @@ class Message {
     var data = null;
 
     if (parts.length > 1 && !parts[1].isEmpty) {
-      data = Json.parse(parts.sublist(1).join(':'));
+      data = JSON.decode(parts.sublist(1).join(':'));
     }
 
     return new Message(name, data);
@@ -30,6 +30,6 @@ class Message {
     if (data == null) {
       return name;
     }
-    return '$name:${Json.stringify(data)}';
+    return '$name:${JSON.encode(data)}';
   }
 }
