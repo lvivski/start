@@ -34,7 +34,7 @@ io_socket_tests() {
       };
       Message expected_msg = new Message(msg_name, msg_data);
 
-      socket.send(msg_name, data: msg_data);
+      socket.send(msg_name, msg_data);
 
       ws.getLogs(callsTo("add", expected_msg.toPacket())).verify(happenedOnce);
     });
