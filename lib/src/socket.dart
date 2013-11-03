@@ -9,7 +9,7 @@ class Socket implements SocketBase {
   Socket(this._ws) {
     _messages = _messageController.stream.asBroadcastStream();
     _ws.listen((data) {
-      var msg = new Message(data);
+      var msg = new Message.fromPacket(data);
       _messageController.add(msg);
     },
     onDone: () {
@@ -17,13 +17,13 @@ class Socket implements SocketBase {
     });
   }
 
-  void send(String messageName, { data }) {
+  void send(String messageName, [ data ]) {
     var message = new Message(messageName, data);
     _ws.add(message.toPacket());
   }
 
   Stream on(String messageName) {
-    return _messages.where((msg) => msg.name == messageName);
+    return _messages.where((msg) => msg.name == messageName).map((msg) => msg.data);
   }
 
   void close([int status, String reason]) {

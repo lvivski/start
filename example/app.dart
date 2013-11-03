@@ -11,7 +11,7 @@ void main() {
 
     app.ws('/socket').listen((socket) {
       socket.on('connected').listen((data) {
-        socket.send('ping');
+        socket.send('ping', 'data-from-ping');
       });
 
       socket.on('pong').listen((data) {

@@ -15,6 +15,6 @@ main() {
   });
 
   socket.on('ping').listen((data) {
-    socket.send('pong');
+    socket.send('pong', 'data-from-pong');
   });
 }
