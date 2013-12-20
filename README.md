@@ -1,4 +1,4 @@
-# Start
+# WebStart
 Sinatra inspired web framework.
 
 [![](https://drone.io/lvivski/start/status.png)](https://drone.io/lvivski/start/latest)

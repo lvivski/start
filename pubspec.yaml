@@ -1,8 +1,10 @@
-name: start
+name: webstart
 version: 0.1.1
-author: Yehor Lvivski <lvivski@gmail.com>
+authors: 
+- Collin Bell <cbell39@utk.edu>
+- Yehor Lvivski <lvivski@gmail.com>
 description: Sinatra inspired Web framework
-homepage: http://github.com/lvivski/start
+homepage: http://github.com/CyborgMedia/start
 environment:
   sdk: '>=0.8.10+6 <2.0.0'
 dependencies:

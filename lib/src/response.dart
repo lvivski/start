@@ -106,4 +106,19 @@ class Response {
     header('Location', url);
     _response.close();
   }
+  
+  render(String view){
+    print(view);
+    File html_file = new File(view);
+    html_file.readAsString().then((html_string){
+      send(html_string);  
+    },
+    onError: (e){
+      // Invoked when the future is completed with an error.
+      send(e.toString());
+    }
+    
+    
+  ); 
+ }
 }
