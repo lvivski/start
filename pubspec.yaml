@@ -1,8 +1,6 @@
 name: start
 version: 0.1.1
-authors:
-- Yehor Lvivski <lvivski@gmail.com>
-- Collin Bell <cbell39@utk.edu>
+author: Yehor Lvivski <lvivski@gmail.com>
 description: Sinatra inspired Web framework
 homepage: https://github.com/lvivski/start
 environment:
