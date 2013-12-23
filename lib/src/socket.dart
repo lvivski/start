@@ -3,17 +3,22 @@ part of start;
 class Socket implements SocketBase {
   WebSocket _ws;
 
-  var _messageController = new StreamController();
+  var _messageController = new StreamController(),
+      _openController = new StreamController(),
+      _closeController = new StreamController();
+
   Stream _messages;
 
   Socket(this._ws) {
     _messages = _messageController.stream.asBroadcastStream();
+
+    _openController.add(_ws);
     _ws.listen((data) {
       var msg = new Message.fromPacket(data);
       _messageController.add(msg);
     },
     onDone: () {
-      print('[${_ws.closeCode}] ${_ws.closeReason}');
+      _closeController.add(_ws);
     });
   }
 
@@ -25,6 +30,10 @@ class Socket implements SocketBase {
   Stream on(String messageName) {
     return _messages.where((msg) => msg.name == messageName).map((msg) => msg.data);
   }
+
+  Future get onOpen => _openController.stream;
+
+  Future get onClose => _closeController.stream;
 
   void close([int status, String reason]) {
     _ws.close(status, reason);

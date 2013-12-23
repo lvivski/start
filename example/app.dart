@@ -15,7 +15,16 @@ void main() {
       });
 
       socket.on('pong').listen((data) {
+        print('pong: $data');
         socket.close(1000, 'requested');
+      });
+
+      socket.onOpen.listen((ws) {
+        print('new socket opened');
+      });
+
+      socket.onClose.listen((ws) {
+        print('socket has been closed');
       });
     });
   });
