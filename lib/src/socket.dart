@@ -1,9 +1,9 @@
 part of start;
 
 class Socket implements SocketBase {
-  WebSocket _ws;
+  final WebSocket _ws;
+  final _messageController = new StreamController();
 
-  var _messageController = new StreamController();
   Stream _messages;
 
   Socket(this._ws) {

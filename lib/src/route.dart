@@ -1,33 +1,35 @@
 part of start;
 
 class Route {
-  String _method, _dir;
-  Map _path;
-  StreamController _controller = new StreamController();
+  final String _method;
+  final Map _path;
+  final StreamController _controller = new StreamController();
   Stream stream;
+  String _dir;
 
-  Route(String method, path) {
-    _method = method.toUpperCase();
-    _path = _normalize(path);
+  Route(String method, path) :
+    _method = method.toUpperCase(),
+    _path = _normalize(path) {
     stream = _controller.stream;
   }
 
-  Route.file(this._dir) {
+  Route.file(this._dir) :
+    _method = null, _path = null {
     stream = _controller.stream;
   }
 
-  Route.ws(dynamic path) {
-    _method = 'WS';
-    _path = _normalize(path);
+  Route.ws(dynamic path) :
+    _method = 'WS',
+    _path = _normalize(path) {
     stream = _controller.stream.transform(new WebSocketTransformer()).map((WebSocket ws) => new Socket(ws));
   }
 
-  match(HttpRequest req) {
+  bool match(HttpRequest req) {
     return ((_method == req.method || _method == 'WS')
         && _path['regexp'].hasMatch(req.uri.path));
   }
 
-  handle(HttpRequest req) {
+  void handle(HttpRequest req) {
     if (_dir != null) {
       var path = _dir + req.uri.path,
           directory = new Directory(path),
@@ -51,7 +53,7 @@ class Route {
     }
   }
 
-  Map _normalize(path, [bool strict = false]) {
+  static Map _normalize(dynamic path, [bool strict = false]) {
     if (path is RegExp) {
       return {
         'regexp': path,
@@ -63,7 +65,7 @@ class Route {
     }
 
     var keys = [];
-    
+
     if (!strict) {
       path += '/?';
     }
