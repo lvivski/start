@@ -1,11 +1,10 @@
 part of start;
 
 class Socket implements SocketBase {
-  WebSocket _ws;
-
-  var _messageController = new StreamController(),
-      _openController = new StreamController(),
-      _closeController = new StreamController();
+  final WebSocket _ws;
+  final _messageController = new StreamController(),
+        _openController = new StreamController(),
+        _closeController = new StreamController();
 
   Stream _messages;
 

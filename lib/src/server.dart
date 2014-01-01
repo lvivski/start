@@ -4,9 +4,9 @@ typedef void HttpHandler(Request req, Response r);
 typedef void WsHandler(Socket s);
 
 class Server {
+  final String _public;
+  final _routes = new List<Route>();
   HttpServer _server;
-  String _public;
-  var _routes = new List<Route>();
 
   Server(this._public);
 

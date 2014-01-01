@@ -1,8 +1,16 @@
-part of start_test;
+library socket_test;
+
+import 'dart:io' hide Socket;
+
+import 'package:unittest/unittest.dart';
+import 'package:unittest/mock.dart';
+
+import 'package:start/start.dart';
+import 'package:start/src/message.dart';
 
 class MockWebSocket extends Mock implements WebSocket {}
 
-io_socket_tests() {
+void main() {
   group("Socket", () {
     MockWebSocket ws;
     Socket socket;

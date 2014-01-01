@@ -1,17 +1,18 @@
+library start.socket;
+
 import 'dart:html';
 import 'dart:async';
 
 import 'src/socket_base.dart';
 
 class Socket implements SocketBase {
-  WebSocket _ws;
-
-  var _messageController = new StreamController();
+  final _messageController = new StreamController();
+  final WebSocket _ws;
   Stream _messages;
 
-  Socket(String url) {
+  Socket(String url) :
+  this._ws = new WebSocket(url) {
     _messages = _messageController.stream.asBroadcastStream();
-    _ws = new WebSocket(url);
     _ws.onMessage.listen((e) {
       var msg = new Message.fromPacket(e.data);
       _messageController.add(msg);
