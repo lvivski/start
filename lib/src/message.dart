@@ -3,8 +3,8 @@ library start_message;
 import 'dart:convert';
 
 class Message {
-  String name;
-  var data;
+  final String name;
+  final Object data;
 
   Message(this.name, [this.data]);
 

@@ -1,7 +1,7 @@
 part of start;
 
 class Request {
-  HttpRequest _request;
+  final HttpRequest _request;
   Response response;
   Map params;
 
@@ -13,7 +13,7 @@ class Request {
       _request.headers['accept'].where((name) => name.split(',').indexOf(type) ).length > 0;
 
   bool isMime(String type) =>
-      _request.headers['content-type'].where((value) => value == type).length > 0;
+      _request.headers['content-type'].where((value) => value == type).isNotEmpty;
 
   bool get isForwarded => _request.headers['x-forwarded-host'] != null;
 
@@ -21,7 +21,7 @@ class Request {
 
   String get path => _request.uri.path;
 
-  get uri => _request.uri;
+  Uri get uri => _request.uri;
 
   String param(String name) {
     if (params.containsKey(name) && params[name] != null) {
