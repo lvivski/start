@@ -17,7 +17,7 @@ class Request {
 
   bool get isForwarded => _request.headers['x-forwarded-host'] != null;
 
-  Stream get input => _request;
+  HttpRequest get input => _request;
 
   String get path => _request.uri.path;
 
