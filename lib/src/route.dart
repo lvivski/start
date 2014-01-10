@@ -7,9 +7,9 @@ class Route {
   Stream stream;
   String _dir;
 
-  Route(String method, path) :
+  Route(String method, path, { List<String> keys: null }) :
     _method = method.toUpperCase(),
-    _path = _normalize(path) {
+    _path = _normalize(path, keys: keys) {
     stream = _controller.stream;
   }
 
@@ -18,9 +18,9 @@ class Route {
     stream = _controller.stream;
   }
 
-  Route.ws(dynamic path) :
+  Route.ws(dynamic path, { List<String> keys: null }) :
     _method = 'WS',
-    _path = _normalize(path) {
+    _path = _normalize(path, keys: keys) {
     stream = _controller.stream.transform(new WebSocketTransformer()).map((WebSocket ws) => new Socket(ws));
   }
 
@@ -53,18 +53,18 @@ class Route {
     }
   }
 
-  static Map _normalize(dynamic path, [bool strict = false]) {
+  static Map _normalize(dynamic path, { List<String> keys: null, bool strict: false }) {
     if (path is RegExp) {
       return {
         'regexp': path,
-        'keys': []
+        'keys': (keys == null) ? [] : keys
       };
     }
     if (path is List) {
       path = '(${path.join('|')})';
     }
 
-    var keys = [];
+    keys = [];
 
     if (!strict) {
       path += '/?';
