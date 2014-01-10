@@ -27,42 +27,42 @@ class Server {
     });
   }
 
-  Stream<Socket> ws(path, { List<String> keys: null} ) {
+  Stream<Socket> ws(path, { List<String> keys } ) {
     var route = new Route.ws(path, keys: keys);
     _routes.add(route);
 
     return route.stream;
   }
 
-  Stream<Request> get(path, { List<String> keys: null}) {
+  Stream<Request> get(path, { List<String> keys }) {
     var route = new Route('get', path, keys: keys);
     _routes.add(route);
 
     return route.stream;
   }
 
-  Stream<Request> options(path, { List<String> keys: null}) {
+  Stream<Request> options(path, { List<String> keys }) {
     var route = new Route('options', path, keys: keys);
     _routes.add(route);
 
     return route.stream;
   }
 
-  Stream<Request> post(path, { List<String> keys: null}) {
+  Stream<Request> post(path, { List<String> keys }) {
     var route = new Route('post', path, keys: keys);
     _routes.add(route);
 
     return route.stream;
   }
 
-  Stream<Request> put(path, { List<String> keys: null}) {
+  Stream<Request> put(path, { List<String> keys }) {
     var route = new Route('put', path, keys: keys);
     _routes.add(route);
 
     return route.stream;
   }
 
-  Stream delete(path, { List<String> keys: null}) {
+  Stream delete(path, { List<String> keys }) {
     var route = new Route('delete', path, keys: keys);
     _routes.add(route);
 
