@@ -1,7 +1,18 @@
 import 'package:start/start.dart';
 
+import 'package:http_server/http_server.dart';
+import 'package:logging/logging.dart';
+
 void main() {
-  start(public: 'web', port: 3000).then((Server app) {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((rec) {
+    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
+
+  start(port: 3000).then((Server app) {
+
+    var staticFiles = new VirtualDirectory('.')
+      ..allowDirectoryListing = true;
 
     app.get('/hello/:name.:lastname?').listen((request) {
       request.response
@@ -26,6 +37,11 @@ void main() {
       socket.onClose.listen((ws) {
         print('socket has been closed');
       });
+    });
+
+    // everything else
+    app.get(new RegExp('^/.*')).listen((request) {
+      staticFiles.serveRequest(request.input);
     });
   });
 }

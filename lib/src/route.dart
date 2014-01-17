@@ -5,16 +5,10 @@ class Route {
   final Map _path;
   final StreamController _controller = new StreamController();
   Stream stream;
-  String _dir;
 
   Route(String method, path, { List<String> keys }) :
     _method = method.toUpperCase(),
     _path = _normalize(path, keys: keys) {
-    stream = _controller.stream;
-  }
-
-  Route.file(this._dir) :
-    _method = null, _path = null {
     stream = _controller.stream;
   }
 
@@ -30,20 +24,7 @@ class Route {
   }
 
   void handle(HttpRequest req) {
-    if (_dir != null) {
-      var path = _dir + req.uri.path,
-          directory = new Directory(path),
-          response = new Response(req.response);
-
-      directory.exists().then((found) {
-        if (found) {
-          response.sendFile(directory.path + '/index.html');
-        } else {
-          response.sendFile(path);
-        }
-      },
-      onError: (e) => print(e));
-    } else if (_method == 'WS') {
+    if (_method == 'WS') {
       _controller.add(req);
     } else {
       var request = new Request(req);
