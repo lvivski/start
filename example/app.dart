@@ -11,8 +11,7 @@ void main() {
 
   start(port: 3000).then((Server app) {
 
-    var staticFiles = new VirtualDirectory('.')
-      ..allowDirectoryListing = true;
+    app.static('web');
 
     app.get('/hello/:name.:lastname?').listen((request) {
       request.response
@@ -37,11 +36,6 @@ void main() {
       socket.onClose.listen((ws) {
         print('socket has been closed');
       });
-    });
-
-    // everything else
-    app.get(new RegExp('^/.*')).listen((request) {
-      staticFiles.serveRequest(request.input);
     });
   });
 }

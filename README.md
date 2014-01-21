@@ -4,13 +4,15 @@ Sinatra inspired web framework.
 
 [![](https://drone.io/lvivski/start/status.png)](https://drone.io/lvivski/start/latest)
 
-It has simple API for dynamic request, websockets and for JSON responses.
+It has simple API to serve static files, handle dynamic requests, websockets and create JSON responses.
 
 ```dart
 import 'package:start/start.dart';
 
 void main() {
   start(port: 3000).then((Server app) {
+
+    app.static('web');
 
     app.get('/hello/:name.:lastname?').listen((request) {
       request.response
@@ -44,6 +46,7 @@ listen(host, port) // start the server (it's performed by the start function)
 stop() // stops the server
 get|post|put|delete(String route) // adds a handler, returns a Stream<Request>
 ws(String route) // adds WebSocket handler, returns a Stream
+static(String path) // serves static files from `path`
 ```
 
 #### Routes
@@ -89,24 +92,6 @@ render(viewName, [Map params]) // renders server view
 send(message) // sends message
 on(message, action) // adds handler to message
 close(status, reason) // closes socket
-```
-
-## Sending static files
-
-Use the `http_server` package to serve files and directories.
-
-```dart
-import 'package:http_server/http_server.dart';
-
-// ...
-
-var staticFiles = new VirtualDirectory('.')
-  ..allowDirectoryListing = true;
-      
-// everything else
-app.get(new RegExp('^/.*')).listen((request) {
-  staticFiles.serveRequest(request.input);
-});
 ```
 
 ## License

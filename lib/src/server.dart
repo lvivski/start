@@ -7,6 +7,7 @@ class Server {
   final Logger log = new Logger('start.server');
   final List<Route> _routes = new List<Route>();
   HttpServer _server;
+  VirtualDirectory _staticServer;
 
   Server();
 
@@ -18,9 +19,11 @@ class Server {
     return HttpServer.bind(host, port).then((HttpServer server){
       _server = server;
       _server.listen((HttpRequest req) {
-        var route = _routes.firstWhere((Route route) => route.match(req));
+        var route = _routes.firstWhere((Route route) => route.match(req), orElse: () => null);
         if (route != null) {
           route.handle(req);
+        } else if (_staticServer != null) {
+          _staticServer.serveRequest(req);
         } else {
           _send404(req);
         }
@@ -30,6 +33,18 @@ class Server {
 
       return this;
     });
+  }
+
+  void static(path) {
+    _staticServer = new VirtualDirectory(path)
+      ..allowDirectoryListing = true
+      ..errorPageHandler = _send404;
+
+    _staticServer.directoryHandler = (Directory dir, HttpRequest req) {
+      var filePath = '${dir.path}${Platform.pathSeparator}index.html';
+      var file = new File(filePath);
+      _staticServer.serveFile(file, req);
+    };
   }
 
   Stream<Socket> ws(path, { List<String> keys } ) {
@@ -76,7 +91,7 @@ class Server {
 
   void _send404(HttpRequest req) {
     req.response
-      ..statusCode = 404
+      ..statusCode = HttpStatus.NOT_FOUND
       ..close();
   }
 }

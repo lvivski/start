@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:mirrors';
 import 'package:logging/logging.dart';
+import 'package:http_server/http_server.dart';
 
 import 'src/socket_base.dart';
 

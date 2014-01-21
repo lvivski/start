@@ -7,8 +7,8 @@ environment:
   sdk: '>=0.8.10+6 <2.0.0'
 dependencies:
   logging: any
+  http_server: any
 
 dev_dependencies:
   unittest: '>=0.2.7'
   browser: any
-  http_server: any
