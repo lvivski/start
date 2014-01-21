@@ -1,15 +1,16 @@
 # Start
+
 Sinatra inspired web framework.
 
 [![](https://drone.io/lvivski/start/status.png)](https://drone.io/lvivski/start/latest)
 
-It has simple API to serve static files from `web` folder (by default), websockets and for JSON responses.
+It has simple API for dynamic request, websockets and for JSON responses.
 
 ```dart
 import 'package:start/start.dart';
 
 void main() {
-  start(public: 'web', port: 3000).then((Server app) {
+  start(port: 3000).then((Server app) {
 
     app.get('/hello/:name.:lastname?').listen((request) {
       request.response
@@ -28,12 +29,16 @@ void main() {
 ## API
 
 ### start()
-You start the server with `start()` function. It has 4 named arguments and returns `Server` future
+
+You start the server with `start()` function. It has 3 named arguments and
+returns `Server` future
+
 ```dart
-start({String public: 'web', String host: '127.0.0.1', int port: 80})
+start({String host: '127.0.0.1', int port: 80})
 ```
 
 ### Server
+
 ```dart
 listen(host, port) // start the server (it's performed by the start function)
 stop() // stops the server
@@ -42,10 +47,15 @@ ws(String route) // adds WebSocket handler, returns a Stream
 ```
 
 #### Routes
-Route is a string with placeholders like `:firstname` its value is available through the Request `param()` method. Placeholders should start with colon `:`, if placeholder ends with a question mark `?` it's optional.
-`"/hello/:firstname.:lastname?"` will match `"/hello/john"` and `"/hello/john.doe"`
+
+Route is a string with placeholders like `:firstname` its value is
+available through the Request `param()` method. Placeholders should start
+with colon `:`, if placeholder ends with a question mark `?` it's optional.
+`"/hello/:firstname.:lastname?"` will match `"/hello/john"` and
+`"/hello/john.doe"`
 
 ### Request
+
 ```dart
 header(String name) // get header
 accepts(String type) // check accept header
@@ -56,6 +66,7 @@ param(String name) // get query param by name
 ```
 
 ### Response
+
 ```dart
 header(String name, [value]) // get or set header
 get(String name) // get header
@@ -67,20 +78,39 @@ cookie(name, val) // sets cookie
 add(string) // add a string to response
 close() // closes response
 send(string) // sends string and closes response
-sendFile(path) // sends file content or 404 if not exists
 json(Map data) // stringifies map and sends it
 jsonp(String name, Map data) // stringifies map and sends it in callback as `name(data)`
 render(viewName, [Map params]) // renders server view
 ```
 
 ### Socket
+
 ```dart
 send(message) // sends message
 on(message, action) // adds handler to message
 close(status, reason) // closes socket
 ```
 
+## Sending static files
+
+Use the `http_server` package to serve files and directories.
+
+```dart
+import 'package:http_server/http_server.dart';
+
+// ...
+
+var staticFiles = new VirtualDirectory('.')
+  ..allowDirectoryListing = true;
+      
+// everything else
+app.get(new RegExp('^/.*')).listen((request) {
+  staticFiles.serveRequest(request.input);
+});
+```
+
 ## License
+
 (The MIT License)
 
 Copyright (c) 2012 Yehor Lvivski <lvivski@gmail.com>

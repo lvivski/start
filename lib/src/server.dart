@@ -4,11 +4,11 @@ typedef void HttpHandler(Request req, Response r);
 typedef void WsHandler(Socket s);
 
 class Server {
-  final String _public;
-  final _routes = new List<Route>();
+  final Logger log = new Logger('start.server');
+  final List<Route> _routes = new List<Route>();
   HttpServer _server;
 
-  Server(this._public);
+  Server();
 
   void stop() {
     _server.close();
@@ -18,10 +18,15 @@ class Server {
     return HttpServer.bind(host, port).then((HttpServer server){
       _server = server;
       _server.listen((HttpRequest req) {
-        _routes.firstWhere((Route route) => route.match(req),
-            orElse: () => new Route.file(_public))
-            .handle(req);
+        var route = _routes.firstWhere((Route route) => route.match(req));
+        if (route != null) {
+          route.handle(req);
+        } else {
+          _send404(req);
+        }
       });
+
+      log.fine('Server started, listening on $host:$port');
 
       return this;
     });
@@ -67,5 +72,11 @@ class Server {
     _routes.add(route);
 
     return route.stream;
+  }
+
+  void _send404(HttpRequest req) {
+    req.response
+      ..statusCode = 404
+      ..close();
   }
 }

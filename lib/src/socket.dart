@@ -9,6 +9,7 @@ class Socket implements SocketBase {
   Stream _messages;
 
   Socket(this._ws) {
+    // TODO remove this broadcast stream
     _messages = _messageController.stream.asBroadcastStream();
 
     _openController.add(_ws);
@@ -30,9 +31,9 @@ class Socket implements SocketBase {
     return _messages.where((msg) => msg.name == messageName).map((msg) => msg.data);
   }
 
-  Future get onOpen => _openController.stream;
+  Stream get onOpen => _openController.stream;
 
-  Future get onClose => _closeController.stream;
+  Stream get onClose => _closeController.stream;
 
   void close([int status, String reason]) {
     _ws.close(status, reason);

@@ -64,29 +64,6 @@ class Response {
     _response.close();
   }
 
-  Future sendFile(String path) {
-    var file = new File(path);
-    return file.exists()
-        .then((found) => found ? found : throw 404)
-        .then((_) => file.length())
-        .then((length) => header('Content-Length', length))
-        .then((_) => mime_type(file))
-        .then((_) => file.openRead().pipe(_response))
-        .then((_) => _response.close())
-        .catchError((_) {
-          _response.statusCode = HttpStatus.NOT_FOUND;
-          _response.close();
-        }, test: (e) => e == 404);
-  }
-
-  mime_type(File file) {
-    for (final ext in EXT_TO_CONTENT_TYPE.keys) {
-      if (file.path.endsWith(ext)) {
-        header('Content-Type', EXT_TO_CONTENT_TYPE[ext]);
-      }
-    }
-  }
-
   json(data) {
     if (data is Map || data is List) {
       data = JSON.encode(data);
