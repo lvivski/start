@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Start by lvivski</title>
-    
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -17,61 +17,117 @@
       <header>
         <h1>Start</h1>
         <p>Sinatra inspired web development framework for Dart</p>
+
         <p class="view"><a href="https://github.com/lvivski/start">View the Project on GitHub <small>lvivski/start</small></a></p>
+
+
         <ul>
           <li><a href="https://github.com/lvivski/start/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/lvivski/start/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/lvivski/start">Fork On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/lvivski/start">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
-        <p>Small server-side Dart web development framework.</p>
+        <h1>
+<a name="start" class="anchor" href="#start"><span class="octicon octicon-link"></span></a>Start</h1>
 
-<div class="highlight">
-<pre>#<span class="k">library</span><span class="p">(</span><span class="s1">'app'</span><span class="p">);</span>
+<p>Sinatra inspired web framework.</p>
 
-#<span class="k">import</span><span class="p">(</span><span class="s1">'lib/start.dart'</span><span class="p">);</span>
-#<span class="k">import</span><span class="p">(</span><span class="s1">'lib/server.dart'</span><span class="p">);</span>
+<p><a href="https://drone.io/lvivski/start/latest"><img src="https://drone.io/lvivski/start/status.png" alt=""></a></p>
 
-<span class="kd">class</span> <span class="nc">App</span> <span class="kd">extends</span> <span class="n">Server</span> <span class="p">{</span>
-  <span class="n">App</span><span class="p">()</span><span class="o">:</span> <span class="k">super</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">res</span>
-        <span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">,</span> <span class="s1">'text/html; charset=UTF-8'</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s1">'Hello World'</span><span class="p">);</span>
-    <span class="p">});</span>
+<p>It has simple API to serve static files, handle dynamic requests, websockets and create JSON responses.</p>
 
-    <span class="kd">get</span><span class="p">(</span><span class="s1">'/hello/:name.:lastname?'</span><span class="p">,</span> <span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">res</span>
-        <span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">,</span> <span class="s1">'text/html; charset=UTF-8'</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s1">'Hello, '</span> <span class="o">+</span> <span class="n">req</span><span class="p">.</span><span class="n">param</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span> <span class="o">+</span> <span class="n">req</span><span class="p">.</span><span class="n">param</span><span class="p">(</span><span class="s1">'lastname'</span><span class="p">));</span>
-    <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight highlight-dart"><pre><span class="k">import</span> <span class="s1">'package:start/start.dart'</span><span class="p">;</span>
 
 <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">new</span> <span class="n">Start</span><span class="p">.</span><span class="n">createServer</span><span class="p">(</span><span class="k">new</span> <span class="n">App</span><span class="p">(),</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span> <span class="m">3000</span><span class="p">);</span>
+  <span class="n">start</span><span class="p">(</span><span class="nl">port:</span> <span class="m">3000</span><span class="p">).</span><span class="n">then</span><span class="p">((</span><span class="n">Server</span> <span class="n">app</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">app</span><span class="p">.</span><span class="kd">static</span><span class="p">(</span><span class="s1">'web'</span><span class="p">);</span>
+
+    <span class="n">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'/hello/:name.:lastname?'</span><span class="p">).</span><span class="n">listen</span><span class="p">((</span><span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">request</span><span class="p">.</span><span class="n">response</span>
+        <span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s1">'Content-Type'</span><span class="p">,</span> <span class="s1">'text/html; charset=UTF-8'</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s1">'Hello, </span><span class="si">${</span><span class="n">request</span><span class="p">.</span><span class="n">param</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span><span class="si">}</span><span class="s1"> </span><span class="si">${</span><span class="n">request</span><span class="p">.</span><span class="n">param</span><span class="p">(</span><span class="s1">'lastname'</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="n">app</span><span class="p">.</span><span class="n">ws</span><span class="p">(</span><span class="s1">'/socket'</span><span class="p">).</span><span class="n">listen</span><span class="p">((</span><span class="n">socket</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">socket</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="s1">'ping'</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span> <span class="n">socket</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s1">'pong'</span><span class="p">);</span> <span class="p">})</span>
+        <span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="s1">'pong'</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span> <span class="n">socket</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="s1">'requested'</span><span class="p">);</span> <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
 <span class="p">}</span>
-</pre>
-</div>
+</pre></div>
 
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
 
-<h2>Instructions</h2>
+<h3>
+<a name="start-1" class="anchor" href="#start-1"><span class="octicon octicon-link"></span></a>start()</h3>
 
-<ul>
-<li>Download latest Dart SDK from <a href="http://www.dartlang.org/docs/getting-started/sdk/">http://www.dartlang.org/docs/getting-started/sdk/</a></li>
-<li>Checkout this repository and
-<code>
-cd
-</code>
-to its folder</li>
-<li>run
-<code>
-$PATH_TO_DART_SDK/bin/dart app.dart
-</code>
-</li>
-<li>open <a href="http://127.0.0.1:3000/">http://127.0.0.1:3000/</a></li>
-</ul><h2>License</h2>
+<p>You start the server with <code>start()</code> function. It has 3 named arguments and
+returns <code>Server</code> future</p>
+
+<div class="highlight highlight-dart"><pre><span class="n">start</span><span class="p">({</span><span class="kt">String</span> <span class="nl">host:</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span> <span class="kt">int</span> <span class="nl">port:</span> <span class="m">80</span><span class="p">})</span>
+</pre></div>
+
+<h3>
+<a name="server" class="anchor" href="#server"><span class="octicon octicon-link"></span></a>Server</h3>
+
+<div class="highlight highlight-dart"><pre><span class="n">listen</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="c1">// start the server (it's performed by the start function)</span>
+<span class="n">stop</span><span class="p">()</span> <span class="c1">// stops the server</span>
+<span class="kd">get</span><span class="o">|</span><span class="n">post</span><span class="o">|</span><span class="n">put</span><span class="o">|</span><span class="n">delete</span><span class="p">(</span><span class="kt">String</span> <span class="n">route</span><span class="p">)</span> <span class="c1">// adds a handler, returns a Stream&lt;Request&gt;</span>
+<span class="n">ws</span><span class="p">(</span><span class="kt">String</span> <span class="n">route</span><span class="p">)</span> <span class="c1">// adds WebSocket handler, returns a Stream</span>
+<span class="kd">static</span><span class="p">(</span><span class="kt">String</span> <span class="n">path</span><span class="p">)</span> <span class="c1">// serves static files from `path`</span>
+</pre></div>
+
+<h4>
+<a name="routes" class="anchor" href="#routes"><span class="octicon octicon-link"></span></a>Routes</h4>
+
+<p>Route is a string with placeholders like <code>:firstname</code> its value is
+available through the Request <code>param()</code> method. Placeholders should start
+with colon <code>:</code>, if placeholder ends with a question mark <code>?</code> it's optional.
+<code>"/hello/:firstname.:lastname?"</code> will match <code>"/hello/john"</code> and
+<code>"/hello/john.doe"</code></p>
+
+<h3>
+<a name="request" class="anchor" href="#request"><span class="octicon octicon-link"></span></a>Request</h3>
+
+<div class="highlight highlight-dart"><pre><span class="n">header</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">)</span> <span class="c1">// get header</span>
+<span class="n">accepts</span><span class="p">(</span><span class="kt">String</span> <span class="n">type</span><span class="p">)</span> <span class="c1">// check accept header</span>
+<span class="n">input</span> <span class="c1">// raw HttpRequest stream</span>
+<span class="n">path</span> <span class="c1">// requested URI path</span>
+<span class="n">uri</span> <span class="c1">// requested URI</span>
+<span class="n">param</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">)</span> <span class="c1">// get query param by name</span>
+</pre></div>
+
+<h3>
+<a name="response" class="anchor" href="#response"><span class="octicon octicon-link"></span></a>Response</h3>
+
+<div class="highlight highlight-dart"><pre><span class="n">header</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">,</span> <span class="p">[</span><span class="n">value</span><span class="p">])</span> <span class="c1">// get or set header</span>
+<span class="kd">get</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">)</span> <span class="c1">// get header</span>
+<span class="kd">set</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">)</span> <span class="c1">// set header</span>
+<span class="n">type</span><span class="p">(</span><span class="n">contentType</span><span class="p">)</span> <span class="c1">// set Content-Type</span>
+<span class="n">cache</span><span class="p">(</span><span class="kt">String</span> <span class="n">cacheType</span><span class="p">)</span> <span class="c1">// set Cache-Control</span>
+<span class="n">status</span><span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="c1">// sets response status code</span>
+<span class="n">cookie</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="c1">// sets cookie</span>
+<span class="n">add</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="c1">// add a string to response</span>
+<span class="n">close</span><span class="p">()</span> <span class="c1">// closes response</span>
+<span class="n">send</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="c1">// sends string and closes response</span>
+<span class="n">json</span><span class="p">(</span><span class="n">Map</span> <span class="n">data</span><span class="p">)</span> <span class="c1">// stringifies map and sends it</span>
+<span class="n">jsonp</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">,</span> <span class="n">Map</span> <span class="n">data</span><span class="p">)</span> <span class="c1">// stringifies map and sends it in callback as `name(data)`</span>
+<span class="n">render</span><span class="p">(</span><span class="n">viewName</span><span class="p">,</span> <span class="p">[</span><span class="n">Map</span> <span class="n">params</span><span class="p">])</span> <span class="c1">// renders server view</span>
+</pre></div>
+
+<h3>
+<a name="socket" class="anchor" href="#socket"><span class="octicon octicon-link"></span></a>Socket</h3>
+
+<div class="highlight highlight-dart"><pre><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="c1">// sends message</span>
+<span class="n">on</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="c1">// adds handler to message</span>
+<span class="n">close</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span> <span class="c1">// closes socket</span>
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>(The MIT License)</p>
 
