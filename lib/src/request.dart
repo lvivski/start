@@ -36,9 +36,8 @@ class Request {
     var param = new Completer();
 
     List<List<int>> buffer = [];
-    _request.listen((data){buffer.add(data);print("data");}, onDone: (){
+    _request.listen((data){buffer.add(data);}, onDone: (){
       String dataString = new String.fromCharCodes(buffer[0]);
-      print(dataString);
       List<String> dataPairs = dataString.split("&");
       var result = "";
       for(var dataPair in dataPairs){
