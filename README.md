@@ -66,6 +66,7 @@ input // raw HttpRequest stream
 path // requested URI path
 uri // requested URI
 param(String name) // get query param by name
+postParam(String name) // get post param by name
 ```
 
 ### Response
