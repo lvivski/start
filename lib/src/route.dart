@@ -27,8 +27,7 @@ class Route {
     if (_method == 'WS') {
       _controller.add(req);
     } else {
-      var request = new Request(req);
-      request.params = _parseParams(req.uri.path, _path);
+      var request = new Request(req, _parseParams(req.uri.path, _path));
       request.response = new Response(req.response);
       _controller.add(request);
     }
