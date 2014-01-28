@@ -5,7 +5,23 @@ class Request {
   Response response;
   Map params;
 
-  Request(this._request);
+  Request(this._request){
+    List<List<int>> buffer = [];
+    _request.listen((data){buffer.add(data);}, onDone: (){
+      String dataString = new String.fromCharCodes(buffer[0]);
+      List<String> dataPairs = dataString.split("&");
+      for(var dataPair in dataPairs){
+        var dataSplit = dataPair.split("=");
+        var key = dataSplit[0];
+        var value = dataSplit[1];
+        if(params[key] == null){
+          params[key] = value;
+        } else {
+          params["POST_"+key] = value;
+        }
+      };
+    });
+  }
 
   List header(String name) => _request.headers[name.toLowerCase()];
 
@@ -32,24 +48,4 @@ class Request {
          : '';
   }
 
-  Future<String> postParam(String name){
-    var param = new Completer();
-
-    List<List<int>> buffer = [];
-    _request.listen((data){buffer.add(data);}, onDone: (){
-      String dataString = new String.fromCharCodes(buffer[0]);
-      List<String> dataPairs = dataString.split("&");
-      var result = "";
-      for(var dataPair in dataPairs){
-        var dataSplit = dataPair.split("=");
-        var key = dataSplit[0];
-        var value = dataSplit[1];
-        if((key.indexOf(name) == 0) && (key.length == name.length)){
-          param.complete(value);
-        }
-      };
-    });
-
-    return param.future;
-  }
 }
