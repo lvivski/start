@@ -38,6 +38,7 @@ class Server {
   void static(path) {
     _staticServer = new VirtualDirectory(path)
       ..allowDirectoryListing = true
+      ..followLinks = true
       ..errorPageHandler = _send404;
 
     _staticServer.directoryHandler = (Directory dir, HttpRequest req) {
