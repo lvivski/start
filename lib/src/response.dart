@@ -39,9 +39,11 @@ class Response {
     var cookie = new Cookie(name, val),
         cookieMirror = reflect(cookie);
 
-    options.forEach((option, value) {
-      cookieMirror.setField(new Symbol(option), value);
-    });
+    if (options != null) {
+      options.forEach((option, value) {
+        cookieMirror.setField(new Symbol(option), value);
+      });
+    }
 
     return header('Set-Cookie', cookie.toString());
   }
