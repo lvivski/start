@@ -19,6 +19,8 @@ class Request {
 
   HttpRequest get input => _request;
 
+  List<Cookie> get cookies => _request.cookies;
+
   String get path => _request.uri.path;
 
   Uri get uri => _request.uri;
@@ -30,5 +32,22 @@ class Request {
     return _request.uri.queryParameters[name] != null
          ? _request.uri.queryParameters[name]
          : '';
+  }
+
+  Future<Map> postParams({ Encoding enc: UTF8 }) {
+    if (_request.method != 'POST') {
+      throw new FormatException('`POST` params are not available for `${_request.method}` requests' );
+    }
+
+    var completer = new Completer();
+    _request.transform(const AsciiDecoder()).listen((content) {
+      final params = new Map.fromIterable(
+          content.split('&').map((kvs) => kvs.split('=')),
+          key: (kv) => Uri.decodeQueryComponent(kv[0], encoding: enc),
+          value: (kv) => Uri.decodeQueryComponent(kv[1], encoding: enc)
+      );
+      completer.complete(params);
+    });
+    return completer.future;
   }
 }
