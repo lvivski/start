@@ -29,6 +29,12 @@ class Request {
 
   Uri get uri => _request.uri;
 
+  HttpSession get session => _request.session;
+
+  String get method => _request.method;
+
+  X509Certificate get certificate => _request.certificate;
+
   String param(String name) {
     if (params.containsKey(name) && params[name] != null) {
       return params[name];
