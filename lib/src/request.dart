@@ -19,7 +19,11 @@ class Request {
 
   HttpRequest get input => _request;
 
-  List<Cookie> get cookies => _request.cookies;
+  List<Cookie> get cookies => _request.cookies.map((Cookie cookie) {
+    cookie.name = Uri.decodeQueryComponent(cookie.name);
+    cookie.value = Uri.decodeQueryComponent(cookie.value);
+    return cookie;
+  });
 
   String get path => _request.uri.path;
 

@@ -60,7 +60,7 @@ class Route {
             replace.write('\.');
           }
 
-          replace.write('(\\w+))');
+          replace.write('([\\w%+]+))');
 
           if (placeholder[3] != null) {
             replace.write('?');
@@ -82,7 +82,7 @@ class Route {
     var params = {};
     Match paramsMatch = routePath['regexp'].firstMatch(path);
     for (var i = 0; i < routePath['keys'].length; i++) {
-      params[routePath['keys'][i]] = paramsMatch[i+1];
+      params[routePath['keys'][i]] = Uri.decodeQueryComponent(paramsMatch[i+1]);
     }
     return params;
   }

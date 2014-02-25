@@ -36,7 +36,10 @@ class Response {
   }
 
   Response cookie(String name, String val, [Map options]) {
-    var cookie = new Cookie(name, val),
+    var cookie = new Cookie(
+          Uri.encodeQueryComponent(name),
+          Uri.encodeQueryComponent(val)
+        ),
         cookieMirror = reflect(cookie);
 
     if (options != null) {
