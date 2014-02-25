@@ -67,7 +67,7 @@ path // requested URI path
 uri // requested URI
 cookies // provided cookies
 param(String name) // get query param by name
-postParams(Encoding enc) // get a promise with a Map of POST params
+payload(Encoding enc) // get a promise with a Map of request body params
 ```
 
 ### Response

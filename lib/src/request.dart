@@ -34,11 +34,7 @@ class Request {
          : '';
   }
 
-  Future<Map> postParams({ Encoding enc: UTF8 }) {
-    if (_request.method != 'POST') {
-      throw new FormatException('`POST` params are not available for `${_request.method}` requests' );
-    }
-
+  Future<Map> payload({ Encoding enc: UTF8 }) {
     var completer = new Completer();
     _request.transform(const AsciiDecoder()).listen((content) {
       final params = new Map.fromIterable(
