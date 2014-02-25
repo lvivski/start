@@ -45,7 +45,8 @@ class Response {
       });
     }
 
-    return header('Set-Cookie', cookie.toString());
+    _response.cookies.add(cookie);
+    return this;
   }
 
   Response deleteCookie(String name) {
