@@ -46,7 +46,7 @@ listen(host, port) // start the server (it's performed by the start function)
 stop() // stops the server
 get|post|put|delete(String route) // adds a handler, returns a Stream<Request>
 ws(String route) // adds WebSocket handler, returns a Stream
-static(String path) // serves static files from `path`
+static(String path, bool jail) // serves static files from `path`, follows symlinks outside the root if jail is false
 ```
 
 #### Routes

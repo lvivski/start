@@ -11,7 +11,7 @@ void main() {
 
   start(port: 3000).then((Server app) {
 
-    app.static('web');
+    app.static('web', jail: false);
 
     app.get('/hello/:name.:lastname?').listen((request) {
       request.response
