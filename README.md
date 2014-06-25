@@ -19,11 +19,12 @@ void main() {
         .header('Content-Type', 'text/html; charset=UTF-8')
         .send('Hello, ${request.param('name')} ${request.param('lastname')}');
     });
-
-    app.ws('/socket').listen((socket) {
-      socket.on('ping', (data) { socket.send('pong'); })
-        .on('pong', (data) { socket.close(1000, 'requested'); });
+    
+    app.ws('/socket').listen((socket) {         
+      socket.on('ping').listen((data) => socket.send('pong'));      
+      socket.on('pong').listen((data) => socket.close(1000, 'requested'));      
     });
+    
   });
 }
 ```
