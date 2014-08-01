@@ -19,12 +19,12 @@ void main() {
         .header('Content-Type', 'text/html; charset=UTF-8')
         .send('Hello, ${request.param('name')} ${request.param('lastname')}');
     });
-    
-    app.ws('/socket').listen((socket) {         
-      socket.on('ping').listen((data) => socket.send('pong'));      
-      socket.on('pong').listen((data) => socket.close(1000, 'requested'));      
+
+    app.ws('/socket').listen((socket) {
+      socket.on('ping').listen((data) => socket.send('pong'));
+      socket.on('pong').listen((data) => socket.close(1000, 'requested'));
     });
-    
+
   });
 }
 ```
@@ -47,7 +47,7 @@ listen(host, port) // start the server (it's performed by the start function)
 stop() // stops the server
 get|post|put|delete(String route) // adds a handler, returns a Stream<Request>
 ws(String route) // adds WebSocket handler, returns a Stream
-static(String path, bool jail) // serves static files from `path`, follows symlinks outside the root if jail is false
+static(String path, {bool jail, bool listing, bool links}) // serves static files from `path`, follows symlinks outside the root if jail is false
 ```
 
 #### Routes
