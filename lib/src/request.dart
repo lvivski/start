@@ -23,7 +23,7 @@ class Request {
     cookie.name = Uri.decodeQueryComponent(cookie.name);
     cookie.value = Uri.decodeQueryComponent(cookie.value);
     return cookie;
-  });
+  }).toList();
 
   String get path => _request.uri.path;
 
