@@ -35,10 +35,10 @@ class Server {
     });
   }
 
-  void static(path, { jail: true }) {
+  void static(path, { allowDirectoryListing: true, followLinks: true, jail: true }) {
     _staticServer = new VirtualDirectory(path)
-      ..allowDirectoryListing = true
-      ..followLinks = true
+      ..allowDirectoryListing = allowDirectoryListing
+      ..followLinks = followLinks
       ..jailRoot = jail
       ..errorPageHandler = _send404;
 
