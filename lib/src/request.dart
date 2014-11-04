@@ -36,12 +36,16 @@ class Request {
   X509Certificate get certificate => _request.certificate;
 
   String param(String name) {
-    if (params.containsKey(name) && params[name] != null) {
-      return params[name];
+    var value;
+    value = params[name];
+    if (value != null) {
+      return value;
     }
-    return _request.uri.queryParameters[name] != null
-         ? _request.uri.queryParameters[name]
-         : '';
+    value = _request.uri.queryParameters[name];
+    if (value != null) {
+      return value;
+    }
+    return ''; // no parameter with name found
   }
 
   Future<Map> payload({ Encoding enc: UTF8 }) {
