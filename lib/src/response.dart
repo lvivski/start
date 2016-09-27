@@ -57,36 +57,37 @@ class Response {
     return cookie(name, '', options);
   }
 
-  add(String string) {
+  Response add(String string) {
     _response.write(string);
+    return this;
   }
 
-  send(String string) {
+  Future send(String string) {
     _response.write(string);
-    _response.close();
+    return _response.close();
   }
 
-  close() {
-    _response.close();
+  Future close() {
+    return _response.close();
   }
 
-  json(data) {
+  Future json(data) {
     if (data is Map || data is List) {
       data = JSON.encode(data);
     }
-    send(data);
+    return send(data);
   }
 
-  jsonp(String name, data) {
+  Future jsonp(String name, data) {
     if (data is Map) {
       data = JSON.encode(data);
     }
-    send("$name('$data');");
+    return send("$name('$data');");
   }
 
-  redirect(String url, [int code = 302]) {
+  Future redirect(String url, [int code = 302]) {
     _response.statusCode = code;
     header('Location', url);
-    _response.close();
+    return _response.close();
   }
 }

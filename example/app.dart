@@ -1,6 +1,5 @@
 import 'package:start/start.dart';
 
-import 'package:http_server/http_server.dart';
 import 'package:logging/logging.dart';
 
 void main() {
