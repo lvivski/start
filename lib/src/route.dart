@@ -60,7 +60,7 @@ class Route {
             replace.write('\.');
           }
 
-          replace.write('([\\w%+]+))');
+          replace.write('([\\w%+-._~!\$&\'()*,;=:@]+))');
 
           if (placeholder[3] != null) {
             replace.write('?');
