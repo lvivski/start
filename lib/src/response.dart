@@ -69,11 +69,10 @@ class Response {
     return this;
   }
 
-  Response mime(File file) {
-    for (final ext in EXT_TO_CONTENT_TYPE.keys) {
-      if (file.path.endsWith(ext)) {
-        return type(EXT_TO_CONTENT_TYPE[ext]);
-      }
+  Response mime(String path) {
+    var mimeType = lookupMimeType(path);
+    if (mimeType != null) {
+      return type(mimeType);
     }
     return this;
   }
@@ -90,7 +89,7 @@ class Response {
         .then((found) => found ? found : throw 404)
         .then((_) => file.length())
         .then((length) => header('Content-Length', length))
-        .then((_) => mime(file))
+        .then((_) => mime(file.path))
         .then((_) => file.openRead().pipe(_response))
         .then((_) => _response.close())
         .catchError((_) {

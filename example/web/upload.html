@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File upload</title>
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <script src="scripts/script.dart" type="application/dart"></script>
+    <script src="packages/browser/dart.js"></script>
+</head>
+<body>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <label>Text <input type="text" name="text"></label><br>
+    <label>File <input type="file" name="file" accept=".png,.gif,.jpg,.jpeg"></label><br>
+    <input type="submit">
+</form>
+</body>
+</html>

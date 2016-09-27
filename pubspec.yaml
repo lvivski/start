@@ -8,6 +8,7 @@ environment:
 dependencies:
   logging: any
   http_server: any
+  mime: any
 
 dev_dependencies:
   unittest: '>=0.2.7'

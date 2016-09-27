@@ -1,6 +1,6 @@
 import 'package:start/start.dart';
-
 import 'package:logging/logging.dart';
+import 'dart:convert';
 
 void main() {
   Logger.root.level = Level.ALL;
@@ -16,6 +16,19 @@ void main() {
       request.response
         .header('Content-Type', 'text/html; charset=UTF-8')
         .send('Hello, ${request.param('name')} ${request.param('lastname')}');
+    });
+
+    app.post('/upload').listen((request) {
+      request.payload().then((payload) {
+        request.response
+            .header('Content-Type', 'text/html; charset=UTF-8')
+            .add(payload['text'])
+            .add('<br>')
+            .add('<img src="data:${payload['file']['mime']};base64,${BASE64.encode(payload['file']['data'])}" />')
+            .add('<br>')
+            .add(payload['file']['name'])
+            .send('');
+      });
     });
 
     app.ws('/socket').listen((socket) {
