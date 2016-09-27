@@ -62,9 +62,41 @@ class Response {
     return this;
   }
 
+  Response attachment(String filename) {
+    if (filename != null) {
+      return set('Content-Disposition', 'attachment; filename="${filename}"');
+    }
+    return this;
+  }
+
+  Response mime(File file) {
+    for (final ext in EXT_TO_CONTENT_TYPE.keys) {
+      if (file.path.endsWith(ext)) {
+        return type(EXT_TO_CONTENT_TYPE[ext]);
+      }
+    }
+    return this;
+  }
+
   Future send(String string) {
     _response.write(string);
     return _response.close();
+  }
+
+  Future sendFile(String path) {
+    var file = new File(path);
+
+    return file.exists()
+        .then((found) => found ? found : throw 404)
+        .then((_) => file.length())
+        .then((length) => header('Content-Length', length))
+        .then((_) => mime(file))
+        .then((_) => file.openRead().pipe(_response))
+        .then((_) => _response.close())
+        .catchError((_) {
+          _response.statusCode = HttpStatus.NOT_FOUND;
+          return _response.close();
+        }, test: (e) => e == 404);
   }
 
   Future close() {
@@ -75,6 +107,11 @@ class Response {
     if (data is Map || data is List) {
       data = JSON.encode(data);
     }
+
+    if (get('Content-Type') == null) {
+      type('application/json');
+    }
+
     return send(data);
   }
 
