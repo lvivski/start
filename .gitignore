@@ -1,6 +1,5 @@
-.svn
 packages
-.children
+.packages
 .project
+.pub
 pubspec.lock
-
