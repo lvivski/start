@@ -47,9 +47,8 @@ class Request {
       return params[name];
     } else if (query[name] != null) {
       return query[name];
-    } else {
-      return '';
     }
+    return null;
   }
 
   Future<Map> payload({ Encoding enc: UTF8 }) {
@@ -74,11 +73,11 @@ class Request {
             var parameters = formData.contentDisposition.parameters;
             formData.listen((data) {
               if (formData.contentType != null) {
-                data = {
-                  "mime": formData.contentType.mimeType,
-                  "name": parameters['filename'],
-                  "data": data
-                };
+                data = new Upload(
+                    parameters['filename'],
+                    formData.contentType.mimeType,
+                    formData.contentTransferEncoding.value,
+                    data);
               }
               payload[parameters['name']] = data;
             });
@@ -88,4 +87,12 @@ class Request {
     }
     return completer.future;
   }
+}
+
+class Upload {
+  final String name;
+  final String mime;
+  final String enc;
+  final data;
+  const Upload(this.name, this.mime, this.enc, this.data);
 }

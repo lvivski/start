@@ -24,7 +24,7 @@ class Message {
     return new Message(name, data);
   }
 
-  Message.empty(): this('');
+  Message.empty() : this('');
 
   String toPacket() {
     if (data == null) {

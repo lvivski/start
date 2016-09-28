@@ -6,16 +6,19 @@ class Route {
   final StreamController _controller = new StreamController();
   Stream stream;
 
-  Route(String method, path, { List<String> keys }) :
-    _method = method.toUpperCase(),
-    _path = _normalize(path, keys: keys) {
+  Route(String method, path, { List<String> keys })
+      :
+        _method = method.toUpperCase(),
+        _path = _normalize(path, keys: keys) {
     stream = _controller.stream;
   }
 
-  Route.ws(dynamic path, { List<String> keys }) :
-    _method = 'WS',
-    _path = _normalize(path, keys: keys) {
-    stream = _controller.stream.transform(new WebSocketTransformer()).map((WebSocket ws) => new Socket(ws));
+  Route.ws(dynamic path, { List<String> keys })
+      :
+        _method = 'WS',
+        _path = _normalize(path, keys: keys) {
+    stream = _controller.stream.transform(new WebSocketTransformer()).map((
+        WebSocket ws) => new Socket(ws));
   }
 
   bool match(HttpRequest req) {
@@ -34,7 +37,8 @@ class Route {
     }
   }
 
-  static Map _normalize(dynamic path, { List<String> keys, bool strict: false }) {
+  static Map _normalize(dynamic path,
+      { List<String> keys, bool strict: false }) {
     if (keys == null) {
       keys = [];
     }
@@ -53,7 +57,8 @@ class Route {
       path += '/?';
     }
 
-    path = path.replaceAllMapped(new RegExp(r'(\.)?:(\w+)(\?)?'), (Match placeholder) {
+    path = path.replaceAllMapped(
+        new RegExp(r'(\.)?:(\w+)(\?)?'), (Match placeholder) {
           var replace = new StringBuffer('(?:');
 
           if (placeholder[1] != null) {
@@ -84,9 +89,9 @@ class Route {
     for (var i = 0; i < routePath['keys'].length; i++) {
       String param;
       try {
-        param = Uri.decodeQueryComponent(paramsMatch[i+1]);
+        param = Uri.decodeQueryComponent(paramsMatch[i + 1]);
       } catch (e) {
-        param = paramsMatch[i+1];
+        param = paramsMatch[i + 1];
       }
 
       params[routePath['keys'][i]] = param;

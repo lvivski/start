@@ -11,7 +11,7 @@ class Socket implements SocketBase {
   Stream _messages;
 
   Socket(String url) :
-  this._ws = new WebSocket(url) {
+        this._ws = new WebSocket(url) {
     _messages = _messageController.stream.asBroadcastStream();
     _ws.onMessage.listen((e) {
       var msg = new Message.fromPacket(e.data);
@@ -25,7 +25,8 @@ class Socket implements SocketBase {
   }
 
   Stream on(String messageName) {
-    return _messages.where((msg) => msg.name == messageName).map((msg) => msg.data);
+    return _messages.where((msg) => msg.name == messageName).map((msg) =>
+    msg.data);
   }
 
   Stream get onOpen => _ws.onOpen;

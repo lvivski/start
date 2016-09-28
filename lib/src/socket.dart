@@ -3,8 +3,8 @@ part of start;
 class Socket implements SocketBase {
   final WebSocket _ws;
   final _messageController = new StreamController(),
-        _openController = new StreamController(),
-        _closeController = new StreamController();
+      _openController = new StreamController(),
+      _closeController = new StreamController();
 
   Stream _messages;
 
@@ -14,12 +14,12 @@ class Socket implements SocketBase {
 
     _openController.add(_ws);
     _ws.listen((data) {
-      var msg = new Message.fromPacket(data);
-      _messageController.add(msg);
-    },
-    onDone: () {
-      _closeController.add(_ws);
-    });
+          var msg = new Message.fromPacket(data);
+          _messageController.add(msg);
+        },
+        onDone: () {
+          _closeController.add(_ws);
+        });
   }
 
   void send(String messageName, [ data ]) {
@@ -28,7 +28,8 @@ class Socket implements SocketBase {
   }
 
   Stream on(String messageName) {
-    return _messages.where((msg) => msg.name == messageName).map((msg) => msg.data);
+    return _messages.where((msg) => msg.name == messageName).map((msg) =>
+    msg.data);
   }
 
   Stream get onOpen => _openController.stream;
