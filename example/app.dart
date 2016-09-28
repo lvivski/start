@@ -18,15 +18,22 @@ void main() {
         .send('Hello, ${request.param('name')} ${request.param('lastname')}');
     });
 
+    app.get('/file/:filename').listen((request) {
+      request.response
+          .header('Content-Type', 'text/html; charset=UTF-8')
+          .send(request.param('filename'));
+    });
+
     app.post('/upload').listen((request) {
       request.payload().then((payload) {
+        var file = payload['file'] as Upload;
         request.response
             .header('Content-Type', 'text/html; charset=UTF-8')
             .add(payload['text'])
             .add('<br>')
-            .add('<img src="data:${payload['file']['mime']};base64,${BASE64.encode(payload['file']['data'])}" />')
+            .add('<img src="data:${file.mime};base64,${BASE64.encode(file.data)}" />')
             .add('<br>')
-            .add(payload['file']['name'])
+            .add(file.name)
             .send('');
       });
     });
