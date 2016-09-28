@@ -15,11 +15,14 @@ class Server {
     _server.close();
   }
 
-  Future<Server> listen(String host, num port) {
-    return HttpServer.bind(host, port).then((HttpServer server){
+  Future<Server> listen(String host, num port,
+      {String certificateChain, String privateKey, String password}) {
+
+    handle(HttpServer server) {
       _server = server;
-      _server.listen((HttpRequest req) {
-        var route = _routes.firstWhere((Route route) => route.match(req), orElse: () => null);
+      server.listen((HttpRequest req) {
+        var route = _routes.firstWhere((Route route) => route.match(req),
+            orElse: () => null);
         if (route != null) {
           route.handle(req);
         } else if (_staticServer != null) {
@@ -32,7 +35,19 @@ class Server {
       log.fine('Server started, listening on $host:$port');
 
       return this;
-    });
+    }
+
+    if (privateKey != null) {
+      var context = new SecurityContext();
+      if (certificateChain != null) {
+        var chain = new File(certificateChain);
+        context.useCertificateChain(chain.path);
+      }
+      var key = new File(privateKey);
+      context.usePrivateKey(key.path, password: password);
+      return HttpServer.bindSecure(host, port, context).then(handle);
+    }
+    return HttpServer.bind(host, port).then(handle);
   }
 
   void static(path, { listing: true, links: true, jail: true }) {
@@ -49,7 +64,7 @@ class Server {
     };
   }
 
-  Stream<Socket> ws(path, { List<String> keys } ) {
+  Stream<Socket> ws(path, { List<String> keys }) {
     var route = new Route.ws(path, keys: keys);
     _routes.add(route);
 
