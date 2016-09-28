@@ -1,6 +1,6 @@
 library socket_test;
 
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group("Socket", () {

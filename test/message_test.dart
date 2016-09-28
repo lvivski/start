@@ -1,7 +1,7 @@
 library message_tests;
 
 import 'dart:convert';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 import 'package:start/src/message.dart';
 
 void main() {

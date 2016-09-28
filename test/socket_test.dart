@@ -2,8 +2,8 @@ library socket_test;
 
 import 'dart:io' hide Socket;
 
-import 'package:unittest/unittest.dart';
-import 'package:unittest/mock.dart';
+import 'package:test/test.dart';
+import 'package:mockito/mockito.dart';
 
 import 'package:start/start.dart';
 import 'package:start/src/message.dart';
@@ -20,15 +20,15 @@ void main() {
       socket = new Socket(ws);
     });
 
-    test("can send a message", () {
+    test("can send a message", () async {
       String message = "Test";
 
       socket.send(message);
 
-      ws.getLogs(callsTo("add", message)).verify(happenedOnce);
+      verify(ws.add(message)).called(1);
     });
 
-    test("can send a message with data", () {
+    test("can send a message with data", () async {
       String msg_name = "Test";
       Map msg_data = {
         "name": "Bob",
@@ -44,7 +44,7 @@ void main() {
 
       socket.send(msg_name, msg_data);
 
-      ws.getLogs(callsTo("add", expected_msg.toPacket())).verify(happenedOnce);
+      verify(ws.add(expected_msg.toPacket())).called(1);
     });
   });
 }
