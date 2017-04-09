@@ -84,6 +84,12 @@ class Request {
           }, onDone: () {
             completer.complete(payload);
           });
+    } else if (isMime('application/json')) {
+      _request.transform(const Utf8Decoder())
+          .listen((content) {
+            final payload = JSON.decode(content);
+            completer.complete(payload);
+          });
     }
     return completer.future;
   }
