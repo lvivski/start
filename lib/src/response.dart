@@ -93,7 +93,7 @@ class Response {
         .then((_) => file.openRead().pipe(_response))
         .then((_) => _response.close())
         .catchError((_) {
-          _response.statusCode = HttpStatus.NOT_FOUND;
+          _response.statusCode = HttpStatus.notFound;
           return _response.close();
         }, test: (e) => e == 404);
   }
@@ -104,7 +104,7 @@ class Response {
 
   Future json(data) {
     if (data is Map || data is List) {
-      data = JSON.encode(data);
+      data = jsonEncode(data);
     }
 
     if (get('Content-Type') == null) {
@@ -116,7 +116,7 @@ class Response {
 
   Future jsonp(String name, data) {
     if (data is Map) {
-      data = JSON.encode(data);
+      data = jsonEncode(data);
     }
     return send("$name('$data');");
   }

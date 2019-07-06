@@ -3,3 +3,5 @@ packages
 .project
 .pub
 pubspec.lock
+.vscode/launch.json
+.dart_tool/

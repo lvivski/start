@@ -68,47 +68,47 @@ class Server {
     var route = new Route.ws(path, keys: keys);
     _routes.add(route);
 
-    return route.stream;
+    return route.streamSocket;
   }
 
   Stream<Request> get(path, { List<String> keys }) {
-    var route = new Route('get', path, keys: keys);
+    Route route = new Route('get', path, keys: keys);
     _routes.add(route);
 
-    return route.stream;
+    return route.streamRequest;
   }
 
   Stream<Request> options(path, { List<String> keys }) {
     var route = new Route('options', path, keys: keys);
     _routes.add(route);
 
-    return route.stream;
+    return route.streamRequest;
   }
 
   Stream<Request> post(path, { List<String> keys }) {
     var route = new Route('post', path, keys: keys);
     _routes.add(route);
 
-    return route.stream;
+    return route.streamRequest;
   }
 
   Stream<Request> put(path, { List<String> keys }) {
     var route = new Route('put', path, keys: keys);
     _routes.add(route);
 
-    return route.stream;
+    return route.streamRequest;
   }
 
   Stream delete(path, { List<String> keys }) {
     var route = new Route('delete', path, keys: keys);
     _routes.add(route);
 
-    return route.stream;
+    return route.streamRequest;
   }
 
   void _send404(HttpRequest req) {
     req.response
-      ..statusCode = HttpStatus.NOT_FOUND
+      ..statusCode = HttpStatus.notFound
       ..close();
   }
 }

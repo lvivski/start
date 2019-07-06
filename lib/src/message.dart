@@ -18,7 +18,7 @@ class Message {
     var data = null;
 
     if (parts.length > 1 && !parts[1].isEmpty) {
-      data = JSON.decode(parts.sublist(1).join(':'));
+      data = jsonDecode(parts.sublist(1).join(':'));
     }
 
     return new Message(name, data);
@@ -30,6 +30,6 @@ class Message {
     if (data == null) {
       return name;
     }
-    return '$name:${JSON.encode(data)}';
+    return '$name:${jsonEncode(data)}';
   }
 }
