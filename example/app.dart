@@ -31,7 +31,7 @@ void main() {
             .header('Content-Type', 'text/html; charset=UTF-8')
             .add(payload['text'])
             .add('<br>')
-            .add('<img src="data:${file.mime};base64,${BASE64.encode(file.data)}" />')
+            .add('<img src="data:${file.mime};base64,${base64Encode(file.data)}" />')
             .add('<br>')
             .add(file.name)
             .send('');

@@ -9,12 +9,12 @@ class Request {
   List header(String name) => _request.headers[name.toLowerCase()];
 
   bool accepts(String type) =>
-      _request.headers[HttpHeaders.ACCEPT]
-          .where((name) => name.split(',').indexOf(type))
+      _request.headers[HttpHeaders.acceptHeader]
+          .where((name) => name.split(',').indexOf(type) > 0)
           .length > 0;
 
   bool isMime(String type, {loose: false}) =>
-      _request.headers[HttpHeaders.CONTENT_TYPE]
+      _request.headers[HttpHeaders.contentTypeHeader]
           .where((value) => loose ? value.contains(type) : value == type)
           .isNotEmpty;
 
@@ -51,8 +51,8 @@ class Request {
     return null;
   }
 
-  Future<Map> payload({ Encoding enc: UTF8 }) {
-    var completer = new Completer();
+  Future<Map> payload({ Encoding enc: utf8 }) {
+    var completer = new Completer<Map>();
 
     if (isMime('application/x-www-form-urlencoded')) {
       _request.transform(const AsciiDecoder())
@@ -82,6 +82,12 @@ class Request {
               payload[parameters['name']] = data;
             });
           }, onDone: () {
+            completer.complete(payload);
+          });
+    } else if (isMime('application/json')) {
+      _request.transform(const Utf8Decoder())
+          .listen((content) {
+            final payload = jsonDecode(content);
             completer.complete(payload);
           });
     }

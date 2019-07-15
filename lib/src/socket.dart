@@ -9,7 +9,6 @@ class Socket implements SocketBase {
   Stream _messages;
 
   Socket(this._ws) {
-    // TODO remove this broadcast stream
     _messages = _messageController.stream.asBroadcastStream();
 
     _openController.add(_ws);

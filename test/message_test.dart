@@ -32,7 +32,7 @@ void main() {
         "stuff":123,
         "other":"test"
       };
-      Message msg = new Message.fromPacket("test:${JSON.encode(data)}");
+      Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
       expect(msg.data, equals(data));
@@ -40,7 +40,7 @@ void main() {
 
     test("parses named message with List for data", () {
       List data = [1, 2, 3];
-      Message msg = new Message.fromPacket("test:${JSON.encode(data)}");
+      Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
       expect(msg.data, equals(data));
@@ -48,7 +48,7 @@ void main() {
 
     test("parses named message with bool for data", () {
       bool data = true;
-      Message msg = new Message.fromPacket("test:${JSON.encode(data)}");
+      Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
       expect(msg.data, equals(data));
@@ -56,7 +56,7 @@ void main() {
 
     test("parses named message with String for data", () {
       String data = "abc123";
-      Message msg = new Message.fromPacket("test:${JSON.encode(data)}");
+      Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
       expect(msg.data, equals(data));
@@ -64,7 +64,7 @@ void main() {
 
     test("parses named message with String containing colon for data", () {
       String data = "a:b:c";
-      Message msg = new Message.fromPacket("test:${JSON.encode(data)}");
+      Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
       expect(msg.data, equals(data));
@@ -72,7 +72,7 @@ void main() {
 
     test("parses named message with int for data", () {
       int data = 123;
-      Message msg = new Message.fromPacket("test:${JSON.encode(data)}");
+      Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
       expect(msg.data, equals(data));
@@ -80,7 +80,7 @@ void main() {
 
     test("parses named message with double for data", () {
       double data = 123.45;
-      Message msg = new Message.fromPacket("test:${JSON.encode(data)}");
+      Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
       expect(msg.data, equals(data));
@@ -91,7 +91,7 @@ void main() {
         "stuff":123,
         "other":"test"
       };
-      Message msg = new Message.fromPacket(":${JSON.encode(data)}");
+      Message msg = new Message.fromPacket(":${jsonEncode(data)}");
 
       expect(msg.name, equals(""));
       expect(msg.data, equals(data));
