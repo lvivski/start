@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+Fix support for dart@2
+
 ## 0.0.8
 
 Breaking changes. Removed `hart` dependency, `start` now uses proper `Cookie` library,

@@ -4,12 +4,12 @@ version: 0.3.0
 homepage: http://github.com/lvivski/start
 description: Sinatra inspired Web framework
 environment:
-  sdk: '>=2.0.0'
+  sdk: '>=2.0.0 <3.0.0'
 dependencies:
-  logging: any
-  http_server: any
-  mime: any
+  logging: '>=0.11.3 <0.12.0'
+  http_server: '>=0.9.8 <0.10.0'
+  mime: '>=0.9.6 <0.10.0'
 
 dev_dependencies:
-  test: any
-  mockito: any
+  test: '>=1.9.4 <1.10.0'
+  mockito: '>=4.1.1 <4.2.0'

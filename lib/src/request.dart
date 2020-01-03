@@ -55,7 +55,7 @@ class Request {
     var completer = new Completer<Map>();
 
     if (isMime('application/x-www-form-urlencoded')) {
-      _request.transform(const AsciiDecoder())
+			const AsciiDecoder().bind(_request)
           .listen((content) {
             final payload = new Map.fromIterable(
                 content.split('&').map((kvs) => kvs.split('=')),
@@ -67,7 +67,7 @@ class Request {
     } else if (isMime('multipart/form-data', loose: true)) {
       var boundary = _request.headers.contentType.parameters['boundary'];
       final payload = new Map();
-      _request.transform(new MimeMultipartTransformer(boundary))
+			new MimeMultipartTransformer(boundary).bind(_request)
           .map(HttpMultipartFormData.parse)
           .listen((HttpMultipartFormData formData) {
             var parameters = formData.contentDisposition.parameters;
@@ -85,7 +85,7 @@ class Request {
             completer.complete(payload);
           });
     } else if (isMime('application/json')) {
-      _request.transform(const Utf8Decoder())
+			const Utf8Decoder().bind(_request)
           .listen((content) {
             final payload = jsonDecode(content);
             completer.complete(payload);
