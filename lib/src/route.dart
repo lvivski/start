@@ -3,24 +3,24 @@ part of start;
 class Route {
   final String _method;
   final Map _path;
-  final StreamController<Request> _controllerRequest = new StreamController<Request>();
-  final StreamController<WebSocketTransformer> _controllerSocket =
-    new StreamController<WebSocketTransformer>();
-  Stream<Request> streamRequest;
-  Stream<Socket> streamSocket;
+  final StreamController<Request> _requestController = new StreamController();
+  final StreamController<HttpRequest> _socketController = new StreamController();
+  Stream<Request> requestStream;
+  Stream<Socket> socketStream;
 
   Route(String method, path, { List<String> keys })
       :
         _method = method.toUpperCase(),
         _path = _normalize(path, keys: keys) {
-    streamRequest = _controllerRequest.stream;
+    requestStream = _requestController.stream;
   }
 
-  Route.ws(dynamic path, { List<String> keys }) :
-    _method = 'WS',
-    _path = _normalize(path, keys: keys) {
-      streamSocket = _controllerSocket.stream
-        .transform(StreamTransformer<WebSocketTransformer, WebSocket>.fromHandlers())
+  Route.ws(dynamic path, { List<String> keys })
+		:
+    	_method = 'WS',
+    	_path = _normalize(path, keys: keys) {
+      socketStream = _socketController.stream
+        .transform(new WebSocketTransformer())
         .map((WebSocket ws) => new Socket(ws));
     }
 
@@ -31,12 +31,12 @@ class Route {
 
   void handle(HttpRequest req) {
     if (_method == 'WS') {
-      _controllerRequest.add(req as Request);
+      _socketController.add(req);
     } else {
-      var request = new Request(req);
+			var request = new Request(req);
       request.params = _parseParams(req.uri.path, _path);
       request.response = new Response(req.response);
-      _controllerRequest.add(request);
+      _requestController.add(request);
     }
   }
 

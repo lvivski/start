@@ -68,42 +68,42 @@ class Server {
     var route = new Route.ws(path, keys: keys);
     _routes.add(route);
 
-    return route.streamSocket;
+    return route.socketStream;
   }
 
   Stream<Request> get(path, { List<String> keys }) {
     Route route = new Route('get', path, keys: keys);
     _routes.add(route);
 
-    return route.streamRequest;
+    return route.requestStream;
   }
 
   Stream<Request> options(path, { List<String> keys }) {
     var route = new Route('options', path, keys: keys);
     _routes.add(route);
 
-    return route.streamRequest;
+    return route.requestStream;
   }
 
   Stream<Request> post(path, { List<String> keys }) {
     var route = new Route('post', path, keys: keys);
     _routes.add(route);
 
-    return route.streamRequest;
+    return route.requestStream;
   }
 
   Stream<Request> put(path, { List<String> keys }) {
     var route = new Route('put', path, keys: keys);
     _routes.add(route);
 
-    return route.streamRequest;
+    return route.requestStream;
   }
 
   Stream delete(path, { List<String> keys }) {
     var route = new Route('delete', path, keys: keys);
     _routes.add(route);
 
-    return route.streamRequest;
+    return route.requestStream;
   }
 
   void _send404(HttpRequest req) {

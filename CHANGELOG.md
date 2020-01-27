@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+Fix Websockets
+
 ## 0.3.0
 
 Fix support for dart@2
