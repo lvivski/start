@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+Websocket format is changed.
+
 ## 0.4.0
 
 Fix Websockets
