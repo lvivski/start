@@ -21,11 +21,21 @@ void main() {
     });
 
     app.ws('/socket').listen((socket) {
-      socket.on('ping').listen((data) => socket.send('pong'));
-      socket.on('pong').listen((data) => socket.close(1000, 'requested'));
-    });
 
-  });
+      socket.onMessage().listen((data) {
+        print('data: $data');
+        socket.send(data);
+      });
+
+      socket.onOpen.listen((ws) {
+        print('new socket opened');
+      });
+
+      socket.onClose.listen((ws) {
+        print('socket has been closed');
+      });
+
+    });
 }
 ```
 
