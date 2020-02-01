@@ -13,7 +13,7 @@ class Request {
           .where((name) => name.split(',').indexOf(type) > 0)
           .length > 0;
 
-  bool isMime(String type, {loose: false}) =>
+  bool isMime(String type, {loose: true}) =>
       _request.headers[HttpHeaders.contentTypeHeader]
           .where((value) => loose ? value.contains(type) : value == type)
           .isNotEmpty;
