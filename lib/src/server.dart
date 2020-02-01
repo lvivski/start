@@ -16,12 +16,12 @@ class Server {
   }
 
   Future<Server> listen(String host, num port,
-      {String certificateChain, String privateKey, String password}) {
+      {String certificateChain, String privateKey, String password, bool cors}) {
 
     handle(HttpServer server) {
       _server = server;
       server.listen((HttpRequest req) {
-        addCorsHeaders(req.response);
+        if (cors) addCorsHeaders(req.response);
         var route = _routes.firstWhere((Route route) => route.match(req),
             orElse: () => null);
         if (route != null) {
