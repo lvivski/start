@@ -54,9 +54,9 @@ class Server {
 
   void addCorsHeaders(HttpResponse response) {
     response.headers.add('Access-Control-Allow-Origin', '*');
-    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    response.headers.add('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
     response.headers.add('Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept');
+        'access-control-allow-origin,content-type,x-access-token');
   }
 
   void static(path, { listing: true, links: true, jail: true }) {
