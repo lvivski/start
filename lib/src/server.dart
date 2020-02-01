@@ -21,6 +21,7 @@ class Server {
     handle(HttpServer server) {
       _server = server;
       server.listen((HttpRequest req) {
+        addCorsHeaders(req.response);
         var route = _routes.firstWhere((Route route) => route.match(req),
             orElse: () => null);
         if (route != null) {
@@ -28,6 +29,7 @@ class Server {
         } else if (_staticServer != null) {
           _staticServer.serveRequest(req);
         } else {
+          print("[DEBUG] server error 404");
           _send404(req);
         }
       });
@@ -48,6 +50,13 @@ class Server {
       return HttpServer.bindSecure(host, port, context).then(handle);
     }
     return HttpServer.bind(host, port).then(handle);
+  }
+
+  void addCorsHeaders(HttpResponse response) {
+    response.headers.add('Access-Control-Allow-Origin', '*');
+    response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    response.headers.add('Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept');
   }
 
   void static(path, { listing: true, links: true, jail: true }) {
