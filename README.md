@@ -47,7 +47,7 @@ You start the server with `start()` function. It has 3 named arguments and
 returns `Server` future
 
 ```dart
-start({String host: '127.0.0.1', int port: 80})
+start({String host: '127.0.0.1', int port: 80, cors : false})
 ```
 
 ### Server
