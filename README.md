@@ -103,7 +103,7 @@ render(viewName, [Map params]) // renders server view
 
 ```dart
 send(message) // sends message
-on(message, action) // adds handler to message
+onMessage()   // adds handler to message
 close(status, reason) // closes socket
 ```
 
