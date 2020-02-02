@@ -21,7 +21,13 @@ class Server {
     handle(HttpServer server) {
       _server = server;
       server.listen((HttpRequest req) {
-        if (cors) addCorsHeaders(req.response);
+        if (cors) {
+          addCorsHeaders(req.response);
+          if (req.method.toLowerCase() == 'options') {
+            _sendDummy(req);
+            return;
+          }
+        }
         var route = _routes.firstWhere((Route route) => route.match(req),
             orElse: () => null);
         if (route != null) {
@@ -29,7 +35,6 @@ class Server {
         } else if (_staticServer != null) {
           _staticServer.serveRequest(req);
         } else {
-          print("[DEBUG] server error 404");
           _send404(req);
         }
       });
@@ -113,6 +118,13 @@ class Server {
     _routes.add(route);
 
     return route.requestStream;
+  }
+
+  void _sendDummy(HttpRequest req) {
+    var msg = {};
+    msg['status'] = 'ok';
+    req.response.write(jsonEncode(msg));
+    req.response.close();
   }
 
   void _send404(HttpRequest req) {
