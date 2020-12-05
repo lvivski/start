@@ -99,7 +99,7 @@ class Server {
     return route.requestStream;
   }
 
-  Stream delete(path, { List<String> keys }) {
+  Stream<Request> delete(path, { List<String> keys }) {
     var route = new Route('delete', path, keys: keys);
     _routes.add(route);
 
