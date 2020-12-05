@@ -38,13 +38,10 @@ void main() {
       });
     });
 
-    app.ws('/socket').listen((socket) {
-      socket.on('connected').listen((data) {
-        socket.send('ping', 'data-from-ping');
-      });
+    app.ws('/').listen((socket) {
 
-      socket.on('pong').listen((data) {
-        print('pong: $data');
+      socket.onMessage().listen((data) {
+        print('msg: $data');
         socket.close(1000, 'requested');
       });
 

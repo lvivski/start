@@ -2,12 +2,10 @@ library start_socket;
 
 import 'dart:async';
 
-export 'message.dart' show Message;
-
 abstract class SocketBase {
-  void send(String msg_name, [ data ]);
+  void send(String msg);
 
-  Stream on(String message_name);
+  Stream onMessage();
 
   void close([int status, String reason]);
 }

@@ -21,11 +21,21 @@ void main() {
     });
 
     app.ws('/socket').listen((socket) {
-      socket.on('ping').listen((data) => socket.send('pong'));
-      socket.on('pong').listen((data) => socket.close(1000, 'requested'));
-    });
 
-  });
+      socket.onMessage().listen((data) {
+        print('data: $data');
+        socket.send(data);
+      });
+
+      socket.onOpen.listen((ws) {
+        print('new socket opened');
+      });
+
+      socket.onClose.listen((ws) {
+        print('socket has been closed');
+      });
+
+    });
 }
 ```
 
@@ -37,7 +47,7 @@ You start the server with `start()` function. It has 3 named arguments and
 returns `Server` future
 
 ```dart
-start({String host: '127.0.0.1', int port: 80})
+start({String host: '127.0.0.1', int port: 80, cors : false})
 ```
 
 ### Server
@@ -93,7 +103,7 @@ render(viewName, [Map params]) // renders server view
 
 ```dart
 send(message) // sends message
-on(message, action) // adds handler to message
+onMessage()   // adds handler to message
 close(status, reason) // closes socket
 ```
 
@@ -102,6 +112,8 @@ close(status, reason) // closes socket
 (The MIT License)
 
 Copyright (c) 2012 Yehor Lvivski <lvivski@gmail.com>
+
+Copyright (c) 2020 Benjamin Jung <bsjung@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

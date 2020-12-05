@@ -8,21 +8,19 @@ class Route {
   Stream<Request> requestStream;
   Stream<Socket> socketStream;
 
-  Route(String method, path, { List<String> keys })
-      :
+  Route(String method, path, { List<String> keys }) :
         _method = method.toUpperCase(),
         _path = _normalize(path, keys: keys) {
     requestStream = _requestController.stream;
   }
 
-  Route.ws(dynamic path, { List<String> keys })
-		:
+  Route.ws(dynamic path, { List<String> keys }) :
     	_method = 'WS',
     	_path = _normalize(path, keys: keys) {
       socketStream = _socketController.stream
         .transform(new WebSocketTransformer())
         .map((WebSocket ws) => new Socket(ws));
-    }
+  }
 
   bool match(HttpRequest req) {
     return ((_method == req.method || _method == 'WS')
@@ -33,15 +31,14 @@ class Route {
     if (_method == 'WS') {
       _socketController.add(req);
     } else {
-			var request = new Request(req);
+      var request = new Request(req);
       request.params = _parseParams(req.uri.path, _path);
       request.response = new Response(req.response);
       _requestController.add(request);
     }
   }
 
-  static Map _normalize(dynamic path,
-      { List<String> keys, bool strict: false }) {
+  static Map _normalize(dynamic path, { List<String> keys, bool strict: false }) {
     if (keys == null) {
       keys = [];
     }

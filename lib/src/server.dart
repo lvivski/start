@@ -16,11 +16,18 @@ class Server {
   }
 
   Future<Server> listen(String host, num port,
-      {String certificateChain, String privateKey, String password}) {
+      {String certificateChain, String privateKey, String password, bool cors}) {
 
     handle(HttpServer server) {
       _server = server;
       server.listen((HttpRequest req) {
+        if (cors) {
+          addCorsHeaders(req.response);
+          if (req.method.toLowerCase() == 'options') {
+            _sendDummy(req);
+            return;
+          }
+        }
         var route = _routes.firstWhere((Route route) => route.match(req),
             orElse: () => null);
         if (route != null) {
@@ -48,6 +55,13 @@ class Server {
       return HttpServer.bindSecure(host, port, context).then(handle);
     }
     return HttpServer.bind(host, port).then(handle);
+  }
+
+  void addCorsHeaders(HttpResponse response) {
+    response.headers.add('Access-Control-Allow-Origin', '*');
+    response.headers.add('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    response.headers.add('Access-Control-Allow-Headers',
+        'access-control-allow-origin,content-type,x-access-token');
   }
 
   void static(path, { listing: true, links: true, jail: true }) {
@@ -104,6 +118,13 @@ class Server {
     _routes.add(route);
 
     return route.requestStream;
+  }
+
+  void _sendDummy(HttpRequest req) {
+    var msg = {};
+    msg['status'] = 'ok';
+    req.response.write(jsonEncode(msg));
+    req.response.close();
   }
 
   void _send404(HttpRequest req) {

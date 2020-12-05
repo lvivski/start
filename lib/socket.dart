@@ -14,19 +14,17 @@ class Socket implements SocketBase {
         this._ws = new WebSocket(url) {
     _messages = _messageController.stream.asBroadcastStream();
     _ws.onMessage.listen((e) {
-      var msg = new Message.fromPacket(e.data);
+      var msg = e.data;
       _messageController.add(msg);
     });
   }
 
-  void send(String messageName, [ data ]) {
-    var message = new Message(messageName, data);
-    _ws.send(message.toPacket());
+  void send(String message) {
+    _ws.send(message);
   }
 
-  Stream on(String messageName) {
-    return _messages.where((msg) => msg.name == messageName).map((msg) =>
-    msg.data);
+  Stream onMessage() {
+    return _messages;
   }
 
   Stream get onOpen => _ws.onOpen;
