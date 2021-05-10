@@ -17,7 +17,6 @@ class Server {
 
   Future<Server> listen(String host, num port,
       {String certificateChain, String privateKey, String password}) {
-
     handle(HttpServer server) {
       _server = server;
       server.listen((HttpRequest req) {
@@ -50,7 +49,7 @@ class Server {
     return HttpServer.bind(host, port).then(handle);
   }
 
-  void static(path, { listing: true, links: true, jail: true }) {
+  void static(path, {listing: true, links: true, jail: true}) {
     _staticServer = new VirtualDirectory(path)
       ..allowDirectoryListing = listing
       ..followLinks = links
@@ -64,42 +63,49 @@ class Server {
     };
   }
 
-  Stream<Socket> ws(path, { List<String> keys }) {
+  Stream<Socket> ws(path, {List<String> keys}) {
     var route = new Route.ws(path, keys: keys);
     _routes.add(route);
 
     return route.socketStream;
   }
 
-  Stream<Request> get(path, { List<String> keys }) {
+  Stream<Request> get(path, {List<String> keys}) {
     Route route = new Route('get', path, keys: keys);
     _routes.add(route);
 
     return route.requestStream;
   }
 
-  Stream<Request> options(path, { List<String> keys }) {
+  Stream<Request> options(path, {List<String> keys}) {
     var route = new Route('options', path, keys: keys);
     _routes.add(route);
 
     return route.requestStream;
   }
 
-  Stream<Request> post(path, { List<String> keys }) {
+  Stream<Request> post(path, {List<String> keys}) {
     var route = new Route('post', path, keys: keys);
     _routes.add(route);
 
     return route.requestStream;
   }
 
-  Stream<Request> put(path, { List<String> keys }) {
+  Stream<Request> patch(path, {List<String> keys}) {
+    var route = new Route('patch', path, keys: keys);
+    _routes.add(route);
+
+    return route.requestStream;
+  }
+
+  Stream<Request> put(path, {List<String> keys}) {
     var route = new Route('put', path, keys: keys);
     _routes.add(route);
 
     return route.requestStream;
   }
 
-  Stream<Request> delete(path, { List<String> keys }) {
+  Stream<Request> delete(path, {List<String> keys}) {
     var route = new Route('delete', path, keys: keys);
     _routes.add(route);
 
