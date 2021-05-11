@@ -5,7 +5,7 @@ typedef void WsHandler(Socket s);
 
 class Server {
   final Logger log = new Logger('start.server');
-  final List<Route> _routes = new List<Route>();
+  final List<Route> _routes = [];
   HttpServer _server;
   VirtualDirectory _staticServer;
 

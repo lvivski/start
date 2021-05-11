@@ -13,22 +13,22 @@ class Socket implements SocketBase {
 
     _openController.add(_ws);
     _ws.listen((data) {
-          var msg = new Message.fromPacket(data);
-          _messageController.add(msg);
-        },
-        onDone: () {
-          _closeController.add(_ws);
-        });
+      var msg = new Message.fromPacket(data);
+      _messageController.add(msg);
+    }, onDone: () {
+      _closeController.add(_ws);
+    });
   }
 
-  void send(String messageName, [ data ]) {
+  void send(String messageName, [data]) {
     var message = new Message(messageName, data);
     _ws.add(message.toPacket());
   }
 
   Stream on(String messageName) {
-    return _messages.where((msg) => msg.name == messageName).map((msg) =>
-    msg.data);
+    return _messages
+        .where((msg) => msg.name == messageName)
+        .map((msg) => msg.data);
   }
 
   Stream get onOpen => _openController.stream;

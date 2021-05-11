@@ -28,10 +28,7 @@ void main() {
     });
 
     test("parses named message with Map for data", () {
-      Map data = {
-        "stuff":123,
-        "other":"test"
-      };
+      Map data = {"stuff": 123, "other": "test"};
       Message msg = new Message.fromPacket("test:${jsonEncode(data)}");
 
       expect(msg.name, equals("test"));
@@ -87,10 +84,7 @@ void main() {
     });
 
     test("parses unnamed message with Map for data", () {
-      Map data = {
-        "stuff":123,
-        "other":"test"
-      };
+      Map data = {"stuff": 123, "other": "test"};
       Message msg = new Message.fromPacket(":${jsonEncode(data)}");
 
       expect(msg.name, equals(""));
@@ -112,7 +106,7 @@ void main() {
     });
 
     test("a message can be serialized to a packet and back", () {
-      Message original_msg = new Message("serial_test", {"bob":123});
+      Message original_msg = new Message("serial_test", {"bob": 123});
 
       Message decoded_msg = new Message.fromPacket(original_msg.toPacket());
 

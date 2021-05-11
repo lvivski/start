@@ -11,7 +11,8 @@ class Request {
   bool accepts(String type) =>
       _request.headers[HttpHeaders.acceptHeader]
           .where((name) => name.split(',').indexOf(type) > 0)
-          .length > 0;
+          .length >
+      0;
 
   bool isMime(String type, {loose: false}) =>
       _request.headers[HttpHeaders.contentTypeHeader]
@@ -25,8 +26,7 @@ class Request {
   Map<String, String> get query => _request.uri.queryParameters;
   Map<String, String> params;
 
-  List<Cookie> get cookies =>
-      _request.cookies.map((Cookie cookie) {
+  List<Cookie> get cookies => _request.cookies.map((Cookie cookie) {
         cookie.name = Uri.decodeQueryComponent(cookie.name);
         cookie.value = Uri.decodeQueryComponent(cookie.value);
         return cookie;
@@ -51,45 +51,43 @@ class Request {
     return null;
   }
 
-  Future<Map> payload({ Encoding enc: utf8 }) {
+  Future<Map> payload({Encoding enc: utf8}) {
     var completer = new Completer<Map>();
 
     if (isMime('application/x-www-form-urlencoded')) {
-			const AsciiDecoder().bind(_request)
-          .listen((content) {
-            final payload = new Map.fromIterable(
-                content.split('&').map((kvs) => kvs.split('=')),
-                key: (kv) => Uri.decodeQueryComponent(kv[0], encoding: enc),
-                value: (kv) => Uri.decodeQueryComponent(kv[1], encoding: enc)
-            );
-            completer.complete(payload);
-          });
+      const AsciiDecoder().bind(_request).listen((content) {
+        final payload = new Map.fromIterable(
+            content.split('&').map((kvs) => kvs.split('=')),
+            key: (kv) => Uri.decodeQueryComponent(kv[0], encoding: enc),
+            value: (kv) => Uri.decodeQueryComponent(kv[1], encoding: enc));
+        completer.complete(payload);
+      });
     } else if (isMime('multipart/form-data', loose: true)) {
       var boundary = _request.headers.contentType.parameters['boundary'];
       final payload = new Map();
-			new MimeMultipartTransformer(boundary).bind(_request)
+      new MimeMultipartTransformer(boundary)
+          .bind(_request)
           .map(HttpMultipartFormData.parse)
           .listen((HttpMultipartFormData formData) {
-            var parameters = formData.contentDisposition.parameters;
-            formData.listen((data) {
-              if (formData.contentType != null) {
-                data = new Upload(
-                    parameters['filename'],
-                    formData.contentType.mimeType,
-                    formData.contentTransferEncoding.value,
-                    data);
-              }
-              payload[parameters['name']] = data;
-            });
-          }, onDone: () {
-            completer.complete(payload);
-          });
+        var parameters = formData.contentDisposition.parameters;
+        formData.listen((data) {
+          if (formData.contentType != null) {
+            data = new Upload(
+                parameters['filename'],
+                formData.contentType.mimeType,
+                formData.contentTransferEncoding.value,
+                data);
+          }
+          payload[parameters['name']] = data;
+        });
+      }, onDone: () {
+        completer.complete(payload);
+      });
     } else if (isMime('application/json')) {
-			const Utf8Decoder().bind(_request)
-          .listen((content) {
-            final payload = jsonDecode(content);
-            completer.complete(payload);
-          });
+      const Utf8Decoder().bind(_request).listen((content) {
+        final payload = jsonDecode(content);
+        completer.complete(payload);
+      });
     }
     return completer.future;
   }

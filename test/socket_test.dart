@@ -34,11 +34,8 @@ void main() {
         "name": "Bob",
         "age": 21,
         "awesome": true,
-        "location": {
-          "city": "Edmonton",
-          "country": "Canada"
-        },
-        "favourite_things": [ 'kittens', 'puppies' ]
+        "location": {"city": "Edmonton", "country": "Canada"},
+        "favourite_things": ['kittens', 'puppies']
       };
       Message expected_msg = new Message(msg_name, msg_data);
 
