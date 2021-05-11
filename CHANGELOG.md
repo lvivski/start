@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+Add `patch` support
+
 ## 0.4.0
 
 Fix Websockets
